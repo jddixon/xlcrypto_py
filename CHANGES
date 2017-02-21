@@ -1,10 +1,14 @@
 # py/xlcrypto_py/CHANGES
 
+v0.0.3
+    2017-02-21
+        * add pylint, coverage                                      SLOC  180
 v0.0.2
     2017-02-20
         * add configuration files, license, .gitignore
 v0.0.1
     2017-02-19
         * initial commit
+
 
 
