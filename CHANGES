@@ -1,5 +1,8 @@
 # py/xlcrypto_py/CHANGES
 
+v0.0.4
+    2017-03-21
+        * xlcrypto/filters/__init__.py                              SLOC  682
 v0.0.3
     2017-02-21
         * add pylint, coverage                                      SLOC  180
@@ -9,6 +12,7 @@ v0.0.2
 v0.0.1
     2017-02-19
         * initial commit
+
 
 
 
