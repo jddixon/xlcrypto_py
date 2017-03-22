@@ -9,7 +9,8 @@ import time
 import unittest
 
 from rnglib import SimpleRNG
-#from xlcrypto import *
+
+from xlcrypto.filters import KeySelector
 
 
 class TestTimestamp(unittest.TestCase):
