@@ -1,2 +1,6 @@
 py/xlcrypto_py/TODO
 
+2017-03-23
+    * make BloomSHA1 an abc (BloomSHA)
+    * need test
+
