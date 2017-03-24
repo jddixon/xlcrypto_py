@@ -13,7 +13,7 @@ from xlattice.u import SHA1_BIN_LEN
 from xlcrypto import XLCryptoError, XLFilterError
 
 __all__ = ['MIN_M', 'MAX_M', 'MIN_K', 'MAX_MK_PRODUCT',
-           'KeySelector', ]
+           'BloomSHA1', 'KeySelector', ]
 
 # EXPORTED CONSTANTS ------------------------------------------------
 
@@ -83,7 +83,7 @@ class BloomSHA1(object):
         self._filter_words = (self._filter_bits + 31) // 32
         # round up
         self._filter = [0] * self._filter_words
-        doClear(self)
+        self._doClear()
         # offsets into the filter
         self._word_offset = [0] * k
         self._bit_offset = [0] * k
@@ -109,7 +109,7 @@ class BloomSHA1(object):
             self._count = 0
             # jdd added 2005 - 02 - 19
 
-    def size(self):
+    def __len__(self):
         """
         Returns the number of keys which have been inserted.  This
         class (BloomSHA1) does not guarantee uniqueness in any sense
@@ -219,7 +219,8 @@ class KeySelector(object):
 #    bit_offset  []byte
 #    word_offset []uint
 
-    def __init__(self, m_exp, hash_count, key_bytes):
+    #                  m      k           int[]       int[]
+    def __init__(self, m_exp, hash_count, bit_offset, word_offset):
         """
         Creates a key selector for a Bloom filter.  When a key is presented
         to the get_offsets(, the k 'hash function' values are
@@ -235,14 +236,16 @@ class KeySelector(object):
         if hash_count < 1:
             raise XLFilterError("hash_count must be positive but is %d" %
                                 hash_count)
-        if not key_bytes:
-            raise XLFilterError("key_bytes may not be None or empty")
+        if not bit_offset:
+            raise XLFilterError("bit_offset may not be None or empty")
+        if not word_offset:
+            raise XLFilterError("word_offset may not be None or empty")
 
         self._m = m_exp                             # must be power of two
         self._k = hash_count                        # count of hash functions
         self._b = deepcopy(key_bytes)
-        self._bit_offset = bytearray(hash_count)    # that many bytes
-        self._word_offset = [0] * hash_count        # that many uint
+        self._bit_offset = deepcopy(bit_offset)
+        self._word_offset = deepcopy(word_offset)
 
         self.get_offsets(key_bytes)                 # will raise if invalid
 

@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
+
 # xlcrypto_py/test_key_selector.py
 
-""" Currently just exercises test framework. """
+""" Exercise KeySelector functionality. """
 
 #import hashlib
 #import os
 import time
 import unittest
+from copy import deepcopy
 
 from rnglib import SimpleRNG
 from xlcrypto import XLFilterError
@@ -14,6 +16,7 @@ from xlcrypto.filters import KeySelector
 
 
 class TestKeySelector(unittest.TestCase):
+    """ Exercise KeySelector functionality. """
 
     def setUp(self):
         self.rng = SimpleRNG(time.time())
@@ -23,9 +26,16 @@ class TestKeySelector(unittest.TestCase):
 
         # 32 keys by default
         # self.keys = new byte[32][20]
-        self.keys = []
+        self.key_bytes = []
+        zeroes = [0 for ndx in range(20)]
         for _ in range(32):
-            self.keys.append(bytes(0) * 20)
+            myzeroes = deepcopy(zeroes)
+            self.key_bytes.append(myzeroes)
+
+        # DEBUG
+        print("len(key_bytes) is %d" % len(self.key_bytes))
+        print("len(key_bytes[0]) is %d" % len(self.key_bytes[0]))
+        # END
 
         self.b_off = [0] * self.hash_count
         self.w_off = [0] * self.hash_count
@@ -95,6 +105,10 @@ class TestKeySelector(unittest.TestCase):
 
         b_len = len(key_bytes)
         v_len = len(val)
+
+        # DEBUG
+        print("_set_bit_offsets: b_len = %d, v_len = %d" % (b_len, v_len))
+        # END
         cur_bit = 0
         cur_byte = 0
 
@@ -154,12 +168,12 @@ class TestKeySelector(unittest.TestCase):
             bit_offsets = [
                 (ndx % 32), (ndx + 1 % 32), (ndx + 2 % 32), (ndx + 3 % 32),
                 (ndx + 4 % 32), (ndx + 5 % 32), (ndx + 6 % 32), (ndx + 7 % 32)]
-            self._set_bit_offsets(self.keys[ndx], bit_offsets)
+            self._set_bit_offsets(self.key_bytes[ndx], bit_offsets)
 
         self.keysel = KeySelector(self.m_exp, self.hash_count,
                                   self.b_off, self.w_off)  # default m=20, k=8
         for ndx in range(32):
-            self.keysel.get_offsets(keys[ndx])
+            self.keysel.get_offsets(key_bytes[ndx])
             for j in range(hash_count):
                 self.assertEqual(
                     "key " + ndx + ", func " + j + " returns wrong value",
@@ -269,8 +283,9 @@ class TestKeySelector(unittest.TestCase):
 #           for (int j = 0; j < 20; j++):
 #               self.keys[ndx][j] = 0
         self.keys = []
+        zeroes = [0 for ndx in range(20)]
         for ndx in range(num_keys):
-            self.keys.append(bytes(20))
+            self.keys.append(bytes(deepcopy(zeroes)))
 
         for ndx in range(num_keys):
             for j in range(hash_count):

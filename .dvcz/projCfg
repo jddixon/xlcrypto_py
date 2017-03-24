@@ -2,8 +2,8 @@
 project:xlcrypto_py
 package:xlcrypto
 mainlang:py
-version:0.0.2
-versionDate:2017-02-20
+version:0.0.6
+versionDate:2017-03-23
 :?dirs?:
 dir:std:ghpDoc
 dir:std:dist
@@ -39,4 +39,9 @@ bash:std:doPyLint
 bash:std:checkCoverage
 bash:std:bkp2u
 py:std:setup.py
-py:test:test_basics.py
+py:test:test_bloom_sha1.py
+py:test:test_key_selector.py
+dunno:local:name-pairs-lib
+dunno:local:name-pairs-test
+dunno:local:renameInLib
+dunno:local:renameInTest
