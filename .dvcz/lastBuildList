@@ -7,21 +7,21 @@ Giaje1YAJPNVBt3dlOA5lhBp4GpSYBskJ9UR2Zyt3lgAGK3dEwxYETLMh9VWEV8i
 k2lyCIE/V/CDb9eVDYQgYSJYrnQ/JAPST7NbcY8aI+/0l7QVBhLBpmOCvmS6ofvz
 /QIDAQAB
 -----END RSA PUBLIC KEY-----
-xlcrypto_py v0.0.7
-2017-03-24 20:26:10
+xlcrypto_py v0.0.8
+2017-04-01 00:58:59
 # BEGIN CONTENT #
 xlcrypto_py
  .dvcz
-  builds 3a324ae8be5ebf0d8d93fee83b38b6ced14ea31c
+  builds 2e83e40f2caf38211ef9e50056f434a844e2afbe
   copyright 04e8696e6424c21d717e46008780505d598eb59a
-  lastBuildList 06a98d1c421ce5f109301987a868a86035f5661e
+  lastBuildList 74b035a90f442dea12c1d3cf251b5bced4deec77
   license 5977a55c75bb4612004451a56b0b4c22d9d3311d
   projCfg 83b6a6e7e83b24eba69f9a38706baa8e2e6fa43c
   projCfg.local 0f549c45fdb61775161f03b21be6ea78814f1f28
-  version d7a104285d950127b2d79150dd9d38d33b4f8312
+  version ac6f2a4638b73dda329e21419636933a4f90c977
  .gitignore 763535ce9c2c0d1e2b7aa6999247cb48e50fd015
  .gitignore.local dc759996ca1366caf080fde4a98d37e39e382eae
- CHANGES 31ab0f4c6c9121f932e38932a9e14fb3e746dece
+ CHANGES c2225fdcd2a1f705de2659ae2bc9e774edd26838
  LICENSE-MIT.md aec2b90058ed291d26eef53badc44802cda9bcde
  README.md 94d8aa3428a6f918946e468260961d3892df4f0f
  TODO 5c76521cbd16015e8932de8827b2a3c4b091a80a
@@ -35,6 +35,7 @@ xlcrypto_py
   xlcrypto_py-0.0.5.tar.gz 7ba2af804f9784a59ba5c7ad6947e3399f90b2d7
   xlcrypto_py-0.0.6.tar.gz 170024f94b945eabe9342f171e9275ad07df9846
   xlcrypto_py-0.0.7.tar.gz 0ef8fbeab5c0395fad3c17d786ea80462450070a
+  xlcrypto_py-0.0.8.tar.gz aad04f4f4857533c922b647f1e212003cf13661f
  doPyLint c382adc6ce090202d92686e696884fe90beba8b8
  ghpDoc
   index.md 37dd9879289663fec039cdea6fae1b76570285c6
@@ -47,11 +48,11 @@ xlcrypto_py
  styleit f14634263f639fa03283a11c6444687d7bd0f30b
  test.all 966e2f14ec7d335a0032c2afd363db987e9114dc
  test_bloom_sha1.py 5b2932c2978ef65190a17404725f4bb250df3b07
- test_key_selector.py e4d9a28f00b4b75607e4491d7bda8d2889ae4ea2
+ test_key_selector.py 9d804483328e40b9e90674a8b1862596737f9f67
  xlcrypto
-  __init__.py ac2bec6d17fb0e1b3f958f71171f21c264320bca
+  __init__.py 779386568828e1ea9491c44390ea298bec58704d
   filters
-   __init__.py 8092a80c6ed3c775210d51212db8d4b50bb661de
+   __init__.py e8448460d75d3aa542b78b5d52d1a97422cd5889
 # END CONTENT #
 
-bTQJddnHOLaLNMM69zlSRK2p2CXVhUGeFUYBQm12sJIy85mJ3YogFm9GleexlRoPQBvV1Pt7ruFUUYcS8DnuxMYfY5GI/B9viSOcqfS3gzbXLHgykYXPkM0HHYUeBBBO9vi4TgyIJDpMEouQF2OAOBuYFjTh1Fn0SRLN835GKJGjbUrQ9xfogfaewvkvOWZBNVY0REj69AAiUidp/83+Rn6hKxtHhFiKMeg4KJyee9frpsVcbuPDBvvd6wcTqInE8eWty/ZTUytTB66OQqkWPgmdh94I1/frj9u0DbZgYT6xvpYXAx4rCAvV9ksFUWzWs4fk99pje0aM6S+S4wzxSQ==
+X7nxaBEpVKMmgkyVjly5CyS7vyzcSnbm8blKEKUHYAEL8gScKdk7MSyGc8bw7YL91sByCxCYxCjtM7ljKCrhIlrQW6n88ecGm9MxLhDkic5+nElzin8/2Eu8fxCxj61XeWvMv1DNb8LVfOnUcdUYY3UcSqKmNqFkegTBszGpK9PZUdLUmFrq+2SjmCwU4vdlsx0d/BcluKXLENhhlMnhLG8pnSROsPz6NL4Pcr8OV0DzzfzhwYZsSA6qletUcDivZp5n6qxcIOTIyY/zu5plgqStt9+4ZLgWHCeRjbIW1/KxqBebSdoubkzYod9H3gUwZP9Z4uov3PmFfEPDRasYuA==
