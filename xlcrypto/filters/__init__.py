@@ -8,6 +8,7 @@
 from asyncio import Lock
 from binascii import b2a_hex
 from copy import deepcopy
+from math import exp
 
 from xlattice.u import SHA1_BIN_LEN
 from xlcrypto import XLCryptoError, XLFilterError
@@ -18,11 +19,11 @@ __all__ = ['MIN_M', 'MAX_M', 'MIN_K', 'MAX_MK_PRODUCT',
 # EXPORTED CONSTANTS ------------------------------------------------
 
 MIN_M = 2
-MAX_M = 24      # XXX arguments for limit?
+MAX_M = 20                                          # SHA1
 MIN_K = 1
 
 # ostensibly "too many hash functions for filter size"
-MAX_MK_PRODUCT = 256
+MAX_MK_PRODUCT = 160                                # SHA1
 
 # PRIVATE CONSTANTS -------------------------------------------------
 
@@ -48,9 +49,9 @@ class BloomSHA1(object):
     This class takes advantage of the fact that SHA1 digests are good-
     quality pseudo-random numbers.  The k hash functions are the values
     of distinct sets of bits taken from the 20-byte SHA1 hash.  The
-    number of bits in the filter, M, is constrained to be a power of
+    number of bytes in the filter, M, is constrained to be a power of
     2; M == 2^m.  The number of bits in each hash function may not
-    exceed floor(m/k).
+    exceed floor(m/k), ie, m//k.
 
     This class is designed to be thread-safe, but this has not been
     exhaustively tested.
@@ -68,10 +69,10 @@ class BloomSHA1(object):
         """
 
         # XXX need to devise more reasonable set of checks
-        if m < 2 or m > 20:                                  # SHA1
+        if m < MIN_M or m > MAX_M:
             raise XLFilterError("m = %d out of range" % m)
 
-        if k < 1 or (k * m > 160):                           # SHA1
+        if k < MIN_K or (k * m > MAX_MK_PRODUCT):
             raise XLFilterError(
                 "too many hash functions (%d) for filter size" % k)
 
@@ -91,9 +92,8 @@ class BloomSHA1(object):
         self._lock = Lock()
 
         # DEBUG
-        print("Bloom constructor: m = " + self._m + ", k = " + self._k
-              + "\n    self._filter_bits = " + self._filter_bits
-              + ", self._filter_words = " + self._filter_words)
+        print("Bloom constructor: m = %d, k = %d, self._filter_bits = %d, self._filter_words = %d" % (
+            self._m, self._k, self._filter_bits, self._filter_words))
         # END
 
     def _doClear(self):
@@ -173,7 +173,6 @@ class BloomSHA1(object):
         """
         if n == 0:
             n = self._count
-        # (1 - e(-kN / M)) ^ k  # XXX we want k to be interpreted as a double
         return (1 - exp(-self._k * n / self._filter_bits)) ** self._k
 
     # DEBUG METHODS =================================================
@@ -202,14 +201,19 @@ class BloomSHA1(object):
 
 class KeySelector(object):
     BITS_PER_WORD = 64
-    KEY_SEL_BITS = 6
+    KEY_SEL_BITS = 6        # assumes 2^6 = 64 bits per word; 5 in Java code
 
-    # AND with byte to expose index-many bits */
-    UNMASK = [
-        # 0 1  2  3   4   5   6    7    8
-        0, 1, 3, 7, 15, 31, 63, 127, 255]
-    # AND with byte to zero out index-many bits */
-    MASK = [255, 254, 252, 248, 240, 224, 192, 128, 0]
+    # AND with word to expose index-many bits
+    UNMASK = [(2 ** k) - 1 for k in range(16)]
+
+    # AND with word to zero out index-many bits */
+    MASK = [~k for k in range(16)]
+
+    # DEBUG
+    print("    UNMASK   MASK")
+    for ndx in range(6):
+        print("%2d  0x%05x  0x%05x" % (ndx, UNMASK[ndx], MASK[ndx]))
+    # END
 
 # Given a key, populates arrays determining word and bit offsets into
 # a Bloom filter.
@@ -223,12 +227,14 @@ class KeySelector(object):
     def __init__(self, m_exp, hash_count, bit_offset, word_offset):
         """
         Creates a key selector for a Bloom filter.  When a key is presented
-        to the get_offsets(, the k 'hash function' values are
+        to get_offsets(), the k 'hash function' values are
         extracted and used to populate bit_offset and word_offset arrays which
         specify the k flags to be set or examined in the filter.
 
-        @param m    size of the filter as a power of 2
-        @param k    number of 'hash functions'
+        @param m            size of the filter as a power of 2
+        @param k            number of 'hash functions'
+        @param bit_offset   array of k bit offsets (of bit flag in word)
+        @param word_offset  array of k word offsets (of word flag word in int)
         """
 
         if m_exp < MIN_M or m_exp > MAX_M:
@@ -241,13 +247,11 @@ class KeySelector(object):
         if not word_offset:
             raise XLFilterError("word_offset may not be None or empty")
 
-        self._m = m_exp                             # must be power of two
+        self._m = m_exp                             # filter size 2^m_exp bytes
         self._k = hash_count                        # count of hash functions
-        self._b = deepcopy(key_bytes)
+        # self._b = deepcopy(key_bytes)             # GO PARAM
         self._bit_offset = deepcopy(bit_offset)
         self._word_offset = deepcopy(word_offset)
-
-        self.get_offsets(key_bytes)                 # will raise if invalid
 
     def get_offsets(self, key):  # []byte) (err error):
         """
@@ -268,53 +272,78 @@ class KeySelector(object):
     def get_bit_selectors(self):
         """
         Extracts the k bit offsets from a key, suitable for general values
-        of m and k.
+        of m_exp and hash_count(m and k).
         """
 
         cur_bit, cur_byte, key_sel = 0, 0, 0
+        # DEBUG
+        print("get_bit_selectors: key is")
+        for ndx, kbyte in enumerate(self._b):
+            print("%4d 0x%02x" % (ndx, kbyte))
+        # END
         for j in range(self._k):
-            cur_byte = cur_bit / 8
+            cur_byte = cur_bit // 8
             t_bit = cur_bit - 8 * cur_byte  # bit offset this byte
-            u_bits = 8 - t_bit          # unused, left in byte
+            bits_unused = 8 - t_bit          # unused, left in byte
 
             if cur_bit % 8 == 0:
                 key_sel = self._b[cur_byte] & KeySelector.UNMASK[
                     KeySelector.KEY_SEL_BITS]
-            elif u_bits >= KeySelector.KEY_SEL_BITS:
+                # DEBUG
+                print("ALIGNED:         cur_byte = 0x%02x, key_sel = 0x%02x" % (
+                    self._b[cur_byte], key_sel))
+                # END
+            elif bits_unused >= KeySelector.KEY_SEL_BITS:
                 # it's all in this byte
                 key_sel = (self._b[cur_byte] >>
                            t_bit) & KeySelector.UNMASK[KeySelector.KEY_SEL_BITS]
+                # DEBUG
+                print("WITHIN BYTE:     " +
+                      "cur_byte = 0x%02x, key_sel = 0x%02x" % (
+                          self._b[cur_byte], key_sel))
+                # END
             else:
                 # the selector spans two bytes
-                r_bits = KeySelector.KEY_SEL_BITS - u_bits
+                r_bits = KeySelector.KEY_SEL_BITS - bits_unused
                 l_side = (
-                    self._b[cur_byte] >> t_bit) & KeySelector.UNMASK[u_bits]
+                    self._b[cur_byte] >> t_bit) & KeySelector.UNMASK[bits_unused]
                 r_side = (
                     self._b[
                         cur_byte +
-                        1] & KeySelector.UNMASK[r_bits]) << u_bits
+                        1] & KeySelector.UNMASK[r_bits]) << bits_unused
                 key_sel = l_side | r_side
+                # DEBUG
+                print("SPANS TWO BYTES: 0x%02x, 0x%02x;      key_sel = 0x%02x" % (
+                    l_side, r_side, key_sel))
+
+                # END
 
             self._bit_offset[j] = key_sel       # may need masking
             cur_bit += KeySelector.KEY_SEL_BITS
 
+        # DEBUG
+        print("BIT OFFSETS")
+        for ndx, val in enumerate(self._bit_offset):
+            print("  %2d 0x%02x" % (ndx, val))
+        # END
+
     def get_word_selectors(self):
         """
         Extracts the k word offsets from a key.  Suitable for general
-        values of m and k.
+        values of m_exp and hash_count(m and k).
 
         Extract the k offsets into the word offset array
         """
         # the word selectors being created
-        sel_bits = self._m - uint(6)
-        sel_bytes = (sel_bits + 7) / 8
+        sel_bits = self._m - 6
+        sel_bytes = (sel_bits + 7) // 8
         bits_last_byte = sel_bits - 8 * (sel_bytes - 1)
 
         # bit offset into self._b, the key being inserted into the filter
         cur_bit = self._k * KeySelector.KEY_SEL_BITS
 
         for ndx in range(self._k):
-            cur_byte = cur_bit / 8
+            cur_byte = cur_bit // 8
 
             word_sel = 0  # uint: accumulate selector bits here
 
@@ -349,3 +378,9 @@ class KeySelector(object):
                     cur_bit += bits_this_byte
 
             self._word_offset[ndx] = word_sel
+
+        # DEBUG
+        print("WORD OFFSETS")
+        for ndx, val in enumerate(self._word_offset):
+            print("  %2d 0x%04x" % (ndx, val))
+        # END

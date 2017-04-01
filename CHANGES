@@ -1,5 +1,8 @@
 # py/xlcrypto_py/CHANGES
 
+v0.0.8
+    2017-03-31
+        * improved KeySelector and test, but it's still buggy       SLOC  823
 v0.0.7
     2017-03-24
         * add crude test_bloom_sha1.py                              SLOC  775
@@ -21,6 +24,7 @@ v0.0.2
 v0.0.1
     2017-02-19
         * initial commit
+
 
 
 
