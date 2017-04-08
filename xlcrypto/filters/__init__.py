@@ -11,12 +11,11 @@ from math import exp
 from xlattice.u import SHA1_BIN_LEN
 from xlcrypto import XLCryptoError, XLFilterError
 
-__all__ = ['MIN_M', 'MAX_M', 'MIN_K', 'BloomSHA', ]
+__all__ = ['MIN_M', 'MIN_K', 'BloomSHA', ]
 
 # EXPORTED CONSTANTS ------------------------------------------------
 
 MIN_M = 2   # minimum hashlen in bits as exponent of 2
-MAX_M = 20  # maximum hashlen in bits, also an exponent of 2
 MIN_K = 1   # minimum number of 'hash functions'
 
 # PRIVATE CONSTANTS -------------------------------------------------
@@ -54,34 +53,35 @@ class BloomSHA(object):
     exhaustively tested.
     """
 
-    def __init__(self, m=20, k=8, key_len=160):
+    def __init__(self, m=20, k=8, key_bytes=20):
         """
         Creates a filter with 2**m bits and k 'hash functions',
-        where each hash function is a portion of the 160-bit
-        SHA1 hash.
+        where each hash function is a portion of the SHA digest.
 
-        @param m determines number of bits in filter, defaults to 20
-        @param k number of hash functions, defaults to 8
+        @param m         determines number of bits in filter, defaults to 20
+        @param k         number of hash functions, defaults to 8
+        @param key_bytes length in bytes of keys acceptable to the filter
         """
 
         m = int(m)                  # must be an int
-        if m < MIN_M or m > MAX_M:
-            raise XLFilterError("m = %d out of range" % m)
+        if m < MIN_M:
+            raise XLFilterError("m = %d but must be > %d" % (m, MIN_M))
 
-        key_len = int(key_len)      # must be an int
-        if key_len <= 0:
+        key_bytes = int(key_bytes)  # must be an int
+        if key_bytes <= 0:
             raise XLFilterError("must specify a positive key length")
+        key_bits = key_bytes * 8  # length of keys in bits
 
         k = int(k)                  # must be an int
         if k < MIN_K:
             raise XLFilterError(
                 "too many hash functions (%d) for filter size" % k)
-        if k * m > key_len:
-            k = key_len // m        # rounds down to number that will fit
+        if k * m > key_bits:
+            k = key_bits // m       # rounds down to number that will fit
 
         self._mm = m
         self._kk = k
-        self._key_len = key_len
+        self._key_bytes = key_bytes
 
         self._count = 0
         # convenience variables
@@ -91,8 +91,8 @@ class BloomSHA(object):
         self._lock = Lock()
 
         # DEBUG
-        print("Bloom ctor: m = %d, k = %d, filter_bits = %d, filter_bytes = %d" % (
-            self._mm, self._kk, self._filter_bits, self._filter_bytes))
+        # print("Bloom ctor: m = %d, k = %d, filter_bits = %d, filter_bytes = %d" % (
+        #    self._mm, self._kk, self._filter_bits, self._filter_bytes))
         # END
 
     def _do_clear(self):
@@ -171,7 +171,7 @@ class BloomSHA(object):
                 return False
         return True
 
-    def member(self, b):
+    def is_member(self, b):
         """
         Whether a key is in the filter.  External interface, internally
         synchronized.
@@ -194,21 +194,19 @@ class BloomSHA(object):
         values are extracted and used to populate bitsel and bytesel arrays
         which specify the k flags to be set or examined in the filter.
 
-        XXX NEED TO CHECK THAT KEY HAS THE CORRECT LENGTH.
-
         @param b    key being added to the Bloom Filter
         """
 
         if b is None or len(b) == 0:
             raise XLFilterError(
                 "key being added to filter may not be None or empty")
-        if len(b) != self._key_len:
+        if len(b) != self._key_bytes:
             raise XLFilterError(
                 "key of length %d but filter expects length of %d bytes" % (
-                    len(b), self._key_len))
+                    len(b), self._key_bytes))
 
         # DEBUG
-        print("get_selectors: m = %d, k = %d" % (self._mm, self._kk))
+        # print("get_selectors: m = %d, k = %d" % (self._mm, self._kk))
         # END
         bitsel = [0] * self._kk        # ints used to select flag bits
         bytesel = [0] * self._kk       # ints used to select flag bytes
