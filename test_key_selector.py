@@ -12,7 +12,7 @@ from copy import deepcopy
 
 from rnglib import SimpleRNG
 from xlcrypto import XLFilterError
-from xlcrypto.filters import KeySelector
+from xlcrypto.filters import _KeySelector
 
 
 class TestKeySelector(unittest.TestCase):
@@ -21,21 +21,21 @@ class TestKeySelector(unittest.TestCase):
     def setUp(self):
         self.rng = SimpleRNG(time.time())
         self.keysel = None                  # KeySelector
-        self.m_exp = 20                     # m: size of set as power of two
-        self.hash_count = 8                 # k: number of filters
+        self.m = 20                     # m: size of set as power of two
+        self.k = 8                 # k: number of filters
 
         # 32 keys by default
-        # self.key_bytes = new byte[32][20]
-        self.key_bytes = []
+        # self.b = new byte[32][20]
+        self.b = []
         for _ in range(32):
-            self.key_bytes.append(self.rng.some_bytes(20))
+            self.b.append(self.rng.some_bytes(20))
 
-        self.b_off = [0] * self.hash_count
-        self.w_off = [0] * self.hash_count
+        self.b_off = [0] * self.k
+        self.w_off = [0] * self.k
 
         # DEBUG
-        print("len(key_bytes) is %d" % len(self.key_bytes))
-        print("len(key_bytes[0]) is %d" % len(self.key_bytes[0]))
+        print("len(b) is %d" % len(self.b))
+        print("len(b[0]) is %d" % len(self.b[0]))
         print("len(b_off) is %d" % len(self.b_off))
         print("len(w_off) is %d" % len(self.w_off))
         # END
@@ -43,87 +43,81 @@ class TestKeySelector(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_param_exceptions(self):
+    # WE NOW ASSUME PARAMS HAVE BEEN CHECKED
+#   def test_param_exceptions(self):
+#       """
+#       Verify that out of range or otherwise unacceptable constructor
+#       parameters are caught.
+#       """
+#       # DEBUG
+#       print("\nTEST_PARAM_EXCEPTIONS")
+#       # END
+
+#       # m check keysel
+#       try:
+#           self.keysel = _KeySelector(-5, self.k, self.b[0])
+#           self.fail("didn't catch negative filter size exponent")
+#       except XLFilterError:
+#           pass
+#       try:
+#           self.keysel = _KeySelector(0, self.k, self.b[0])
+#           self.fail("didn't catch zero filter size exponent")
+#       except XLFilterError:
+#           pass
+
+#       # check s on k
+#       try:
+#           self.keysel = _KeySelector(20, -1, self.b[0])
+#           self.fail("didn't catch negative hash function count")
+#       except XLFilterError:
+#           pass
+#       try:
+#           self.keysel = _KeySelector(20, 0, self.b[0])
+#           self.fail("didn't catch zero hash function count")
+#       except XLFilterError:
+#           pass
+#       try:
+#           self.keysel = _KeySelector(3, 0, self.b[0])
+#           self.fail("didn't catch invalid hash function count")
+#       except XLFilterError:
+#           pass
+#       try:
+#           self.keysel = _KeySelector(247, 0, self.b[0])
+#           self.fail("didn't catch invalid hash function count")
+#       except XLFilterError:
+#           pass
+
+#       # checks on arrays
+#       try:
+#           self.keysel = _KeySelector(20, 8, None)
+#           self.fail("didn't catch None bit offset array")
+#       except XLFilterError:
+#           pass
+
+    def _set_bit_sels(self, b, val):   # bytes-like, int[]
         """
-        Verify that out of range or otherwise unacceptable constructor
-        parameters are caught.
-        """
-        # DEBUG
-        print("\nTEST_PARAM_EXCEPTIONS")
-        # END
-
-        # m check keysel
-        try:
-            self.keysel = KeySelector(-5, self.hash_count,
-                                      self.b_off, self.w_off)
-            self.fail("didn't catch negative filter size exponent")
-        except XLFilterError:
-            pass
-        try:
-            self.keysel = KeySelector(
-                0, self.hash_count, self.b_off, self.w_off)
-            self.fail("didn't catch zero filter size exponent")
-        except XLFilterError:
-            pass
-
-        # check s on k
-        try:
-            self.keysel = KeySelector(20, -1, self.b_off, self.w_off)
-            self.fail("didn't catch negative hash function count")
-        except XLFilterError:
-            pass
-        try:
-            self.keysel = KeySelector(20, 0, self.b_off, self.w_off)
-            self.fail("didn't catch zero hash function count")
-        except XLFilterError:
-            pass
-        try:
-            self.keysel = KeySelector(3, 0, self.b_off, self.w_off)
-            self.fail("didn't catch invalid hash function count")
-        except XLFilterError:
-            pass
-        try:
-            self.keysel = KeySelector(247, 0, self.b_off, self.w_off)
-            self.fail("didn't catch invalid hash function count")
-        except XLFilterError:
-            pass
-
-        # checks on arrays
-        try:
-            self.keysel = KeySelector(20, 8, None, self.w_off)
-            self.fail("didn't catch None bit offset array")
-        except XLFilterError:
-            pass
-        try:
-            self.keysel = KeySelector(20, 8, self.b_off, None)
-            self.fail("didn't catch None word offset array")
-        except XLFilterError:
-            pass
-
-    def _set_bit_offsets(self, key_bytes, val):   # bytes-like, int[]
-        """
-        Set the bit selectors, which are KeySelector.KEY_SEL_BITS-bit values
+        Set the bit selectors, which are _KeySelector.KEY_SEL_BITS-bit values
         packed at the beginning of a key.
 
-        @param key_bytes key, expected to be at least 20 bytes long
-        @param val       array of key values, exp. to be self.hash_count long
+        @param b key, expected to be at least 20 bytes long
+        @param val       array of key values, exp. to be self.k long
         """
 
         # XXX
-        b_len = len(key_bytes)
+        b_len = len(b)
         v_len = len(val)
 
         # DEBUG
-        print("_set_bit_offsets: b_len = %d, v_len = %d" % (b_len, v_len))
+        print("_set_bit_sels: b_len = %d, v_len = %d" % (b_len, v_len))
         # END
         cur_bit = 0
         cur_byte = 0
 
-        for ndx in range(v_len):
+        for i in range(v_len):
             cur_byte = cur_bit // 8
             offset_in_byte = cur_bit - (cur_byte * 8)
-            # mask value to KeySelector.KEY_SEL_BITS bits
-            b_val = val[ndx] & KeySelector.UNMASK[KeySelector.KEY_SEL_BITS]
+            # mask value to _KeySelector.KEY_SEL_BITS bits
+            b_val = val[i] & _KeySelector.UNMASK[_KeySelector.KEY_SEL_BITS]
             # DEBUG
 #           print(
 #               "hash " + ndx + ": bit " + cur_bit + ", byte " + cur_byte
@@ -135,15 +129,15 @@ class TestKeySelector(unittest.TestCase):
                 #b[cur_byte] &= 0xf1
 
                 # XXX THE 0xff IS A HACK
-                key_bytes[cur_byte] |= 0xff & (b_val << 3)
+                b[cur_byte] |= 0xff & (b_val << 3)
 #              # DEBUG
 #              print(
 #                  "    current byte becomes " + btoh(b[cur_byte]))
 #              # END
             elif offset_in_byte < 4:
                 # it will fit in this byte
-                #b[cur_byte] &= ( KeySelector.MASK[KeySelector.KEY_SEL_BITS] << (3 - offset_in_byte) )
-                key_bytes[cur_byte] |= (b_val << (3 - offset_in_byte))
+                #b[cur_byte] &= (_KeySelector.MASK[_KeySelector.KEY_SEL_BITS] << (3 - offset_in_byte) )
+                b[cur_byte] |= (b_val << (3 - offset_in_byte))
 #              # DEBUG
 #              print(
 #                  "    offset_in_byte " + offsetInByte
@@ -159,18 +153,18 @@ class TestKeySelector(unittest.TestCase):
 #                  + ", offset_in_byte " + offsetInByte
 #                  + ", bitsThisByte = " + bitsThisByte)
 #              # END
-                val_this_byte = (b_val & KeySelector.UNMASK[bits_this_byte])
-                #b[cur_byte] &= KeySelector.MASK[bitsThisByte]
-                key_bytes[cur_byte] |= val_this_byte
+                val_this_byte = (b_val & _KeySelector.UNMASK[bits_this_byte])
+                #b[cur_byte] &= _KeySelector.MASK[bitsThisByte]
+                b[cur_byte] |= val_this_byte
 
                 # XXX THE 0xff IS A HACK
                 val_next_byte = 0xff & (
-                    (b_val & KeySelector.MASK[bits_this_byte]) << 3)
+                    (b_val & _KeySelector.MASK[bits_this_byte]) << 3)
                 # b[cur_byte+1] &= (KeySelector.MASK[KeySelector.KEY_SEL_BITS - bitsThisByte]
                 #                    << (3 + bitsThisByte))
-                key_bytes[cur_byte + 1] |= val_next_byte
+                b[cur_byte + 1] |= val_next_byte
 
-            cur_bit += KeySelector.KEY_SEL_BITS
+            cur_bit += _KeySelector.KEY_SEL_BITS
 
     def test_bit_selection(self):
         """ Exhaustive test. """
@@ -180,65 +174,60 @@ class TestKeySelector(unittest.TestCase):
         # END
 
         # set up 32 test keys
-        for ndx in range(32):
+        for i in range(32):
             # reinitialize our test keys
-            self.key_bytes.append(self.rng.some_bytes(20))
+            self.b.append(self.rng.some_bytes(20))
 
             # DEBUG
-            print("test_bit_selection: key %d" % ndx)
-            for n, bval in enumerate(self.key_bytes[ndx]):
+            print("test_bit_selection: key %d" % i)
+            for n, bval in enumerate(self.b[i]):
                 print("%2d 0x%02x" % (n, bval))
             # END
 
-            bit_offsets = [
-                (ndx % 32), (ndx + 1) % 32, (ndx + 2) % 32, (ndx + 3) % 32,
-                (ndx + 4) % 32, (ndx + 5) % 32, (ndx + 6) % 32, (ndx + 7) % 32]
-            self._set_bit_offsets(self.key_bytes[ndx], bit_offsets)
+            bit_sels = [
+                (i % 32), (i + 1) % 32, (i + 2) % 32, (i + 3) % 32,
+                (i + 4) % 32, (i + 5) % 32, (i + 6) % 32, (i + 7) % 32]
+            self._set_bit_sels(self.b[i], bit_sels)
 
-        self.keysel = KeySelector(self.m_exp, self.hash_count,
-                                  self.b_off, self.w_off)  # default m=20, k=8
-        for ndx in range(32):
-            self.keysel.get_offsets(self.key_bytes[ndx])
-            for j in range(self.hash_count):
+        self.keysel = _KeySelector(self.m, self.k, self.b[i])
+        for i in range(32):
+            self.keysel.get_offsets(self.b[i])
+            for j in range(self.k):
                 self.assertEqual(
-                    (ndx + j) % 32, self.b_off[j],
+                    (i + j) % 32, self.b_off[j],
                     "key %d, hash %d returns wrong value 0x%02x" % (
-                        ndx, j, self.b_off[j]))
+                        i, j, self.b_off[j]))
 
-    def set_word_offsets(self, key_bytes, val, m_exp, hash_count):
+    def set_byte_sels(self, b, val, m, k):
         """
-        Set the word selectors, which are (m_exp-KeySelector.KEY_SEL_BITS)-bit values.
+        Set the word selectors, which are (m - KEY_SEL_BITS)-bit values.
 
-        @param key_bytes  key, expected to be at least 20 bytes long
-        @param val        array of key values, expected to be hash_count long
-        @param m_exp      memory size in bytes is 2^m_exp
-        @param hash_count number of hash functions
+        @param b  key, expected to be at least 20 bytes long
+        @param val        array of key values, expected to be k long
+        @param m      memory size in bytes is 2**m
+        @param k number of hash functions
         """
 
-        b_len = len(key_bytes)  # number of bytes in key
+        b_len = len(b)  # number of bytes in key
         v_len = len(val)
         # set number of bits in word selector
-        stride = m_exp - KeySelector.KEY_SEL_BITS
-
-        # reinitialize our test keys
-        for _ in range(32):
-            self.key_bytes.append(self.rng.some_bytes(20))
+        stride = m - _KeySelector.KEY_SEL_BITS
 
         # DEBUG
-        print("set_word_offsets: b_len %d, v_len %d, stride %d; m %d h %d" % (
-            b_len, v_len, stride, m_exp, hash_count))
+        print("set_byte_sels: b_len %d, v_len %d, stride %d; m %d h %d" % (
+            b_len, v_len, stride, m, k))
         # END
 
         # position beyond the bit selectors
-        cur_bit = hash_count * KeySelector.KEY_SEL_BITS
+        cur_bit = k * _KeySelector.KEY_SEL_BITS
         cur_byte = 0
-        for ndx in range(v_len):
+        for i in range(v_len):
             # force value within range
             # DEBUG
-            val[ndx]
-            KeySelector.UNMASK[stride]
+            val[i]
+            _KeySelector.UNMASK[stride]
             # END
-            w_val = val[ndx] & KeySelector.UNMASK[stride]
+            w_val = val[i] & _KeySelector.UNMASK[stride]
             bits_to_go = stride
             cur_byte = cur_bit // 8
             offset_in_byte = cur_bit - (cur_byte * 8)
@@ -260,26 +249,26 @@ class TestKeySelector(unittest.TestCase):
                 # aligned
                 if bits_to_go >= 8:
                     # first of two bytes
-                    key_bytes[cur_byte] = w_val & KeySelector.UNMASK[8]
+                    b[cur_byte] = w_val & _KeySelector.UNMASK[8]
                     w_val >>= 8
                     bits_to_go -= 8
                     # second byte
-                    key_bytes[cur_byte + 1] |= (
-                        w_val & KeySelector.UNMASK[bits_to_go]) << (8 - bits_to_go)
+                    b[cur_byte + 1] |= (
+                        w_val & _KeySelector.UNMASK[bits_to_go]) << (8 - bits_to_go)
                 else:
                     # only one byte affected
-                    key_bytes[cur_byte] |= w_val << (8 - bits_to_go)
+                    b[cur_byte] |= w_val << (8 - bits_to_go)
 
             else:
                 # not starting at byte boundary
                 if bits_to_go < (8 - offset_in_byte):
                     # CASE 1: it all fits in the first byte
-                    key_bytes[cur_byte] |= w_val << (
+                    b[cur_byte] |= w_val << (
                         offset_in_byte - bits_to_go)
                 else:
                     bits_first_byte = 8 - offset_in_byte
                     # first byte
-                    key_bytes[cur_byte] |= w_val & KeySelector.UNMASK[
+                    b[cur_byte] |= w_val & _KeySelector.UNMASK[
                         bits_first_byte]
                     bits_to_go -= bits_first_byte
                     w_val >>= bits_first_byte
@@ -287,15 +276,15 @@ class TestKeySelector(unittest.TestCase):
                     # second byte
                     if bits_to_go < 8:
                         # CASE 2: it doesn't fill the second byte
-                        key_bytes[cur_byte + 1] |= w_val << (8 - bits_to_go)
+                        b[cur_byte + 1] |= w_val << (8 - bits_to_go)
                     else:
                         # CASE 3: it fills the second byte
                         bits_to_go -= 8
-                        key_bytes[cur_byte + 1] = 0xff & w_val
+                        b[cur_byte + 1] = 0xff & w_val
                         if bits_to_go > 0:
                             # CASE 4: it puts some bits in a third byte
                             w_val >>= 8
-                            key_bytes[cur_byte + 2] |= (
+                            b[cur_byte + 2] |= (
                                 w_val << (8 - bits_to_go))
 
 
@@ -310,58 +299,72 @@ class TestKeySelector(unittest.TestCase):
 #          # END
             cur_bit += stride
 
-    def do_test_word_selection(self, m_exp, hash_count, num_keys):
-        num_word_sel = 1 << (m_exp - KeySelector.KEY_SEL_BITS)
-        # int[][] word_offsets = new int [num_keys][8]
-        word_offsets = []
-        for ndx in range(num_keys):
-            word_offsets.append([0] * 8)
+    def do_test_byte_selection(self, m, k, num_keys):
+        # DEBUG
+        print("\nDO_TEST_WORD_SELECTION: m = %d, k = %d for %d keys" % (
+            m, k, num_keys))
+        # END
 
-        # set up the test self.key_bytes
-        self.key_bytes = []
-        for ndx in range(num_keys):
-            self.key_bytes.append(self.rng.some_bytes(20))
+        num_byte_sel = 1 << (m - _KeySelector.KEY_SEL_BITS)
+        # int[][] byte_sels = new int [num_keys][8]
+        byte_sels = []
+        for i in range(num_keys):
+            byte_sels.append([0] * 8)
 
-        for ndx in range(num_keys):
-            for j in range(hash_count):
-                # up to 2^15 32-bit words in a 2^20 bit array
-                word_offsets[ndx][j] = self.rng.next_int32(num_word_sel)
+        # set up the test keys
+        keys = []
+        zeroes = [0] * 20
+        for i in range(num_keys):
+            keys.append(deepcopy(zeroes))
 
-            self.set_word_offsets(
-                self.key_bytes[ndx], word_offsets[ndx], m_exp, hash_count)
+        for i in range(num_keys):
+            for j in range(k):
+                # up to 2^14 64-bit words in a 2^20 bit array
+                byte_sels[i][j] = self.rng.next_int16(num_byte_sel)
 
-        self.keysel = KeySelector(
-            m_exp, hash_count, self.b_off, self.w_off)   # default m=20, k=8
-        for ndx in range(num_keys):
-            self.keysel.get_offsets(self.key_bytes[ndx])
-            for j in range(hash_count):
+            self.set_byte_sels(
+                keys[i], byte_sels[i], m, k)
+
+        keysel = _KeySelector(
+            m, k, self.b_off, self.w_off)   # default m=20, k=8
+        for i in range(num_keys):
+            keysel.get_offsets(keys[i])
+            for j in range(k):
                 # DEBUG
-                if word_offsets[ndx][j] != self.w_off[j]:
-                    print("word_offsets[ndx][j] = %d (0x%04x)" % (
-                        word_offsets[ndx][j], word_offsets[ndx][j]))
+                if byte_sels[i][j] != self.w_off[j]:
+                    print("byte_sels[ndx][j] = %d (0x%04x)" % (
+                        byte_sels[i][j], byte_sels[i][j]))
                     print("self.w_off[j]        = %d" % self.w_off[j])
                 # END
                 self.assertEqual(
-                    word_offsets[ndx][j], self.w_off[j],
+                    byte_sels[i][j], self.w_off[j],
                     "key %d, hash %d returns wrong value 0x%x" % (
-                        ndx, j, self.w_off[j]))
+                        i, j, self.w_off[j]))
 
-    def test_word_selection(self):
+    def test_byte_selection(self):
         # DEBUG
         print("\nTEST_WORD_SELECTION")
         # END
 
-        self.do_test_word_selection(20, 8, 32)    # default values
-        self.do_test_word_selection(14, 8, 32)    # stride = 9
-        self.do_test_word_selection(13, 8, 32)    # stride = 8
-        self.do_test_word_selection(12, 8, 32)    # stride = 7
+        self.do_test_byte_selection(20, 8, 32)    # default values
+        self.do_test_byte_selection(14, 8, 32)    # stride = 9
+        self.do_test_byte_selection(13, 8, 32)    # stride = 8
+        self.do_test_byte_selection(12, 8, 32)    # stride = 7
+
+    def test_hacking_about(self):
+        x = bytes([n for n in range(256)])
+        i = int.from_bytes(x, 'big')
+        for k in range(256):
+            m = i & 0xff
+            i >>= 8
+            print(m)        # prints 255 .. 0 inclusive
 
     # DEBUG METHODS #//////////////////////////////////////////////
 #   String itoh (int ndx):
 #       return BloomSHA1.itoh(ndx)
 #
-#   String btoh (byte key_bytes):
-#       return BloomSHA1.btoh(key_bytes)
+#   String btoh (byte b):
+#       return BloomSHA1.btoh(b)
 
 
 if __name__ == '__main__':

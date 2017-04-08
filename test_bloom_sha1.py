@@ -5,10 +5,13 @@
 
 import time
 import unittest
+from hashlib import sha1
 
 from rnglib import SimpleRNG
 from xlcrypto import XLFilterError
 from xlcrypto.filters import BloomSHA1
+
+rng = SimpleRNG(time.time())
 
 
 class TestBloomSHA1(unittest.TestCase):
@@ -16,15 +19,16 @@ class TestBloomSHA1(unittest.TestCase):
 
     def setUp(self):
         self.filter = None      # BloomSHA1
-        self.m_exp = 20             # number of strings in set
-        self.hash_count = 8
+        self.m = 20             # M = 2**m is number of bits in filter
+        self.k = 8              # numberof hash funcions
         self.keys = []          # new byte[100][20]
 
     def test_empty_filter(self):
-        filter = BloomSHA1(self.m_exp, self.hash_count)
-        self.assertEqual("brand new filter isn't empty", 0, len(filter))
-        self.assertEqual("filter capacity is wrong",
-                         2 << (m_exp - 1), filter.capacity)
+        filter = BloomSHA1(self.m, self.k)
+        self.assertEqual(0, len(filter),
+                         "brand new filter isn't empty")
+        self.assertEqual(2 << (self.m - 1), filter.capacity,
+                         "filter capacity is wrong")
 
     def test_param_exceptions(self):
         """
@@ -71,28 +75,30 @@ class TestBloomSHA1(unittest.TestCase):
         except XLFilterError:
             pass
 
-    def do_test_inserts(self, m_exp, hash_count, num_key):
+    def do_test_inserts(self, m, k, num_key):
         keys = []
-        # set up distinct keys
-        for ndx in range(num_key):
-            keys.append([])
-            for j in range(20):
-                keys[ndx].append(0xff & (ndx + j + 100))
+        # set up distinct keys, each the hash of a unique value
+        for i in range(num_key):
+            sha = sha1()
+            stuff = rng.some_bytes(20)      # 20 quasi-random bytes
+            stuff[0] = i                    # guarantee uniqueness
+            sha.update(stuff)
+            stuff2 = sha.digest()           # SHA1 of stuff
+            keys.append(stuff)
 
-        filter = BloomSHA1(m_exp, hash_count)
-        for ndx in range(num_key):
-            self.assertEqual(ndx, len(filter))
-            self.assertFalse("key " + ndx + " not yet in set, but found!",
-                             filter.member(keys[ndx]))
-            filter.insert(keys[ndx])
+        filter = BloomSHA1(m, k)
+        for i in range(num_key):
+            self.assertEqual(i, len(filter))
+            self.assertFalse(filter.member(keys[i]),
+                             "key %d not yet in set, but found!" % i)
+            filter.insert(keys[i])              # add key to filter
 
-        for ndx in range(num_key):
-            # if the message isn't there, we get an NPE - weird
-            self.assertTrue("key " + ndx + " has been added but not found in set",
-                            filter.member(keys[ndx]))
+        for i in range(num_key):
+            self.assertTrue(filter.member(keys[i]),
+                            "key " + i + " has been added but not found in set")
 
     def test_inserts(self):
-        self.do_test_inserts(self.m_exp, self.hash_count, 16)  # default values
+        self.do_test_inserts(self.m, self.k, 16)  # default values
         self.do_test_inserts(14, 8, 16)   # stride = 9
         self.do_test_inserts(13, 8, 16)   # stride = 8
         self.do_test_inserts(12, 8, 16)   # stride = 7
