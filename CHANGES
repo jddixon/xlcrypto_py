@@ -1,5 +1,8 @@
 # py/xlcrypto_py/CHANGES
 
+v0.0.11
+    2017-04-09
+        * add NibbleCounters                                        SLOC  797
 v0.0.10
     2017-04-08
         * add BloomSHA2 tests; all tests succeedf                   SLOC  719
@@ -30,6 +33,7 @@ v0.0.2
 v0.0.1
     2017-02-19
         * initial commit
+
 
 
 

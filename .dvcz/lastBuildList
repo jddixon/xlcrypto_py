@@ -7,21 +7,21 @@ Giaje1YAJPNVBt3dlOA5lhBp4GpSYBskJ9UR2Zyt3lgAGK3dEwxYETLMh9VWEV8i
 k2lyCIE/V/CDb9eVDYQgYSJYrnQ/JAPST7NbcY8aI+/0l7QVBhLBpmOCvmS6ofvz
 /QIDAQAB
 -----END RSA PUBLIC KEY-----
-xlcrypto_py v0.0.10
-2017-04-08 23:21:10
+xlcrypto_py v0.0.11
+2017-04-09 23:18:15
 # BEGIN CONTENT #
 xlcrypto_py
  .dvcz
-  builds 638abdddfbc976766760ef5cacea955129e5524d
+  builds 5f82a4a274fd59fd95411e479c29dbf8fd2e7594
   copyright 04e8696e6424c21d717e46008780505d598eb59a
-  lastBuildList 1b173b1b2edbf37a30612a81fd209b5196f2ed15
+  lastBuildList 25bd813a0909cfb712888637c0664f92dadef482
   license 5977a55c75bb4612004451a56b0b4c22d9d3311d
   projCfg 83b6a6e7e83b24eba69f9a38706baa8e2e6fa43c
   projCfg.local 0f549c45fdb61775161f03b21be6ea78814f1f28
-  version 8d4d659c3b944720e0e0e61f9fee5e56c169d581
+  version 2387a50ccc89f4ad020ba22f1b6fb27d8a270458
  .gitignore 763535ce9c2c0d1e2b7aa6999247cb48e50fd015
  .gitignore.local dc759996ca1366caf080fde4a98d37e39e382eae
- CHANGES d7e1043930b32dbec35461382ed4aae5ca8d3546
+ CHANGES 57de8e01a1c16965109c5f7fd9c1610dfcddd939
  LICENSE-MIT.md aec2b90058ed291d26eef53badc44802cda9bcde
  README.md 94d8aa3428a6f918946e468260961d3892df4f0f
  TODO 5c76521cbd16015e8932de8827b2a3c4b091a80a
@@ -30,6 +30,7 @@ xlcrypto_py
  countem 1facff5e75ec57f20b8a010c0f9ffb717a863925
  dist
   xlcrypto_py-0.0.10.tar.gz 44b8c0e8a6104d551cdcfc979ffdd9824128edd2
+  xlcrypto_py-0.0.11.tar.gz 551d6ef54663d714d81778396d9ca5ab70ae2343
   xlcrypto_py-0.0.2.tar.gz aa19e80134a774630c6adcc091c1786f5ca888e3
   xlcrypto_py-0.0.3.tar.gz cac2e68841c23c89a3e3663472dd0c4a00b5d1a5
   xlcrypto_py-0.0.4.tar.gz d4ed0649207d6850c06327c3f315e4290df25f75
@@ -54,9 +55,9 @@ xlcrypto_py
  test_key_selector.py a52648289ced4ce5ee6f1b2aa43a69835452510c
  test_pylint.py 72dcb7d11f21209f5709f10d22285c1d0d164be1
  xlcrypto
-  __init__.py a2290511b724dbbf2fc69ed10daeb53742662d98
+  __init__.py 7449d57ad13ddc7c0fe9c4db65f6b88ef788509a
   filters
-   __init__.py 244da4b76a0c748655988056068412a3d9ae9ae6
+   __init__.py 1042e93816d584bce4edb5caf4fd77aa4d9fedc6
 # END CONTENT #
 
-jLwtj8X5xixh5uzzh8YLllh2QfE0Aj/U1sAybF+/hCn8ouF2fvmgu+FCiXDm00sOAuPVWEw6hK1cw175JpphAjYx1c2hos8HM0NIuqboSNixVzQUUU5zmQBJ9b0fy34N3K8ybp0lAinNv0ccQlllFTv8V1d9HPmQrnKWO7bVI8qAOfZxiau7n5v6aPdryLIVnqNj1MvKLNAHrUbv+kdE+5Zcrll8nULQ529A+MY2NL9cMteIcP8cPoxWNj3iAVogfPh98bV0Vk14mY0LbF+maLFQlVhcYIaTgXF79LghMPr6W3IfticVwH8TqAoRN/0tIDQCzbd9Vp90W8TUYSz18Q==
+fa28jS0W7vZh4KM113FmR02LTzIvm2AtoI6fSJukAa00AVhemMBUyrpcYd+eVsvi3lPUGUANM8BnqFfxdhWE632oLIIj/3HOvhgG+azbhTmAV0+nR0fzFmeSLd0KyM6O+eM/leqRv/t+pHdDGT6PzogHt0GZi4zclkq849rMKZCLjMLhcNwVtTYGte8DDnpp+AIydQ9wiQcT0Jv7JKeUDR+t7sqlwcwB760ncOjtrdqgIbam0tbRdGeYgAslt6GY6dnRyzf+MhDPbwqhTWVYZgwaCxJzhy8r7+oJCLuk0dv0D4APpkrYPwOfRforuO31WN6XiAhtpvtJMvX9mzH2qQ==

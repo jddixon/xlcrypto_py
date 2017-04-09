@@ -11,7 +11,7 @@ from math import exp
 from xlattice.u import SHA1_BIN_LEN
 from xlcrypto import XLCryptoError, XLFilterError
 
-__all__ = ['MIN_M', 'MIN_K', 'BloomSHA', ]
+__all__ = ['MIN_M', 'MIN_K', 'BloomSHA', 'NibbleCounters']
 
 # EXPORTED CONSTANTS ------------------------------------------------
 
@@ -228,3 +228,97 @@ class BloomSHA(object):
             i >>= self._mm - 3
 
         return bitsel, bytesel
+
+# ===================================================================
+
+
+class NibbleCounters(object):
+    """
+    Maintain a set of 4-bit counters, one for each bit in a BloomSHA.
+
+    Counters are stored in bytes, two counters per byte.
+
+    The presence of the counters allows keys to be removed without
+    having to recalculate the entire BloomSHA.
+
+    As it stands, this class is not thread-safe.  Using classes are
+    expected to provide synchronization.
+    """
+
+    def __init__(self, m=20):           # default is for SHA1
+        self._nibble_count = 1 << m     # ie, 2**20; the size of the filter
+        self._counters = bytearray(0) * (self._nibble_count // 2)
+
+    def clear(self):
+        """ Zero out all of the counters.  Unsynchronized. """
+
+        for i in range(self._counters // 2):
+            self._counters[i] = 0           # zeroes out two counters
+
+    def inc(self, filter_bit):
+        """
+        Increment the nibble, ignoring any overflow.
+
+        @param filter_bit offset of bit in the filter
+        @return           value of nibble after operation
+        """
+        if filter_bit < 0:
+            raise XLFilterError("filter bit offset cannot be negative.")
+        if filter_bit >= self._nibble_count:
+            raise XLFilterError("filter bit offset %d out of range" %
+                                filter_bit)
+
+        byte_offset = filter_bit // 2
+        upper_nibble = filter_bit & 1       # interpreted as boolean
+        cur_byte = self._counters[byte_offset]
+
+        if upper_nibble:
+            value = cur_byte >> 4
+        else:
+            value = cur_byte & 0xf
+        if value < 0xf:
+            value += 1          # increment counter, ignoring any overflow
+
+        if upper_nibble:
+            self._counters[byte_offset] &= 0xf0  # mask off existing value
+            self._counters[byte_offset] |= value << 4
+        else:
+            self._counters[byte_offset] &= 0xf   # mask off low-order nibble
+            self._counters[byte_offset] |= value
+
+        return value
+
+    def dec(self, filter_bit):
+        """
+        Decrement the nibble, ignoring any underflow
+
+        @param filterWord offset of 32-bit word
+        @param filter_bit  offset of bit in that word (so in range 0..31)
+        @return value of nibble after operation
+        """
+
+        if filter_bit < 0:
+            raise XLFilterError("filter bit offset cannot be negative.")
+        if filter_bit >= self._nibble_count:
+            raise XLFilterError("filter bit offset %d out of range" %
+                                filter_bit)
+
+        byte_offset = filter_bit // 2
+        upper_nibble = filter_bit & 1       # interpreted as boolean
+        cur_byte = self._counters[byte_offset]
+
+        if upper_nibble:
+            value = cur_byte >> 4
+        else:
+            value = cur_byte & 0xf
+        if value > 0:
+            value -= 1          # decrement counter, ignoring underflow
+
+        if upper_nibble:
+            self._counters[byte_offset] &= 0xf0  # mask off existing value
+            self._counters[byte_offset] |= value << 4
+        else:
+            self._counters[byte_offset] &= 0xf   # mask off low-order nibble
+            self._counters[byte_offset] |= value
+
+        return value
