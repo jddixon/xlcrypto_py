@@ -247,7 +247,7 @@ class NibbleCounters(object):
 
     def __init__(self, m=20):           # default is for SHA1
         self._nibble_count = 1 << m     # ie, 2**20; the size of the filter
-        self._counters = bytearray(0) * (self._nibble_count // 2)
+        self._counters = bytearray(self._nibble_count // 2)
 
     def clear(self):
         """ Zero out all of the counters.  Unsynchronized. """
@@ -276,16 +276,26 @@ class NibbleCounters(object):
             value = cur_byte >> 4
         else:
             value = cur_byte & 0xf
+        # DEBUG
+        #print("bit %6d: value 0x%x => " % (filter_bit, value), end='')
+        # END
         if value < 0xf:
             value += 1          # increment counter, ignoring any overflow
+        # DEBUG
+        #print("0x%x  " % value, end='')
+        # END
 
         if upper_nibble:
-            self._counters[byte_offset] &= 0xf0  # mask off existing value
-            self._counters[byte_offset] |= value << 4
+            self._counters[byte_offset] &= 0x0f  # mask off existing value
+            self._counters[byte_offset] |= (value << 4)
         else:
-            self._counters[byte_offset] &= 0xf   # mask off low-order nibble
+            self._counters[byte_offset] &= 0xf0  # mask off low-order nibble
             self._counters[byte_offset] |= value
 
+        # DEBUG
+        # print(" counters: 0x%02x => 0x%02x" % (
+        #    cur_byte, self._counters[byte_offset]))
+        # END
         return value
 
     def dec(self, filter_bit):
@@ -311,14 +321,24 @@ class NibbleCounters(object):
             value = cur_byte >> 4
         else:
             value = cur_byte & 0xf
+        # DEBUG
+        #print("bit %6d: value 0x%x => " % (filter_bit, value), end='')
+        # END
         if value > 0:
             value -= 1          # decrement counter, ignoring underflow
+        # DEBUG
+        #print("0x%x  " % value, end='')
+        # END
 
         if upper_nibble:
-            self._counters[byte_offset] &= 0xf0  # mask off existing value
+            self._counters[byte_offset] &= 0x0f  # mask off existing value
             self._counters[byte_offset] |= value << 4
         else:
-            self._counters[byte_offset] &= 0xf   # mask off low-order nibble
+            self._counters[byte_offset] &= 0xf0   # mask off low-order nibble
             self._counters[byte_offset] |= value
 
+        # DEBUG
+        # print(" counters: 0x%02x => 0x%02x" % (
+        #    cur_byte, self._counters[byte_offset]))
+        # END
         return value

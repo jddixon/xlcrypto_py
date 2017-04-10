@@ -1,5 +1,8 @@
 # py/xlcrypto_py/CHANGES
 
+v0.0.12
+    2017-04-10
+        * add test_nibble_counters.py                               SLOC  869
 v0.0.11
     2017-04-09
         * add NibbleCounters                                        SLOC  797
@@ -33,6 +36,7 @@ v0.0.2
 v0.0.1
     2017-02-19
         * initial commit
+
 
 
 
