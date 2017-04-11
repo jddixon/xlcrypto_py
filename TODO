@@ -1,6 +1,13 @@
 py/xlcrypto_py/TODO
 
+2017-04-13
+    * resurrect KeySelector class to avoid repeated calculation
+        of the same numbers
+    * BloomSHA.{insert,is_member} take KeySelector as arg instead
+        of b
+    * CountingBloom.{insert,remove} likewise
+
 2017-03-23
-    * make BloomSHA1 an abc (BloomSHA)
-    * need test
+    * make BloomSHA1 an abc (BloomSHA)                                  * DON'T
+    * need test                                                         * DONE
 

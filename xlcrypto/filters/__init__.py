@@ -83,7 +83,7 @@ class BloomSHA(object):
         self._kk = k
         self._key_bytes = key_bytes
 
-        self._count = 0
+        self._key_count = 0
         # convenience variables
         self._filter_bits = 1 << m
         self._filter_bytes = (self._filter_bits + 7) // 8   # round up
@@ -94,6 +94,18 @@ class BloomSHA(object):
         # print("Bloom ctor: m = %d, k = %d, filter_bits = %d, filter_bytes = %d" % (
         #    self._mm, self._kk, self._filter_bits, self._filter_bytes))
         # END
+
+    @property
+    def m(self):
+        return self._mm
+
+    @property
+    def k(self):
+        return self._kk
+
+    @property
+    def key_bytes(self):
+        return self._key_bytes
 
     def _do_clear(self):
         """ Clear the filter, unsynchronized. """
@@ -106,7 +118,7 @@ class BloomSHA(object):
         try:
             self._lock.acquire()
             self._do_clear()
-            self._count = 0
+            self._key_count = 0
             # jdd added 2005-02-19
         finally:
             self._lock.release()
@@ -120,7 +132,7 @@ class BloomSHA(object):
         """
         try:
             self._lock.acquire()
-            return self._count
+            return self._key_count
         finally:
             self._lock.release()
 
@@ -135,7 +147,7 @@ class BloomSHA(object):
         @return approximate False positive rate
         """
         if n == 0:
-            n = self._count
+            n = self._key_count
         return (1 - exp(-self._kk * n / self._filter_bits)) ** self._kk
 
     def insert(self, b):
@@ -147,12 +159,13 @@ class BloomSHA(object):
 
         @param b    byte array representing a key(SHA1 digest)
         """
-        bitsel, bytesel = self.get_selectors(b)
+        keysel = KeySelector(b, self)
+        bitsel, bytesel = keysel.bitsel, keysel.bytesel
         try:
             self._lock.acquire()
             for i in range(self._kk):
                 self._filter[bytesel[i]] |= (1 << bitsel[i])
-            self._count += 1
+            self._key_count += 1
         finally:
             self._lock.release()
 
@@ -164,7 +177,8 @@ class BloomSHA(object):
         @param b    byte array representing a key(SHA1 digest)
         @return True if b is in the filter
         """
-        bitsel, bytesel = self.get_selectors(b)
+        keysel = KeySelector(b, self)
+        bitsel, bytesel = keysel.bitsel, keysel.bytesel
         for i in range(self._kk):
             check_byte = self._filter[bytesel[i]]
             if (check_byte & (1 << bitsel[i])) == 0:
@@ -185,31 +199,32 @@ class BloomSHA(object):
         finally:
             self._lock.release()
 
-    def get_selectors(self, b):
-        """
-        Create bit and byte selectors for a key being added to the
-        Bloom filter.
+# ===================================================================
 
-        When the key is presented to get_selectos(), the k 'hash function'
-        values are extracted and used to populate bitsel and bytesel arrays
-        which specify the k flags to be set or examined in the filter.
 
-        @param b    key being added to the Bloom Filter
-        """
+class KeySelector(object):
 
+    def __init__(self, b, bloom):
         if b is None or len(b) == 0:
             raise XLFilterError(
-                "key being added to filter may not be None or empty")
-        if len(b) != self._key_bytes:
+                "key being added to KeySelector may not be None or empty")
+        self._key = bytes(deepcopy(b))      # so immutable
+
+        if bloom is None:
+            raise XLFilterError("bloom may not be None")
+
+        key_bytes = bloom.key_bytes
+        if len(b) != key_bytes:
             raise XLFilterError(
-                "key of length %d but filter expects length of %d bytes" % (
-                    len(b), self._key_bytes))
+                "key of length %d but fltr expects length of %d bytes" % (
+                    len(b), key_bytes))
+        m, k = bloom.m, bloom.k
 
         # DEBUG
-        # print("get_selectors: m = %d, k = %d" % (self._mm, self._kk))
+        # print("KeySelector: m = %d, k = %d" % (m, k))
         # END
-        bitsel = [0] * self._kk        # ints used to select flag bits
-        bytesel = [0] * self._kk       # ints used to select flag bytes
+        bitsel = [0] * k        # ints used to select flag bits
+        bytesel = [0] * k       # ints used to select flag bytes
 
         # Given a key, populate the byte and bit offset arrays, each
         # of which has k elements.  The low order 3 bits are used to
@@ -220,14 +235,27 @@ class BloomSHA(object):
         i = int.from_bytes(b, 'little')     # signed=False
 
         # extract the k bit and byte selectors
-        for j in range(self._kk):
+        for j in range(k):
             bitsel[j] = i & 0x7       # get 3 bits selecting bit in byte
             i >>= 3
-            byte_mask = (1 << (self._mm - 3)) - 1
+            byte_mask = (1 << (m - 3)) - 1
             bytesel[j] = i & byte_mask
-            i >>= self._mm - 3
+            i >>= m - 3
 
-        return bitsel, bytesel
+        self._bitsel = bitsel
+        self._bytesel = bytesel
+
+    @property
+    def bitsel(self):
+        return self._bitsel
+
+    @property
+    def bytesel(self):
+        return self._bytesel
+
+    @property
+    def key(self):
+        return self._key
 
 # ===================================================================
 

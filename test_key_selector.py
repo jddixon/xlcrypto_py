@@ -2,7 +2,7 @@
 
 # xlcrypto_py/test_key_selector.py
 
-""" Exercise BloomSHA.get_selectors functionality. """
+""" Exercise KeySelector functionality. """
 
 #import hashlib
 #import os
@@ -11,11 +11,11 @@ import unittest
 
 from rnglib import SimpleRNG
 from xlcrypto import XLFilterError
-from xlcrypto.filters import BloomSHA
+from xlcrypto.filters import BloomSHA, KeySelector
 
 
 class TestKeySelector(unittest.TestCase):
-    """ Exercise BloomSHA.get_selectors functionality. """
+    """ Exercise KeySelector functionality. """
 
     def setUp(self):
         self.rng = SimpleRNG(time.time())
@@ -29,12 +29,19 @@ class TestKeySelector(unittest.TestCase):
         parameters are caught.
         """
 
-        fltr = BloomSHA(m=20, k=8, key_bytes=20)      # BloomSHA1
+        fltr = BloomSHA(m=20, k=8, key_bytes=20)
 
         bad_key = self.rng.some_bytes(15)               # wrong key length
         try:
-            _, _ = fltr.get_selectors(bad_key)
-            self.fail("BloomSHA accepted key with wrong length")
+            _ = KeySelector(bad_key, fltr)
+            self.fail("KeySelector accepted key with wrong length")
+        except XLFilterError:
+            pass
+
+        good_key = self.rng.some_bytes(20)               # correct key length
+        try:
+            _ = KeySelector(good_key, None)
+            self.fail("KeySelector accepted key with wrong length")
         except XLFilterError:
             pass
 
@@ -53,19 +60,24 @@ class TestKeySelector(unittest.TestCase):
         # END
 
         fltr = BloomSHA(m, k, key_bytes=20)    # so BloomSHA1
+        self.assertIsNotNone(fltr)
 
         # the most elementary of tests
         for i in range(32):
-            self.assertFalse(fltr.is_member(b[i]))
+            # self.assertFalse(fltr.is_member(b[i]))
 
-            bitsel, bytesel = fltr.get_selectors(b[i])
+            keysel = KeySelector(b[i], fltr)
+            self.assertIsNotNone(keysel)
+
+            bitsel, bytesel = keysel.bitsel, keysel.bytesel
             self.assertIsNotNone(bitsel)
             self.assertEqual(len(bitsel), k)
 
             self.assertIsNotNone(bytesel)
             self.assertEqual(len(bytesel), k)
 
-            fltr.insert(b[i])
-            self.assertTrue(fltr.is_member(b[i]))
+            # fltr.insert(b[i])
+            # self.assertTrue(fltr.is_member(b[i]))
+
 if __name__ == '__main__':
     unittest.main()
