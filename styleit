@@ -4,7 +4,8 @@ if [ ! -z "${DEV_BASE// }" ]
 then
   cd $DEV_BASE/py/xlcrypto_py
   
-  autopep8 -ai -r xlcrypto *.py
+  autopep8 -ai *.py
+  autopep8 -air xlcrypto
   
 else
   echo "DEV_BASE is not defined"

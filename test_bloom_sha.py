@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # xlcrypto_py/test_bloom_sha1.py
 
-""" Bloom filters for sets whose members are SHA1 digests. """
+""" Bloom filters for sets whose members are SHA digests. """
 
 import time
 import unittest
@@ -9,18 +9,18 @@ from hashlib import sha1, sha256 as sha2
 
 from rnglib import SimpleRNG
 from xlcrypto import XLFilterError
-from xlcrypto.filters import BloomSHA
+from xlcrypto.filters import BloomSHA, KeySelector
 
 RNG = SimpleRNG(time.time())
 
 
 class TestBloomSHA(unittest.TestCase):
-    """ Bloom filters for sets whose members are SHA1 digests. """
+    """ Bloom filters for sets whose members are SHA digests. """
 
     def setUp(self):
         self.m = 20             # M = 2**m is number of bits in filter
         self.k = 8              # numberof hash funcions
-        self.key_bytes = 20     # so these are BloomSHA1s
+        self.key_bytes = 20     # so these are BloomSHAs
         self.keys = []          # new byte[100][20]
 
     def test_empty_filter(self):
@@ -83,8 +83,8 @@ class TestBloomSHA(unittest.TestCase):
         except XLFilterError:
             pass
 
-    def do_test_sha1_inserts(self, m, k, num_key):
-        """ Test BloomSHA1 for specific parameters. """
+    def do_test_sha_inserts(self, m, k, num_key):
+        """ Test BloomSHA for specific parameters. """
         keys = []
         # set up distinct keys, each the hash of a unique value
         for i in range(num_key):
@@ -97,32 +97,34 @@ class TestBloomSHA(unittest.TestCase):
         fltr = BloomSHA(m, k, key_bytes=20)
         for i in range(num_key):
             self.assertEqual(i, len(fltr))
-            self.assertFalse(fltr.is_member(keys[i]),
+            keysel = KeySelector(keys[i], fltr)
+            self.assertFalse(fltr.is_member(keysel),
                              "key %d not yet in set, but found!" % i)
-            fltr.insert(keys[i])              # add key to fltr
+            fltr.insert(keysel)              # add key to fltr
 
         for i in range(num_key):
-            self.assertTrue(fltr.is_member(keys[i]),
+            keysel = KeySelector(keys[i], fltr)
+            self.assertTrue(fltr.is_member(keysel),
                             "key " + str(i) + " has been added but not found in set")
 
-    def test_sha1_inserts(self):
-        """ Test BloomSHA1 for various parameter settings. """
-        self.do_test_sha1_inserts(self.m, self.k, 16)  # default values
-        self.do_test_sha1_inserts(14, 8, 16)   # stride = 9
-        self.do_test_sha1_inserts(13, 8, 16)   # stride = 8
-        self.do_test_sha1_inserts(12, 8, 16)   # stride = 7
+    def test_sha_inserts(self):
+        """ Test BloomSHA for various parameter settings. """
+        self.do_test_sha_inserts(self.m, self.k, 16)  # default values
+        self.do_test_sha_inserts(14, 8, 16)   # stride = 9
+        self.do_test_sha_inserts(13, 8, 16)   # stride = 8
+        self.do_test_sha_inserts(12, 8, 16)   # stride = 7
 
-        self.do_test_sha1_inserts(14, 7, 16)   # stride = 9
-        self.do_test_sha1_inserts(13, 7, 16)   # stride = 8
-        self.do_test_sha1_inserts(12, 7, 16)   # stride = 7
+        self.do_test_sha_inserts(14, 7, 16)   # stride = 9
+        self.do_test_sha_inserts(13, 7, 16)   # stride = 8
+        self.do_test_sha_inserts(12, 7, 16)   # stride = 7
 
-        self.do_test_sha1_inserts(14, 6, 16)   # stride = 9
-        self.do_test_sha1_inserts(13, 6, 16)   # stride = 8
-        self.do_test_sha1_inserts(12, 6, 16)   # stride = 7
+        self.do_test_sha_inserts(14, 6, 16)   # stride = 9
+        self.do_test_sha_inserts(13, 6, 16)   # stride = 8
+        self.do_test_sha_inserts(12, 6, 16)   # stride = 7
 
-        self.do_test_sha1_inserts(14, 5, 16)   # stride = 9
-        self.do_test_sha1_inserts(13, 5, 16)   # stride = 8
-        self.do_test_sha1_inserts(12, 5, 16)   # stride = 7
+        self.do_test_sha_inserts(14, 5, 16)   # stride = 9
+        self.do_test_sha_inserts(13, 5, 16)   # stride = 8
+        self.do_test_sha_inserts(12, 5, 16)   # stride = 7
 
     def do_test_sha2_inserts(self, m, k, num_key):
         """ Test BloomSHA2 for specific parameters. """
@@ -138,12 +140,14 @@ class TestBloomSHA(unittest.TestCase):
         fltr = BloomSHA(m, k, key_bytes=32)
         for i in range(num_key):
             self.assertEqual(i, len(fltr))
-            self.assertFalse(fltr.is_member(keys[i]),
+            keysel = KeySelector(keys[i], fltr)
+            self.assertFalse(fltr.is_member(keysel),
                              "key %d not yet in set, but found!" % i)
-            fltr.insert(keys[i])              # add key to fltr
+            fltr.insert(keysel)              # add key to fltr
 
         for i in range(num_key):
-            self.assertTrue(fltr.is_member(keys[i]),
+            keysel = KeySelector(keys[i], fltr)
+            self.assertTrue(fltr.is_member(keysel),
                             "key %d has been added but not found in set" % i)
 
     def test_sha2_inserts(self):

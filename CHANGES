@@ -1,5 +1,8 @@
 # py/xlcrypto_py/CHANGES
 
+v0.0.14
+    2017-04-12
+        * parameter to BloomSHA.{insert,is_member} now KeySelector  SLOC  980
 v0.0.13
     2017-04-11
         * resurrected KeySelector, edited test_key_selector.py      SLOC  981
@@ -39,6 +42,7 @@ v0.0.2
 v0.0.1
     2017-02-19
         * initial commit
+
 
 
 

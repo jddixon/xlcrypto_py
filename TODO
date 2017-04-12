@@ -1,6 +1,6 @@
 py/xlcrypto_py/TODO
 
-2017-04-13
+2017-04-10
     * resurrect KeySelector class to avoid repeated calculation
         of the same numbers
     * BloomSHA.{insert,is_member} take KeySelector as arg instead

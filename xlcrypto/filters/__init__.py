@@ -150,16 +150,18 @@ class BloomSHA(object):
             n = self._key_count
         return (1 - exp(-self._kk * n / self._filter_bits)) ** self._kk
 
-    def insert(self, b):
+    def insert(self, keysel):
         """
         Add a key to the set represented by the filter.
 
         XXX This version does not maintain 4 - bit counters, it is not
         a counting Bloom filter.
 
-        @param b    byte array representing a key(SHA1 digest)
+        @param keysel    KeySelector for key (SHA digest)
         """
-        keysel = KeySelector(b, self)
+        if keysel is None:
+            raise XLFilterError("KeySelector may not be None")
+
         bitsel, bytesel = keysel.bitsel, keysel.bytesel
         try:
             self._lock.acquire()
@@ -169,15 +171,14 @@ class BloomSHA(object):
         finally:
             self._lock.release()
 
-    def _is_member(self, b):
+    def _is_member(self, keysel):
         """
         Whether a key is in the filter.  Sets up the bit and byte offset
         arrays.
 
-        @param b    byte array representing a key(SHA1 digest)
+        @param keysel  KeySelector for key (SHA digest)
         @return True if b is in the filter
         """
-        keysel = KeySelector(b, self)
         bitsel, bytesel = keysel.bitsel, keysel.bytesel
         for i in range(self._kk):
             check_byte = self._filter[bytesel[i]]
@@ -185,17 +186,19 @@ class BloomSHA(object):
                 return False
         return True
 
-    def is_member(self, b):
+    def is_member(self, keysel):
         """
         Whether a key is in the filter.  External interface, internally
         synchronized.
 
-        @param b    byte array representing a key(SHA1 digest)
+        @param keysel    KeySelector for a key (SHA digest)
         @return True if b is in the filter
         """
+        if keysel is None:
+            raise XLFilterError("KeySelector may not be None")
         try:
             self._lock.acquire()
-            return self._is_member(b)
+            return self._is_member(keysel)
         finally:
             self._lock.release()
 
@@ -204,20 +207,20 @@ class BloomSHA(object):
 
 class KeySelector(object):
 
-    def __init__(self, b, bloom):
-        if b is None or len(b) == 0:
+    def __init__(self, key, bloom):
+        if key is None or len(key) == 0:
             raise XLFilterError(
                 "key being added to KeySelector may not be None or empty")
-        self._key = bytes(deepcopy(b))      # so immutable
+        self._key = bytes(deepcopy(key))      # so immutable
 
         if bloom is None:
             raise XLFilterError("bloom may not be None")
 
         key_bytes = bloom.key_bytes
-        if len(b) != key_bytes:
+        if len(key) != key_bytes:
             raise XLFilterError(
                 "key of length %d but fltr expects length of %d bytes" % (
-                    len(b), key_bytes))
+                    len(key), key_bytes))
         m, k = bloom.m, bloom.k
 
         # DEBUG
@@ -232,7 +235,7 @@ class KeySelector(object):
         # select the byte.
 
         # convert the bytes of the key to a single long int
-        i = int.from_bytes(b, 'little')     # signed=False
+        i = int.from_bytes(key, 'little')     # signed=False
 
         # extract the k bit and byte selectors
         for j in range(k):

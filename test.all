@@ -7,7 +7,7 @@ then
   ./test_bloom_sha.py
   ./test_key_selector.py
   ./test_nibble_counters.py
-
+  
 else
   echo "DEV_BASE is not defined"
 fi
