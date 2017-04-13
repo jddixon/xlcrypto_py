@@ -373,3 +373,109 @@ class NibbleCounters(object):
         #    cur_byte, self._counters[byte_offset]))
         # END
         return value
+
+# ===================================================================
+
+
+class CountingBloom(BloomSHA):
+    """
+    Counting version of the Bloom filter.
+
+    Adds a 4-bit counter to each bit in the Bloom filter, enabling members
+    to be removed from the set without having to recreate the filter from
+    scratch.
+    """
+
+    # self._cb_lock is CountingBloom lock
+    # self._lock   is BloomSHA lock, so super._lock; MAY NEED isolating
+    # functions
+
+    def __init__(m=20, k=8, key_bytes=20):
+        super().__init__(m, k, key_bytes)
+
+        self._counters = NibbleCounters(m)
+        self._cb_lock = Lock()              # coarse lock on nibble counters
+        self._count = 0                     # number of keys in filter
+
+    def clear(self):
+        """
+        Clear both the underlying filter in the superclass and the
+        bit counters maintained here.
+
+        XXX Possible deadlock.
+        """
+
+        # XXX ORDER IN WHICH LOCKS ARE OBTAINED MUST BE THE SAME EVERYWHERE.
+        try:
+            self._cb_lock.acquire()
+            try:
+                self._lock.acquire()
+
+                super().clear()        # BloomSHA; otherwise unsynchronized
+                self._counters.clear()  # nibble counters; otherwise unsync
+            finally:
+                self._lock.release()
+        finally:
+            self._cb_lock.release()
+
+    def insert(self, keysel):
+        """
+        Add a key to the set represented by the filter, updating counters
+        as it does so.  Overflows are silently ignored.
+
+        @param b byte array representing a key (SHA digest)
+        """
+        bytesel, bitsel = keysel.bytesel, keysel.bitsel
+        filter_bit = []
+        for i in range(self._kk):
+            filter_bit[i] = (bytesel[i] << 3) + bitsel[i]
+        try:
+            self._cb_lock.acquire()
+            try:
+                self._lock.acquire()
+
+                for i in range(k):
+                    super().insert(keysel)              # add to BloomSHA
+                    self._counters.inc(filter_bit[i])   # increment counter
+                self._count += 1
+            finally:
+                self._lock.release()
+        finally:
+            self._cb_lock.release()
+
+    def remove(self, keysel):
+        """
+        Remove a key from the set, updating counters while doing so.
+
+        If the key is not a member of the set, no action is taken.
+        However, if it is a member (a) the count is decremented,
+        (b) all bit counters are decremented, and (c) where the bit
+        counter goes to zero the corresponding bit in the filter is
+        zeroed.
+
+        @param keysel  KeySelector for the key to be removed.
+        """
+        if not self.is_member(keysel):
+            return
+
+        bytesel, bitsel = keysel.bytesel, keysel.bitsel
+        filter_bit = []
+        for i in range(self._kk):
+            filter_bit[i] = (bytesel[i] << 3) + bitsel[i]
+        try:
+            self._cb_lock.acquire()
+            try:
+                self._lock.acquire()
+                present = self.is_member(keysel)
+                if present:
+                    for i in range(k):
+                        new_count = self._counters.dec(filter_bit[i])
+                        if new_count == 0:
+                            # mask out the relevant bit
+                            val = self._filter[bytesel[i]] & ~(1 << bitsel[i])
+                            self._filter[bytesel[i]] = val
+                    self._count -= 1
+            finally:
+                self._lock.release()
+        finally:
+            self._cb_lock.release()

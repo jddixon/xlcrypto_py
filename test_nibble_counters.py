@@ -57,7 +57,7 @@ class TestNibbleCounters(unittest.TestCase):
     def do_nibble_test(self, m):
         """ Run tests for specific value of m. """
 
-        fltr = BloomSHA(m)
+        fltr = BloomSHA(m)                  # used only to calculate capacity
         fltr_size = fltr.capacity
         self.assertEqual(fltr_size, 1 << m)
 
