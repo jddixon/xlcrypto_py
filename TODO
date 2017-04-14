@@ -1,11 +1,16 @@
 py/xlcrypto_py/TODO
 
+2017-04-14
+    * test_counting_bloom.py needs to be elaborated to actually 
+        test counters (currently just verifies that it is equivalent
+        to BloomSHA
+
 2017-04-10
-    * resurrect KeySelector class to avoid repeated calculation
-        of the same numbers
-    * BloomSHA.{insert,is_member} take KeySelector as arg instead
-        of b
-    * CountingBloom.{insert,remove} likewise
+    * resurrect KeySelector class to avoid repeated calculation         * DONE
+        of the same numbers                                             * DONE
+    * BloomSHA.{insert,is_member} take KeySelector as arg instead       * DONE
+        of b                                                            * DONE
+    * CountingBloom.{insert,remove} likewise                            * DONE
 
 2017-03-23
     * make BloomSHA1 an abc (BloomSHA)                                  * DON'T

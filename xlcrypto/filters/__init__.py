@@ -168,6 +168,9 @@ class BloomSHA(object):
             for i in range(self._kk):
                 self._filter[bytesel[i]] |= (1 << bitsel[i])
             self._key_count += 1
+            # DEBUG
+            # print("key count := %d" % self._key_count)
+            # END
         finally:
             self._lock.release()
 
@@ -390,12 +393,11 @@ class CountingBloom(BloomSHA):
     # self._lock   is BloomSHA lock, so super._lock; MAY NEED isolating
     # functions
 
-    def __init__(m=20, k=8, key_bytes=20):
+    def __init__(self, m=20, k=8, key_bytes=20):
         super().__init__(m, k, key_bytes)
 
         self._counters = NibbleCounters(m)
         self._cb_lock = Lock()              # coarse lock on nibble counters
-        self._count = 0                     # number of keys in filter
 
     def clear(self):
         """
@@ -408,13 +410,8 @@ class CountingBloom(BloomSHA):
         # XXX ORDER IN WHICH LOCKS ARE OBTAINED MUST BE THE SAME EVERYWHERE.
         try:
             self._cb_lock.acquire()
-            try:
-                self._lock.acquire()
-
-                super().clear()        # BloomSHA; otherwise unsynchronized
-                self._counters.clear()  # nibble counters; otherwise unsync
-            finally:
-                self._lock.release()
+            super().clear()        # BloomSHA; otherwise unsynchronized
+            self._counters.clear()  # nibble counters; otherwise unsync
         finally:
             self._cb_lock.release()
 
@@ -428,18 +425,12 @@ class CountingBloom(BloomSHA):
         bytesel, bitsel = keysel.bytesel, keysel.bitsel
         filter_bit = []
         for i in range(self._kk):
-            filter_bit[i] = (bytesel[i] << 3) + bitsel[i]
+            filter_bit.append((bytesel[i] << 3) + bitsel[i])
         try:
             self._cb_lock.acquire()
-            try:
-                self._lock.acquire()
-
-                for i in range(k):
-                    super().insert(keysel)              # add to BloomSHA
-                    self._counters.inc(filter_bit[i])   # increment counter
-                self._count += 1
-            finally:
-                self._lock.release()
+            super().insert(keysel)                  # add to BloomSHA
+            for i in range(self._kk):
+                self._counters.inc(filter_bit[i])   # increment counter
         finally:
             self._cb_lock.release()
 
@@ -461,21 +452,18 @@ class CountingBloom(BloomSHA):
         bytesel, bitsel = keysel.bytesel, keysel.bitsel
         filter_bit = []
         for i in range(self._kk):
-            filter_bit[i] = (bytesel[i] << 3) + bitsel[i]
+            filter_bit.append((bytesel[i] << 3) + bitsel[i])
         try:
             self._cb_lock.acquire()
-            try:
-                self._lock.acquire()
-                present = self.is_member(keysel)
-                if present:
-                    for i in range(k):
-                        new_count = self._counters.dec(filter_bit[i])
-                        if new_count == 0:
-                            # mask out the relevant bit
-                            val = self._filter[bytesel[i]] & ~(1 << bitsel[i])
-                            self._filter[bytesel[i]] = val
-                    self._count -= 1
-            finally:
-                self._lock.release()
+            present = self.is_member(keysel)
+            if present:
+                for i in range(self._kk):
+                    new_count = self._counters.dec(filter_bit[i])
+                    if new_count == 0:
+                        # mask out the relevant bit
+                        val = self._filter[bytesel[i]] & ~(1 << bitsel[i])
+                        self._filter[bytesel[i]] = val
+                if self._key_count > 0:
+                    self._key_count -= 1
         finally:
             self._cb_lock.release()

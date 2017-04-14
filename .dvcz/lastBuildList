@@ -7,24 +7,24 @@ Giaje1YAJPNVBt3dlOA5lhBp4GpSYBskJ9UR2Zyt3lgAGK3dEwxYETLMh9VWEV8i
 k2lyCIE/V/CDb9eVDYQgYSJYrnQ/JAPST7NbcY8aI+/0l7QVBhLBpmOCvmS6ofvz
 /QIDAQAB
 -----END RSA PUBLIC KEY-----
-xlcrypto_py v0.0.15
-2017-04-13 19:54:58
+xlcrypto_py v0.0.16
+2017-04-14 23:22:43
 # BEGIN CONTENT #
 xlcrypto_py
  .dvcz
-  builds ccf35d751c03ac119e74e157edb94459cae8bed8
+  builds fc266e614f60cf3bef3986ef55210e0756ce29c7
   copyright 04e8696e6424c21d717e46008780505d598eb59a
-  lastBuildList 25a354575833551a62447d270cd02361fdbd23d4
+  lastBuildList 8bcbc53d3304476f4fbf6630661d8f5011db5c21
   license 5977a55c75bb4612004451a56b0b4c22d9d3311d
-  projCfg ecd174afd6bf1262b3deeb3fa428f15d69e9f707
+  projCfg d83e381e4ea11a08235babc70c1cc952f1a4e534
   projCfg.local 0f549c45fdb61775161f03b21be6ea78814f1f28
-  version 380fd86dad02778feb659ccb20bfa4e8e661321a
+  version bc1127d2cd5dc5844d86112fdba77dc21a9b7f90
  .gitignore 763535ce9c2c0d1e2b7aa6999247cb48e50fd015
  .gitignore.local dc759996ca1366caf080fde4a98d37e39e382eae
- CHANGES f3afd461598a177f4a7f12e86b1636e8cf909fbe
+ CHANGES 15048f10adb7033f644e5dbfaacb6b00b6b9a141
  LICENSE-MIT.md aec2b90058ed291d26eef53badc44802cda9bcde
  README.md 94d8aa3428a6f918946e468260961d3892df4f0f
- TODO 6ab7fcce10117ffc1365f10e9405d9017be943f9
+ TODO 1aa1b43b3c1716d6d77e435714ba39a9de21cdd7
  bkp2U 191660507830a3f66cb2e9b202581270fd3ad38f
  checkCoverage d63e623bbf624a18d6b9e89c028cbb15c0756f1c
  countem 1facff5e75ec57f20b8a010c0f9ffb717a863925
@@ -35,6 +35,7 @@ xlcrypto_py
   xlcrypto_py-0.0.13.tar.gz 6e6abdc0bb3ea1f56820c9ec9cb0aee27d940f8e
   xlcrypto_py-0.0.14.tar.gz 213ca2be99d5c14d011bf625b8044eb4a7b80ce8
   xlcrypto_py-0.0.15.tar.gz aeb324f5f5942534916ffbdc60dc4b5d495ccace
+  xlcrypto_py-0.0.16.tar.gz 76f3773e189eccbc912afcfdcfa0729d167ba9ca
   xlcrypto_py-0.0.2.tar.gz aa19e80134a774630c6adcc091c1786f5ca888e3
   xlcrypto_py-0.0.3.tar.gz cac2e68841c23c89a3e3663472dd0c4a00b5d1a5
   xlcrypto_py-0.0.4.tar.gz d4ed0649207d6850c06327c3f315e4290df25f75
@@ -54,14 +55,15 @@ xlcrypto_py
  renameInTest ccf606977c55c6d2c6c083bfaa22e0321337476f
  setup.py ba9036ac35e390708bc1eb039f00918060e8a431
  styleit cbd7a67435ac0746e88e57aa24a2b3d976399371
- test.all 6feace6640ef71cc01e514e33f9ecbbdbaf804a2
+ test.all 71e605ed1de517159a6bf9505e6c39048be6f481
  test_bloom_sha.py 61bd3b01987d1bd2055a9b8ae6c639faa6a49b11
+ test_counting_bloom.py 69529d4ad7e1155f8e33c95a4f775a09656c835b
  test_key_selector.py e082b026fed1fcc9b67b654b997505eda8b2f000
  test_nibble_counters.py 42d0694bf3ca88cc6e81e877f4f000b9f1ad98f2
  xlcrypto
-  __init__.py 640ee8fd39310a15b22f6891a815b13335f5aef0
+  __init__.py 034f771d71a92d793e47e7f97da318554d11ff89
   filters
-   __init__.py 2e51bccb6d2252fe2b2e6add8efa3058e745d1c6
+   __init__.py 9176e00c48cf4dfb09399eb0e7a9bbcec25276bb
 # END CONTENT #
 
-AFV6ET+3jM1qiSf43PPUH0BXzLtx9ByIJtmsb9ejVI6rq8A9juTWufHmRNKCp7Go/bfSJMZaaCrKlyLLPZ1Sztcv6qGCxgvXFwyW0ctIlibjjnsq+qPKlqYOml7tGYutQe0AA9lzLrN4PaEa1KdgdxVVcEVoVsWGtjidy3AMWj2gffohxbIAisj+PJ2mL+DoucUPo4IRHlUTWTWYEmsHWYIlPqEFpbCmjTm9WwY2xD3HWI/a46kIRIFfU1xnpjX0YqkaUbP7+jX5STOMgyAU2cB5iafkZPWs0lTB0YC8Fl4Ji4uiNASGaZz4SMgGVN56Ysxry9XaQCc1XrDFYsZbAA==
+g4nmV+Pwo2jbQVpvrBgCdwIP8hR8pCFDvAYvdjTxHlIUxbXF885RwujtdjkTivoM7LfVSfQZhOEhBrd1nYXNSoxHdpoyWRjP6EmntxEtXObg+YjyVjiVR1kDK3EwaqWfNE/kxIctDMfqqEfwdHuOqzbvgMSniCDOGGVapHBhYU+PUPV2uSsBClhhkl2DRe1cvKO2J7xl2m6MLjBMCQ5Hl0R8FfPridACdjq8oVuUa8HXVXZ/AolexrM56eI+rpzQgj8XpKXIT6mBn8TOalNOwk4+8Ima9uUthjTainqA1B7KFJpxktpS6NbCo2Ve2+yOcjoYA2rlbD460bMNUkdFCA==
