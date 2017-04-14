@@ -1,5 +1,29 @@
 # py/xlcrypto_py/CHANGES
 
+v0.0.16
+    2017-04-14
+        * add simplistic test_counting_bloom.py                     SLOC 1111
+v0.0.15
+    2017-04-13
+        * add CountingBloom (untested)                              SLOC  987
+v0.0.14
+    2017-04-12
+        * parameter to BloomSHA.{insert,is_member} now KeySelector  SLOC  980
+v0.0.13
+    2017-04-11
+        * resurrected KeySelector, edited test_key_selector.py      SLOC  981
+v0.0.12
+    2017-04-10
+        * add test_nibble_counters.py                               SLOC  869
+v0.0.11
+    2017-04-09
+        * add NibbleCounters                                        SLOC  797
+v0.0.10
+    2017-04-08
+        * add BloomSHA2 tests; all tests succeedf                   SLOC  719
+v0.0.9
+    2017-04-07
+        * replace KeySelector class with get_selecotrs function     SLOC  817
 v0.0.8
     2017-03-31
         * improved KeySelector and test, but it's still buggy       SLOC  823
@@ -24,6 +48,14 @@ v0.0.2
 v0.0.1
     2017-02-19
         * initial commit
+
+
+
+
+
+
+
+
 
 
 
