@@ -97,5 +97,6 @@ class TestNibbleCounters(unittest.TestCase):
         self.do_nibble_test(20)
         self.do_nibble_test(24)
 
+
 if __name__ == '__main__':
     unittest.main()

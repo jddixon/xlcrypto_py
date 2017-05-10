@@ -155,5 +155,6 @@ class TestBloomSHA(unittest.TestCase):
         self.do_test_sha2_inserts(32, 8, 16)
         self.do_test_sha2_inserts(16, 16, 16)
 
+
 if __name__ == '__main__':
     unittest.main()
