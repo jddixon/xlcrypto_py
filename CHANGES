@@ -1,5 +1,8 @@
 # py/xlcrypto_py/CHANGES
 
+v0.0.17
+    2017-05-10
+        * drop dist/* from repos; plus minor edits                  SLOC 1115
 v0.0.16
     2017-04-14
         * add simplistic test_counting_bloom.py                     SLOC 1111
@@ -48,6 +51,7 @@ v0.0.2
 v0.0.1
     2017-02-19
         * initial commit
+
 
 
 

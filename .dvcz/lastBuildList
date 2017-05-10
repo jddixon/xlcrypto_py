@@ -1,4 +1,4 @@
------BEGIN RSA PUBLIC KEY-----
+-----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAl9xsFHvzEsi3G8q8dUOM
 3v4WLJefw8Kv0hHBGFPFQF1WRPldwPGNdVKql8zcO52KO4hzFNHNSBCGgH8cbtAk
 mLWB78ackABFJzhY9TEbPkLnoMXJHAXQpZK/JAudSixuAZIXYtIyBWfgLaHjurAT
@@ -6,44 +6,28 @@ mLWB78ackABFJzhY9TEbPkLnoMXJHAXQpZK/JAudSixuAZIXYtIyBWfgLaHjurAT
 Giaje1YAJPNVBt3dlOA5lhBp4GpSYBskJ9UR2Zyt3lgAGK3dEwxYETLMh9VWEV8i
 k2lyCIE/V/CDb9eVDYQgYSJYrnQ/JAPST7NbcY8aI+/0l7QVBhLBpmOCvmS6ofvz
 /QIDAQAB
------END RSA PUBLIC KEY-----
-xlcrypto_py v0.0.16
-2017-04-14 23:22:43
+-----END PUBLIC KEY-----
+xlcrypto_py v0.0.17
+2017-05-10 19:46:07
 # BEGIN CONTENT #
 xlcrypto_py
  .dvcz
-  builds fc266e614f60cf3bef3986ef55210e0756ce29c7
+  builds 7bfa2fbba5bd447bfeb92d7b59ccf3d16dbc75ab
   copyright 04e8696e6424c21d717e46008780505d598eb59a
-  lastBuildList 8bcbc53d3304476f4fbf6630661d8f5011db5c21
+  lastBuildList c7782c318276372d30e5d479cf5cf09eae80e278
   license 5977a55c75bb4612004451a56b0b4c22d9d3311d
   projCfg d83e381e4ea11a08235babc70c1cc952f1a4e534
   projCfg.local 0f549c45fdb61775161f03b21be6ea78814f1f28
-  version bc1127d2cd5dc5844d86112fdba77dc21a9b7f90
- .gitignore 763535ce9c2c0d1e2b7aa6999247cb48e50fd015
+  version 6b8a2dacebad23d165464be873c7c0ef6f3af18b
+ .gitignore 680b1aca0d2418b3b46a7e426df8bd31bd00e64f
  .gitignore.local dc759996ca1366caf080fde4a98d37e39e382eae
- CHANGES 15048f10adb7033f644e5dbfaacb6b00b6b9a141
+ CHANGES 375a169677c0a36d1c44fc8131eadbda07117084
  LICENSE-MIT.md aec2b90058ed291d26eef53badc44802cda9bcde
  README.md 94d8aa3428a6f918946e468260961d3892df4f0f
  TODO 1aa1b43b3c1716d6d77e435714ba39a9de21cdd7
  bkp2U 191660507830a3f66cb2e9b202581270fd3ad38f
  checkCoverage d63e623bbf624a18d6b9e89c028cbb15c0756f1c
  countem 1facff5e75ec57f20b8a010c0f9ffb717a863925
- dist
-  xlcrypto_py-0.0.10.tar.gz 44b8c0e8a6104d551cdcfc979ffdd9824128edd2
-  xlcrypto_py-0.0.11.tar.gz 551d6ef54663d714d81778396d9ca5ab70ae2343
-  xlcrypto_py-0.0.12.tar.gz 4c7c5d06ed10d4d70f8e17ee0fa160651e7b0a76
-  xlcrypto_py-0.0.13.tar.gz 6e6abdc0bb3ea1f56820c9ec9cb0aee27d940f8e
-  xlcrypto_py-0.0.14.tar.gz 213ca2be99d5c14d011bf625b8044eb4a7b80ce8
-  xlcrypto_py-0.0.15.tar.gz aeb324f5f5942534916ffbdc60dc4b5d495ccace
-  xlcrypto_py-0.0.16.tar.gz 76f3773e189eccbc912afcfdcfa0729d167ba9ca
-  xlcrypto_py-0.0.2.tar.gz aa19e80134a774630c6adcc091c1786f5ca888e3
-  xlcrypto_py-0.0.3.tar.gz cac2e68841c23c89a3e3663472dd0c4a00b5d1a5
-  xlcrypto_py-0.0.4.tar.gz d4ed0649207d6850c06327c3f315e4290df25f75
-  xlcrypto_py-0.0.5.tar.gz 7ba2af804f9784a59ba5c7ad6947e3399f90b2d7
-  xlcrypto_py-0.0.6.tar.gz 170024f94b945eabe9342f171e9275ad07df9846
-  xlcrypto_py-0.0.7.tar.gz 0ef8fbeab5c0395fad3c17d786ea80462450070a
-  xlcrypto_py-0.0.8.tar.gz aad04f4f4857533c922b647f1e212003cf13661f
-  xlcrypto_py-0.0.9.tar.gz 09705de7a89b124e2ef291bbe2238daa48d4fac8
  doPyLint c382adc6ce090202d92686e696884fe90beba8b8
  ghpDoc
   index.md 37dd9879289663fec039cdea6fae1b76570285c6
@@ -56,14 +40,14 @@ xlcrypto_py
  setup.py ba9036ac35e390708bc1eb039f00918060e8a431
  styleit cbd7a67435ac0746e88e57aa24a2b3d976399371
  test.all 71e605ed1de517159a6bf9505e6c39048be6f481
- test_bloom_sha.py 61bd3b01987d1bd2055a9b8ae6c639faa6a49b11
- test_counting_bloom.py 69529d4ad7e1155f8e33c95a4f775a09656c835b
- test_key_selector.py e082b026fed1fcc9b67b654b997505eda8b2f000
- test_nibble_counters.py 42d0694bf3ca88cc6e81e877f4f000b9f1ad98f2
+ test_bloom_sha.py 1128e8da4d54a29dfe6d84a2a60d1722f45e2428
+ test_counting_bloom.py 510f24aaeb3ef680d0ac66b9b4fb101ab154d089
+ test_key_selector.py 362560039b6559c155ccfc471c0829143901c39a
+ test_nibble_counters.py f239af10e283aff6264de479f38377069307a632
  xlcrypto
-  __init__.py 034f771d71a92d793e47e7f97da318554d11ff89
+  __init__.py 8e50d14e95441d9527839280c5967d3d1838a86c
   filters
    __init__.py 9176e00c48cf4dfb09399eb0e7a9bbcec25276bb
 # END CONTENT #
 
-g4nmV+Pwo2jbQVpvrBgCdwIP8hR8pCFDvAYvdjTxHlIUxbXF885RwujtdjkTivoM7LfVSfQZhOEhBrd1nYXNSoxHdpoyWRjP6EmntxEtXObg+YjyVjiVR1kDK3EwaqWfNE/kxIctDMfqqEfwdHuOqzbvgMSniCDOGGVapHBhYU+PUPV2uSsBClhhkl2DRe1cvKO2J7xl2m6MLjBMCQ5Hl0R8FfPridACdjq8oVuUa8HXVXZ/AolexrM56eI+rpzQgj8XpKXIT6mBn8TOalNOwk4+8Ima9uUthjTainqA1B7KFJpxktpS6NbCo2Ve2+yOcjoYA2rlbD460bMNUkdFCA==
+cAoHBPzYjrgEKJVm4iLyfd/NV5YRezL27mvdgEAQzZluK89tZ8R2e0gFCeSlgbAVb9vAvUX79vEgqkJ7bPTyaPnPjOlIu+fOwR7uNEmz6rGu4Sd9GTJjMSjEnhimnu4JKh19Uzh/YR8zQPJJ2xJIB+dxmi9UyR5ekgWTib+8hYSZH85g3yPoJ5NvS+H0SCd42aDS/iLmBfY8ctrPrEQaCwqL4f+7jUKRk5bOw2DzOcvhGxsz5fugen+eyg+Tr+Wkd215JsQU5Xxy8p3pkip1AtH2N4DXwwHby0/B7mWwZlOUI3eFB6IBWd9jFPu7+6rGqWl+8zjuLGS1dUYT3jrwHA==
