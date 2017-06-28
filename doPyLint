@@ -1,5 +1,4 @@
 # xlcrypto_py/doPyLint
 
-pylint setup.py  xlcrypto   \
-    test*.py
+pylint setup.py  src/ tests/
 
