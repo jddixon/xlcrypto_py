@@ -5,6 +5,7 @@ then
   cd $DEV_BASE/py/xlcrypto_py
   
   autopep8 -air src tests
+  autopep8 -ai  setup.py
   
 else
   echo "DEV_BASE is not defined"

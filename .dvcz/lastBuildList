@@ -7,49 +7,41 @@ Giaje1YAJPNVBt3dlOA5lhBp4GpSYBskJ9UR2Zyt3lgAGK3dEwxYETLMh9VWEV8i
 k2lyCIE/V/CDb9eVDYQgYSJYrnQ/JAPST7NbcY8aI+/0l7QVBhLBpmOCvmS6ofvz
 /QIDAQAB
 -----END PUBLIC KEY-----
-xlcrypto_py v0.0.18
-2017-06-28 20:54:14
+xlcrypto_py v0.0.19
+2017-08-02 01:02:05
 # BEGIN CONTENT #
 xlcrypto_py
- .cache
-  v
-   cache
-    lastfailed d6a8523608eaee931cd1758688f024b230093279
  .dvcz
-  builds e3b16be3f711d74438d3291825b629525d1a870a
+  builds 43e6b8387c21f8d50b8c14680cefc811721dfe28
   copyright 04e8696e6424c21d717e46008780505d598eb59a
-  lastBuildList 5636594428ce22c11a7b3ea07aba2bb2dbc02d4c
+  lastBuildList 630d055e4e3c11bdba0e0b31a9da05fee1889e56
   license 5977a55c75bb4612004451a56b0b4c22d9d3311d
-  projCfg d83e381e4ea11a08235babc70c1cc952f1a4e534
+  projCfg 1ae05f1bb77449a0631b948959eddd0bebe39292
   projCfg.local 0f549c45fdb61775161f03b21be6ea78814f1f28
-  version d8487f323208028da9f1e1548314162d7e1894bb
+  version ce92abec4409f0b665a38b3aeefeb33129af0bf2
  .gitignore 680b1aca0d2418b3b46a7e426df8bd31bd00e64f
  .gitignore.local dc759996ca1366caf080fde4a98d37e39e382eae
- CHANGES 3f0341d2163ebc24386a84416de49e56b3a52669
+ CHANGES a1e0c76dd21b761e146c38154292c5d1211bdee0
  LICENSE-MIT.md aec2b90058ed291d26eef53badc44802cda9bcde
- MANIFEST.in 198cf22bb8566b233bfb8cacdbc6b40f184f3e1a
+ MANIFEST.in 4adf906b2cd5a5e68a3d78a36d9c643627646b7e
  README.md 94d8aa3428a6f918946e468260961d3892df4f0f
  TODO 1aa1b43b3c1716d6d77e435714ba39a9de21cdd7
  bkp2U 191660507830a3f66cb2e9b202581270fd3ad38f
- checkCoverage d63e623bbf624a18d6b9e89c028cbb15c0756f1c
- countem b6ab31cc8f0558f2fa280479f6bcdc1bcbd6811d
- doPyLint aee2db880d28f286acc18c7850e556ffe6a8915c
+ checkCoverage a11ebf3c71f3a2258f94f6439df298867a66ccbe
+ countem 4274fe854ba4d657f71e744630f2f751d4b09bc1
+ doPyLint 31321ad99eb3b9ac0928a68c29a8b5b88c9472fb
  ghpDoc
   index.md 37dd9879289663fec039cdea6fae1b76570285c6
  installit 94fbe89a36fe62a37d5408ff095f03aeedf01dd6
- name-pairs-lib bf83850144893f1e2c52d37d3d7aa83da3a8539e
- name-pairs-test ac9176f595343bd1f363c096e9a692d7a43a614c
  pylintrc 6f006c8c1bad3195ddbe19db7db8bae9372c45ab
- renameInLib 39d05b03a92bd252bddea048910c220559ca612d
- renameInTest ccf606977c55c6d2c6c083bfaa22e0321337476f
- setup.py 6cb306aeb9b16ad81c2ac3805c3ff15609fab928
+ setup.py ef69b479117369cfe6cf5efd32272f5d7881a75e
  src
   xlcrypto
-   __init__.py 1fb8e5f29828a6d00b3f2e5dd7ba16e781a3577a
+   __init__.py 68ba59445a150ccf1612307377800e5864722aae
    filters
     __init__.py 9176e00c48cf4dfb09399eb0e7a9bbcec25276bb
- styleit 74173eb2c19c841a858fe616b0aaf0fbe82f1179
- test.all 6819d2bafeda03c2fd2cd07fa5df48c82229b21f
+ styleit 7a814827f2fcb2cd1ba3bdb6c651822d465587a4
+ test.all 056b4e635ed4d13c89fb399f7a122ea8c9842255
  tests
   test_bloom_sha.py 1128e8da4d54a29dfe6d84a2a60d1722f45e2428
   test_counting_bloom.py 510f24aaeb3ef680d0ac66b9b4fb101ab154d089
@@ -57,4 +49,4 @@ xlcrypto_py
   test_nibble_counters.py f239af10e283aff6264de479f38377069307a632
 # END CONTENT #
 
-NHg7wQ3hx3qejQKDPqKr/MaUonoJO06FPx1b3l4WLZ2XgrWqlqTcZNzEVJzB384c+LXdMPvJyoOgs8VHgdzVWzlknHYUlgXwIOeXK7zYEqIQgv6QOITTFHYf+qEQVYjfVk1iQnRlq0OMxsydtupg3N1MTQNkzwUug35vetXXNtOaOhWqAdn0wIEm7it2bx9rru8U0J+PgHZgyGbB6gyWH+HLPIyyNb8PtaGUmh8/c8G4+RYlzCNGOXkxSs3ez0iIbrO1n1AqAAp+B6Xm8hWNNcoNB1iM08q6OS/opIuDB9rWrlvW7OgNg8qFP8igwspZDeCVnR18nSeOrUxmug5ENQ==
+FPKOvsRHNzlvLJmaagW/gHOpBtDDE/jiMaZ7UBbsSjXvJSOcBmI+Prz6FleFz8QrQGlusQazSY0ucGizurf7W8cOzMKVLnwDVSyQfEB50qhDFAZnBYdPAEgY0z+GU49ssNAqrEJGzoFooB1zgieZXJjwerRZFTOAA0aoonWi6ETsEJh2ZPMTK7YeGkQ200oC76xdlSKMnv8l9yCHlGc6g9TA6xtCwUXFFHaPrf5J4D1jop6gBHDNFfxLepGFWzyCfM7m+WqzMmUBKfcKKJMdIQeRjwkLGZiFDKc+C2pNJ3Gz82cvv9ZKATN0eHr54EPnXvlAY5mr020fS+OhUuL/xQ==

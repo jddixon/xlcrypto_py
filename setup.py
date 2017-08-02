@@ -1,35 +1,34 @@
 #!/usr/bin/python3
-# ~/dev/py/xlcrypto_py/setup.py
+# xlcrypto_py/setup.py
 
-""" Set up distutils for xlcrypto_py. """
+""" Setuptools project configuration for xlcrypto_py. """
 
-import re
-from distutils.core import setup
-__version__ = re.search(r"__version__\s*=\s*'(.*)'",
-                        open('src/xlcrypto/__init__.py').read()).group(1)
+from os.path import exists
+from setuptools import setup
 
-# see http://docs.python.org/distutils/setupscript.html
+long_desc = None
+if exists('README.md'):
+    with open('README.md', 'r') as file:
+        long_desc = file.read()
 
 setup(name='xlcrypto_py',
-      version=__version__,
+      version='0.0.19',
       author='Jim Dixon',
       author_email='jddixon@gmail.com',
-      #
-      # wherever we have a .py file that will be imported, we
-      # list it here, without the .py extension but SQuoted
+      long_description=long_desc,
+      packages=['xlcrypto', 'xlcrypto.filters'],
+      package_dir={'': 'src'},
       py_modules=[],
-      #
-      packages=['src/xlcrypto','src/xlcrypto/filters', ],
-      #
-      # following could be in scripts/ subdir; SQuote
+      include_package_data=False,
+      zip_safe=False,
       scripts=[],
       description='crypto layer for xlattice_py',
-      url='https://jddixon/github.io/xlcrypto_py',
+      url='https://jddixon.github.io/xlcrypto_py',
       classifiers=[
           'Development Status :: 2 - Pre-Alpha',
           'Intended Audience :: Developers',
           'License :: OSI Approved :: MIT License',
           'Natural Language :: English',
-          'Programming Language :: Python 3',
+          'Programming Language :: Python 3.5',
           'Topic :: Software Development :: Libraries :: Python Modules',
       ],)
