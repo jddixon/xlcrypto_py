@@ -1,12 +1,10 @@
 # see http://docs.python.org/distutils/sourcedist.html
 
-include netDistrib.conf
 include CHANGES LICENSE* MANIFEST.in README* TODO
-include bkp2U check* countem doPyLint installit pylintrc setup.py \
-    styleit test.al
-recursive-include src tests
+include bkp2U checkCoverage countem doPyLint installit pylintrc styleit test.all
+include setup.py setup.cfg
+recursive-include src *
+recursive-include tests *
 recursive-include ghpDoc *
-global-exclude junk* .*swp 
+global-exclude junk* .*swp *.pyc __pycache__ *.bak
 prune   .svn
-
-

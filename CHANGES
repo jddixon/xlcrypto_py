@@ -1,5 +1,8 @@
 # py/xlcrypto_py/CHANGES
 
+v0.0.19
+    2017-08-01
+        * rewrite setup.py; edit cfg files                          SLOC 1110
 v0.0.18
     2017-06-28
         * restructure for pytest                                    SLOC 1103
@@ -54,6 +57,7 @@ v0.0.2
 v0.0.1
     2017-02-19
         * initial commit
+
 
 
 
