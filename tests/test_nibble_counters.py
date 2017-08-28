@@ -5,7 +5,7 @@
 
 import time
 import unittest
-from hashlib import sha1, sha256 as sha2
+# from hashlib import sha1, sha256 as sha2
 
 from rnglib import SimpleRNG
 from xlcrypto import XLFilterError
@@ -30,12 +30,13 @@ class TestNibbleCounters(unittest.TestCase):
         # count up through all possible values and beyond
         for i in range(18):
             # DEBUG
-            #print("  up %2d" % i)
+            # print("  up %2d" % i)
             # END
             value = counters.inc(filter_bit)
             if i < 15:
                 self.assertEqual(value, i + 1,
-                                 "bit %d:  error adding 1 to %d" % (filter_bit, i))
+                                 "bit %d: error adding 1 to %d" % (
+                                     filter_bit, i))
             else:
                 self.assertEqual(value, 15,
                                  "bit %d:  overflow error" % filter_bit)
@@ -43,12 +44,13 @@ class TestNibbleCounters(unittest.TestCase):
         # count back down
         for i in range(18):
             # DEBUG
-            #print("  down %2d" % i)
+            # print("  down %2d" % i)
             # END
             value = counters.dec(filter_bit)
             if i < 15:
                 self.assertEqual(value, 14 - i,
-                                 "bit %d filter_bit: error subtracting 1 from %d" % (
+                                 ("bit %d filter_bit: " +
+                                  "error subtracting 1 from %d") % (
                                      filter_bit, 15 - i))
             else:
                 self.assertEqual(value, 0,

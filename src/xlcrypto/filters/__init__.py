@@ -4,12 +4,12 @@
 """ Bloom filter for fixed length keys which are usually SHA hashes. """
 
 from threading import Lock
-from binascii import b2a_hex
+# from binascii import b2a_hex
 from copy import deepcopy
 from math import exp
 
-from xlattice.u import SHA1_BIN_LEN
-from xlcrypto import XLCryptoError, XLFilterError
+# from xlattice.u import SHA1_BIN_LEN
+from xlcrypto import XLFilterError
 
 __all__ = ['MIN_M', 'MIN_K', 'BloomSHA', 'NibbleCounters']
 
@@ -91,7 +91,7 @@ class BloomSHA(object):
         self._lock = Lock()
 
         # DEBUG
-        # print("Bloom ctor: m = %d, k = %d, filter_bits = %d, filter_bytes = %d" % (
+        # print("Bloom ctor: m %d, k %d, filter_bits %d, filter_bytes %d" % (
         #    self._mm, self._kk, self._filter_bits, self._filter_bytes))
         # END
 
@@ -311,12 +311,12 @@ class NibbleCounters(object):
         else:
             value = cur_byte & 0xf
         # DEBUG
-        #print("bit %6d: value 0x%x => " % (filter_bit, value), end='')
+        # print("bit %6d: value 0x%x => " % (filter_bit, value), end='')
         # END
         if value < 0xf:
             value += 1          # increment counter, ignoring any overflow
         # DEBUG
-        #print("0x%x  " % value, end='')
+        # print("0x%x  " % value, end='')
         # END
 
         if upper_nibble:
@@ -356,12 +356,12 @@ class NibbleCounters(object):
         else:
             value = cur_byte & 0xf
         # DEBUG
-        #print("bit %6d: value 0x%x => " % (filter_bit, value), end='')
+        # print("bit %6d: value 0x%x => " % (filter_bit, value), end='')
         # END
         if value > 0:
             value -= 1          # decrement counter, ignoring underflow
         # DEBUG
-        #print("0x%x  " % value, end='')
+        # print("0x%x  " % value, end='')
         # END
 
         if upper_nibble:

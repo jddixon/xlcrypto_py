@@ -39,46 +39,46 @@ class TestCountingBloom(unittest.TestCase):
 
         # m (m_exp) checks
         try:
-            _ = CountingBloom(-5)
+            CountingBloom(-5)
             self.fail("didn't catch negative filter size exponent")
         except XLFilterError:
             pass
         try:
-            _ = CountingBloom(0)
+            CountingBloom(0)
             self.fail("didn't catch zero filter size exponent")
         except XLFilterError:
             pass
 
         # checks on k (hash_count)
         try:
-            _ = CountingBloom(20, -1)
+            CountingBloom(20, -1)
             self.fail("didn't catch zero hash function count")
         except XLFilterError:
             pass
         try:
-            _ = CountingBloom(20, 0)
+            CountingBloom(20, 0)
             self.fail("didn't catch zero hash function count")
         except XLFilterError:
             pass
         try:
-            _ = CountingBloom(3, 0)
+            CountingBloom(3, 0)
             self.fail("didn't catch invalid hash function count")
         except XLFilterError:
             pass
         try:
-            _ = CountingBloom(247, 0)
+            CountingBloom(247, 0)
             self.fail("didn't catch invalid hash function count")
         except XLFilterError:
             pass
 
         try:
-            _ = CountingBloom(20, 8, -47)
+            CountingBloom(20, 8, -47)
             self.fail("didn't catch invalid key_bytes")
         except XLFilterError:
             pass
 
         try:
-            _ = CountingBloom(20, 8, 0)
+            CountingBloom(20, 8, 0)
             self.fail("didn't catch key_bytes==0")
         except XLFilterError:
             pass
@@ -113,7 +113,8 @@ class TestCountingBloom(unittest.TestCase):
         for i in range(num_key):
             keysel = KeySelector(keys[i], fltr)
             self.assertTrue(fltr.is_member(keysel),
-                            "key " + str(i) + " has been added but not found in set")
+                            "key " + str(i) +
+                            " has been added but not found in set")
 
     def test_sha_inserts(self):
         """ Test CountingBloom for various parameter settings. """
