@@ -4,8 +4,8 @@
 
 """ Exercise KeySelector functionality. """
 
-#import hashlib
-#import os
+# import hashlib
+# import os
 import time
 import unittest
 
@@ -33,14 +33,14 @@ class TestKeySelector(unittest.TestCase):
 
         bad_key = self.rng.some_bytes(15)               # wrong key length
         try:
-            _ = KeySelector(bad_key, fltr)
+            KeySelector(bad_key, fltr)
             self.fail("KeySelector accepted key with wrong length")
         except XLFilterError:
             pass
 
         good_key = self.rng.some_bytes(20)               # correct key length
         try:
-            _ = KeySelector(good_key, None)
+            KeySelector(good_key, None)
             self.fail("KeySelector accepted key with wrong length")
         except XLFilterError:
             pass

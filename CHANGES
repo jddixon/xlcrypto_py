@@ -1,5 +1,8 @@
 # py/xlcrypto_py/CHANGES
 
+v0.0.20
+    2017-08-28
+        * add tox.ini, *requirements.txt; minor edits cfg files     SLOC 1148
 v0.0.19
     2017-08-01
         * rewrite setup.py; edit cfg files                          SLOC 1110
@@ -57,6 +60,7 @@ v0.0.2
 v0.0.1
     2017-02-19
         * initial commit
+
 
 
 

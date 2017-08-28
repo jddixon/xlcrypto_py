@@ -1,9 +1,9 @@
 :?0.0.1?:
 project:xlcrypto_py
-package:xlcrypto
+package:xlcrypto.filters
 mainlang:py
-version:0.0.18
-versionDate:2017-06-28
+version:0.0.19
+versionDate:2017-08-01
 :?dirs?:
 dir:std:ghpDoc
 dir:std:dist
@@ -28,6 +28,9 @@ code:std:pylintrc
 code:std:.coveragerc
 code:std:check.summary
 code:std:MANIFEST.in
+code:std:tox.ini
+code:std:requirements.txt
+code:std:test_requirements.txt
 txt:std:LICENSE-MIT.md
 txt:std:CHANGES
 txt:std:README.md

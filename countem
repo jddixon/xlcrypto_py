@@ -6,7 +6,7 @@ then
   
   rm -rf build/* tmp/* 
   
-  pySloc -L py  -X cover -X htmlcov -X dist -v $@ src/xlcrypto src/xlcrypto/filters tests/test_bloom_sha.py tests/test_counting_bloom.py tests/test_key_selector.py tests/test_nibble_counters.py setup.py
+  pySloc -L py  -X cover -X htmlcov -X dist -v $@ src/xlcrypto src/xlcrypto/filters tox.ini requirements.txt test_requirements.txt tests/test_bloom_sha.py tests/test_counting_bloom.py tests/test_key_selector.py tests/test_nibble_counters.py setup.py
 else
   echo "DEV_BASE is not defined"
 fi
