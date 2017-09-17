@@ -7,25 +7,25 @@ Giaje1YAJPNVBt3dlOA5lhBp4GpSYBskJ9UR2Zyt3lgAGK3dEwxYETLMh9VWEV8i
 k2lyCIE/V/CDb9eVDYQgYSJYrnQ/JAPST7NbcY8aI+/0l7QVBhLBpmOCvmS6ofvz
 /QIDAQAB
 -----END PUBLIC KEY-----
-xlcrypto_py v0.0.20
-2017-08-28 19:15:43
+xlcrypto_py v0.0.21
+2017-09-17 23:49:57
 # BEGIN CONTENT #
 xlcrypto_py
  .cache
   v
    cache
-    lastfailed 4e78f4bdd2f0f5532983fd9c1cfef512f739b602
+    lastfailed bf21a9e8fbc5a3846fb05b4fa0859e0917b2202f
  .dvcz
-  builds b96d9203f0ae8c04a3cac9b4af456c6237a3fb48
+  builds 1bc2104561ef3fe9c302aa6c1d25cda1f1fcb40c
   copyright 04e8696e6424c21d717e46008780505d598eb59a
-  lastBuildList 6da71434d001246a1a6e5ec0a034a078c65bbaa1
+  lastBuildList 63808f7a72bd3602e14ff397e42c8c3bb83ff744
   license 5977a55c75bb4612004451a56b0b4c22d9d3311d
   projCfg 836e66e693dec2578d9f85e43775b8f4921b8879
   projCfg.local 0f549c45fdb61775161f03b21be6ea78814f1f28
-  version d0b0e23796fd7e03145951c630cfb88efec5e43e
+  version 16e9286109b771e02f9f391f052819325dc9f115
  .gitignore 7de6b56ffe9e21d458fd606f462f7854743e09bb
  .gitignore.local dc759996ca1366caf080fde4a98d37e39e382eae
- CHANGES d7f492791a94133c9175c48f9db556d174130cd6
+ CHANGES 254d074117fdbddd4aa5b15485d33803e1dffba6
  LICENSE-MIT.md aec2b90058ed291d26eef53badc44802cda9bcde
  MANIFEST.in ee87ecf6928c0c4c69376734eba9cf532ce748b1
  README.md 94d8aa3428a6f918946e468260961d3892df4f0f
@@ -42,7 +42,7 @@ xlcrypto_py
  setup.py 18f54ab91461ebe69c4cdeaf75c28eebdcd6e013
  src
   xlcrypto
-   __init__.py fca34b1a5b0d099a97a2fee4ee08a001182fa087
+   __init__.py f7756f0172aaa26832a29ba21873a35d9755ee65
    filters
     __init__.py 2eab47133b29c42f3349e62237490b89037a52b5
  styleit 7a814827f2fcb2cd1ba3bdb6c651822d465587a4
@@ -53,7 +53,7 @@ xlcrypto_py
   test_counting_bloom.py 0a163e1f826853311d7caa60787efb4b553723c0
   test_key_selector.py 73aa31a66dadda807ee471f20fb956d6fa71201b
   test_nibble_counters.py 51ac112e75ef5c4af89331d5b0e944bdfd1e5bc6
- tox.ini 6b02a6d36001bdd1ec3d10d4371924be65452eb8
+ tox.ini dee542eec0c141e874d5aa704397ed61a727179d
 # END CONTENT #
 
-c4H0MCdREjDO3QqJvJ7XUjwdpFDFIrM3dBUwRTDnVtjBmWHdNogJIzzYCE2e3XPFHOmwdNRLIIMFvUE0R6/cZSAJbEmXRJjpweNnXQNUqbveeXFjtpN0nb6LdsG6tD6/ubfVrTHTkT3pOomwhOzkyx39E8TJ020MBd3tsgBTAJGaI3NNbt2/teAFeehEFz3I4rtqqWokNFkVYM5pKOVQwD1obhmn7TnlkMw6KQWDalXKE+qll4psCvhgST35SZsix/B3pdAPor91Sbnxe7TjVt7cShdX0mNWHdgBd/sZIc/0m4D8hrSSmi8AePyM8i3VfOY02jaGi+2nImxjMcciug==
+g1MTADpB0ZF0yjIWX5u9hixwbbidip9mTr/RzBhthAVLhHuQ3OT7HhvmrdmZXtk0AquuqWfrNLb6Np3+70jQ5WvTRrjEdZ70jVkTsSberLPnx5HieUWxqUG4At38dSld0762zHGvqT9X/icKXvBI2eouTdPE0IqGztowdC4NlbYwUCIl2Xc8zbZaonV+fJp9Kyp9JPYjEg60pU8CBBt2Na7elQTFIBqpMQQAKM0p7+ydRccLFzmkcxjkjpKwtfX/UNUfOXXk//f0TkNoos29NnjZ+ax6ytXIuDRavFo7FzW4pwKJuY90eV+TfWt53nM8yhfAMaJbuH9In5NXfQtPTw==
