@@ -12,7 +12,7 @@ if exists('README.md'):
         long_desc = file.read()
 
 setup(name='xlcrypto_py',
-      version='0.0.20',
+      version='0.0.22',
       author='Jim Dixon',
       author_email='jddixon@gmail.com',
       long_description=long_desc,
@@ -22,6 +22,7 @@ setup(name='xlcrypto_py',
       include_package_data=False,
       zip_safe=False,
       scripts=[],
+      ext_modules=[],
       description='crypto layer for xlattice_py',
       url='https://jddixon.github.io/xlcrypto_py',
       classifiers=[
