@@ -7,25 +7,22 @@ Giaje1YAJPNVBt3dlOA5lhBp4GpSYBskJ9UR2Zyt3lgAGK3dEwxYETLMh9VWEV8i
 k2lyCIE/V/CDb9eVDYQgYSJYrnQ/JAPST7NbcY8aI+/0l7QVBhLBpmOCvmS6ofvz
 /QIDAQAB
 -----END PUBLIC KEY-----
-xlcrypto_py v0.0.21
-2017-09-17 23:49:57
+xlcrypto_py v0.0.22
+2017-10-10 17:12:10
 # BEGIN CONTENT #
 xlcrypto_py
- .cache
-  v
-   cache
-    lastfailed bf21a9e8fbc5a3846fb05b4fa0859e0917b2202f
  .dvcz
-  builds 1bc2104561ef3fe9c302aa6c1d25cda1f1fcb40c
+  builds b39bb8ac07bab76431c6861d00ce8ea3c10e013f
   copyright 04e8696e6424c21d717e46008780505d598eb59a
-  lastBuildList 63808f7a72bd3602e14ff397e42c8c3bb83ff744
+  lastBuildList 4750d99e92f6afcde2e3452e98b3c24f20124af5
   license 5977a55c75bb4612004451a56b0b4c22d9d3311d
   projCfg 836e66e693dec2578d9f85e43775b8f4921b8879
   projCfg.local 0f549c45fdb61775161f03b21be6ea78814f1f28
-  version 16e9286109b771e02f9f391f052819325dc9f115
+  projConfig.toml 32df548c630fd07da6217b452e339d31450eeef0
+  version 15a3c63880880e5681fbc2576ccbdda2e2291976
  .gitignore 7de6b56ffe9e21d458fd606f462f7854743e09bb
  .gitignore.local dc759996ca1366caf080fde4a98d37e39e382eae
- CHANGES 254d074117fdbddd4aa5b15485d33803e1dffba6
+ CHANGES f70e19afc36b72aa86fd2c780d191a6f4c605fe2
  LICENSE-MIT.md aec2b90058ed291d26eef53badc44802cda9bcde
  MANIFEST.in ee87ecf6928c0c4c69376734eba9cf532ce748b1
  README.md 94d8aa3428a6f918946e468260961d3892df4f0f
@@ -39,10 +36,10 @@ xlcrypto_py
  installit 94fbe89a36fe62a37d5408ff095f03aeedf01dd6
  pylintrc 6f006c8c1bad3195ddbe19db7db8bae9372c45ab
  requirements.txt 75341c9582d8e4cea089b5f9faf1b37499ed82ed
- setup.py 18f54ab91461ebe69c4cdeaf75c28eebdcd6e013
+ setup.py 5145cd177c92cbd7afe75cbc6e0a0bdf8b05bb85
  src
   xlcrypto
-   __init__.py f7756f0172aaa26832a29ba21873a35d9755ee65
+   __init__.py db45f35227c0c708b1f0c8f01ec4e89097da0eb8
    filters
     __init__.py 2eab47133b29c42f3349e62237490b89037a52b5
  styleit 7a814827f2fcb2cd1ba3bdb6c651822d465587a4
@@ -56,4 +53,4 @@ xlcrypto_py
  tox.ini dee542eec0c141e874d5aa704397ed61a727179d
 # END CONTENT #
 
-g1MTADpB0ZF0yjIWX5u9hixwbbidip9mTr/RzBhthAVLhHuQ3OT7HhvmrdmZXtk0AquuqWfrNLb6Np3+70jQ5WvTRrjEdZ70jVkTsSberLPnx5HieUWxqUG4At38dSld0762zHGvqT9X/icKXvBI2eouTdPE0IqGztowdC4NlbYwUCIl2Xc8zbZaonV+fJp9Kyp9JPYjEg60pU8CBBt2Na7elQTFIBqpMQQAKM0p7+ydRccLFzmkcxjkjpKwtfX/UNUfOXXk//f0TkNoos29NnjZ+ax6ytXIuDRavFo7FzW4pwKJuY90eV+TfWt53nM8yhfAMaJbuH9In5NXfQtPTw==
+ci+GWuN62BqtEpCJyaxvlycfYOrciGQV5dVs006DkokP6GCePWGKPHo2s13oYVw+1lwPmGkeLef1Gy9LZBCrj7hB2ArAAoQwjDMsuWQJBfcDn/BgeIQm++VI838MFBXNxNvnpyxO+k0A5tJ1LumeraW2KmOygyb0O9w+l9fApsGVOPQ+Uv+DvGTS4I5lRcP1Ui9aYCxGDiEgQHrcqmXGD6q8XvmgEXlZxIq4GS9FmkQLdnkyF0NbIbD/vSBFgcf8KHOR6KPlwd3BO1+pNOYPPV/nyZxmyct3/xL7zfYst+Pesj5ah0+sgv4kWa/dIZNf1rwAQziR35/ERsN691aGQA==
