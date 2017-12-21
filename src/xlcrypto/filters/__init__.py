@@ -97,14 +97,17 @@ class BloomSHA(object):
 
     @property
     def m(self):
+        """ Return m, the number of bits in the filter (default == 20). """
         return self._mm
 
     @property
     def k(self):
+        """ Return k, the number of hash functions. """
         return self._kk
 
     @property
     def key_bytes(self):
+        """ Length in bytes of acceptable keys (default == 20 bytes). """
         return self._key_bytes
 
     def _do_clear(self):
@@ -211,11 +214,12 @@ class BloomSHA(object):
 class KeySelector(object):
 
     def __init__(self, key, bloom):
-        if key is None or len(key) == 0:
+        if not key:
             raise XLFilterError(
                 "key being added to KeySelector may not be None or empty")
         self._key = bytes(deepcopy(key))      # so immutable
 
+        # XXX Weak test.
         if bloom is None:
             raise XLFilterError("bloom may not be None")
 
@@ -253,14 +257,17 @@ class KeySelector(object):
 
     @property
     def bitsel(self):
+        """ Return the bit selector. """
         return self._bitsel
 
     @property
     def bytesel(self):
+        """ Return the byte selector. """
         return self._bytesel
 
     @property
     def key(self):
+        """ Return the value of the key associated with the selector. """
         return self._key
 
 # ===================================================================

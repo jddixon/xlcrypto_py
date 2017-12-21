@@ -21,13 +21,13 @@ class TestNibbleCounters(unittest.TestCase):
     """
 
     def do_nibble_test_bit(self, counters, filter_bit):
+        """ Count up through all possible values and beyond. """
         value = 0
 
         # DEBUG
         # print("do_nibble_test_bit: filter_bit %6d" % filter_bit)
         # END
 
-        # count up through all possible values and beyond
         for i in range(18):
             # DEBUG
             # print("  up %2d" % i)
@@ -51,7 +51,7 @@ class TestNibbleCounters(unittest.TestCase):
                 self.assertEqual(value, 14 - i,
                                  ("bit %d filter_bit: " +
                                   "error subtracting 1 from %d") % (
-                                     filter_bit, 15 - i))
+                                      filter_bit, 15 - i))
             else:
                 self.assertEqual(value, 0,
                                  "bit %d: underflow error" % filter_bit)
