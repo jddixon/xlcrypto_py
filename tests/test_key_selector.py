@@ -46,6 +46,7 @@ class TestKeySelector(unittest.TestCase):
             pass
 
     def test_key_selectors(self):
+        """ Verify that key selectors work as expected for 20-byte keys. """
 
         m = 20                  # m: size of filter as power of two: 2**20 bits
         k = 8                   # k: number of filters

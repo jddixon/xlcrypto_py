@@ -1,34 +1,30 @@
-projConfig.toml for xlcrypto_py
-
 [meta]
-    version = '0.1.0'
+version = "0.1.0"
 
 [project]
-    name = 'xlcrypto_py'  # distro name
-    package = 'xlcrypto_py'  # internal name
-    proj_dir = '/home/jdd/dev/py/xlcrypto_py'
-    main_lang = 'py'
-    version = '0.0.22'
-    version_date = '2017-10-10'
-    author = 'Jim Dixon'
-    author_email = 'jddixon@gmail.com'
-    copyright = '2017'
-    description = 'crypto layer for xlattice_py'
-    dev_status = 'pre_alpha'
-    license = 'mit'
-    state = 'shared'
-    url = 'https://jddixon.github.io/xlcrypto_py'
+name = "xlcrypto_py"
+package = "xlcrypto_py"
+proj_dir = "/home/jdd/dev/py/xlcrypto_py"
+main_lang = "py"
+version = "0.0.23"
+version_date = "2017-12-21"
+author = "Jim Dixon"
+author_email = "jddixon@gmail.com"
+copyright = "2017"
+description = "crypto layer for xlattice_py"
+dev_status = "pre_alpha"
+license = "mit"
+state = "shared"
+url = "https://jddixon.github.io/xlcrypto_py"
 
 [py]
-    packages=['xlcrypto', 'xlcrypto.filters']
-    package_dir = ['src']
-    test_dir = ['tests']
-    py_modules=[]
-    scripts=[]
-    ext_modules=[]
-
-    # sdReq output
-    distshare=['rnglib']
-    env_vars=[]
-    requirements=['setuptools']
-    test_requirements=[]
+packages = [ "xlcrypto", "xlcrypto.filters",]
+package_dir = [ "src",]
+test_dir = [ "tests",]
+py_modules = []
+scripts = []
+ext_modules = []
+distshare = [ "rnglib",]
+env_vars = []
+requirements = [ "setuptools",]
+test_requirements = []
