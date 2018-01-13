@@ -1,4 +1,4 @@
-# xlattice_py/xlattice/pyca_hello_and_reply.py
+# xlcrypto_py/src/xlcrypto/hello_and_reply.py
 
 """
 Implementation of the hello-and-reply protocol.

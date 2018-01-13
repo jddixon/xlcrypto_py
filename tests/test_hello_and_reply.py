@@ -13,7 +13,7 @@ from cryptography.hazmat.primitives.asymmetric import rsa
 
 import rnglib
 from xlattice.crypto import AES_BLOCK_BYTES
-import xlattice.pyca_hello_and_reply as hr
+from xlcrypto import hello_and_reply as hr
 from xlattice.util import DecimalVersion, parse_decimal_version
 from xlattice import SHA1_BIN_LEN
 

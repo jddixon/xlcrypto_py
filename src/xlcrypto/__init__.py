@@ -2,8 +2,8 @@
 
 """ Crypto library for python XLattice packages. """
 
-__version__ = '0.1.0'
-__version_date__ = '2018-01-09'
+__version__ = '0.1.1'
+__version_date__ = '2018-01-13'
 
 
 # class XLFilterError(XLCryptoError):

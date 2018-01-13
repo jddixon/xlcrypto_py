@@ -1,5 +1,8 @@
 # py/xlcrypto_py/CHANGES
 
+v0.1.1
+    2018-01-13
+        *
 v0.1.0
     2018-01-09
         * add test_rsa.py, [test_]hello_and_reply.py                SLOC 1734
@@ -72,6 +75,7 @@ v0.0.2
 v0.0.1
     2017-02-19
         * initial commit
+
 
 
 
