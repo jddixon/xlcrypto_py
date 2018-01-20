@@ -10,8 +10,8 @@ if sys.version_info < (3, 6):
     import sha3                     # pysha3 monkey-patches hashlib
     from pyblake2 import blake2b
 
-__version__ = '0.2.0'
-__version_date__ = '2018-01-19'
+__version__ = '0.2.1'
+__version_date__ = '2018-01-20'
 
 
 __all__ = ['AES_BLOCK_BITS', 'AES_BLOCK_BYTES',
