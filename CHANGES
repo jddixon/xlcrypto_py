@@ -1,5 +1,8 @@
 # py/xlcrypto_py/CHANGES
 
+v0.2.2
+    2018-01-21
+        * add XLSHA3, update test                                   SLOC 2132
 v0.2.1
     2018-01-20
         * add XLSHA2 and test                                       SLOC 2096
@@ -81,6 +84,7 @@ v0.0.2
 v0.0.1
     2017-02-19
         * initial commit
+
 
 
 

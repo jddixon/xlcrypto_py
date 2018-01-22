@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-""" Test functionality of 160-bit SHA2 hash. """
+""" Test functionality of 256-bit SHA2 hash. """
 
 import sys
 import unittest
