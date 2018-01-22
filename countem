@@ -12,7 +12,7 @@ then
       tests/test_bloom_sha.py tests/test_counting_bloom.py \
       tests/test_key_selector.py tests/test_nibble_counters.py \
       tests/test_pkcs7.py tests/test_pyca_pkcs7.py \
-      tests/test_sha1.py test_sha2.py test_sha3_256.py \
+      tests/test_sha1.py test_sha2.py test_sha3_256.py test_blake2b.py \
       tests/test_spaces.py \
       setup.py
 else
