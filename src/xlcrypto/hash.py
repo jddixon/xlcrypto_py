@@ -7,10 +7,11 @@ from xlattice import SHA1_BIN_LEN, SHA2_BIN_LEN, SHA3_BIN_LEN, BLAKE2B_BIN_LEN
 from xlcrypto import XLHash
 
 if sys.version_info < (3, 6):
+    from pyblake2 import blake2b
+
     # pylint:disable=unused-import
     import sha3                     # pysha3    - monkey-patches hashhlib
     # assert sha3                   # suppress warnings
-    from pyblake2 import blake2b
 
 
 class XLSHA1(XLHash):
