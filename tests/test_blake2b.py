@@ -38,14 +38,10 @@ class TestBLAKE2B_256(unittest.TestCase):
         sha = XLBLAKE2B()
 
         # Verify it has the right properties ...
-        self.assertEqual(sha.hash_name, self.BLAKE2B_NAME)
-        self.assertEqual(sha.digest_size, self.DIGEST_SIZE)
-        self.assertEqual(len(sha.digest), self.DIGEST_SIZE)
-        self.assertEqual(len(sha.hexdigest), self.DIGEST_SIZE * 2)
-
-        # we shouldn't be able to assign to properties
-        self.assertRaises(AttributeError, setattr, sha, "digest", 42)
-        self.assertRaises(AttributeError, setattr, sha, "hash_name", "foo")
+        self.assertEqual(sha.hash_name(), self.BLAKE2B_NAME)
+        self.assertEqual(sha.digest_size(), self.DIGEST_SIZE)
+        self.assertEqual(len(sha.digest()), self.DIGEST_SIZE)
+        self.assertEqual(len(sha.hexdigest()), self.DIGEST_SIZE * 2)
 
         # byte strings are acceptable parameters
         XLBLAKE2B(b"foo")
@@ -64,8 +60,8 @@ class TestBLAKE2B_256(unittest.TestCase):
         """ Verify that the value of BLAKE2B_{BIN,HEX}_NONE is as expected. """
         sha = XLBLAKE2B()
         sha.update(b'')
-        self.assertEqual(sha.hexdigest, BLAKE2B_HEX_NONE)
-        self.assertEqual(sha.digest, BLAKE2B_BIN_NONE)
+        self.assertEqual(sha.hexdigest(), BLAKE2B_HEX_NONE)
+        self.assertEqual(sha.digest(), BLAKE2B_BIN_NONE)
 
     def test_unicode_to_hex_vectors(self):
         """ Verify that the test vectors in U2H_VECTORS compute correctly."""
@@ -84,7 +80,7 @@ class TestBLAKE2B_256(unittest.TestCase):
             for _ in range(4):
                 count = 16 + rng.next_int16(48)
                 data = rng.some_bytes(count)
-                my_hex = XLBLAKE2B(data).hexdigest
+                my_hex = XLBLAKE2B(data).hexdigest()
                 expected = pyblake2.blake2b(data, digest_size=32).hexdigest()
                 self.assertEqual(my_hex, expected)
 
@@ -100,14 +96,14 @@ class TestBLAKE2B_256(unittest.TestCase):
 
         # shortcut passes bytes to constructor
         sha = XLBLAKE2B(bin_in)
-        self.assertEqual(sha.hexdigest, expected_hex_out)
-        self.assertEqual(sha.digest, expected_bin_out)
+        self.assertEqual(sha.hexdigest(), expected_hex_out)
+        self.assertEqual(sha.digest(), expected_bin_out)
 
         # longer version has an explicit update call
         sha = XLBLAKE2B()
         sha.update(bin_in)
-        self.assertEqual(sha.hexdigest, expected_hex_out)
-        self.assertEqual(sha.digest, expected_bin_out)
+        self.assertEqual(sha.hexdigest(), expected_hex_out)
+        self.assertEqual(sha.digest(), expected_bin_out)
 
         # we can also hash the binary value byte by byte
         sha = XLBLAKE2B()
@@ -115,8 +111,8 @@ class TestBLAKE2B_256(unittest.TestCase):
             xxx = bytearray(1)
             xxx[0] = b_val
             sha.update(xxx)
-        self.assertEqual(sha.hexdigest, expected_hex_out)
-        self.assertEqual(sha.digest, expected_bin_out)
+        self.assertEqual(sha.hexdigest(), expected_hex_out)
+        self.assertEqual(sha.digest(), expected_bin_out)
 
 
 if __name__ == "__main__":

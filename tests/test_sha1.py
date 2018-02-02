@@ -30,15 +30,16 @@ class TestSHA1(unittest.TestCase):
 
         sha = XLSHA1()
 
-        # Verify it has the right properties ...
-        self.assertEqual(sha.hash_name, self.SHA1_NAME)
-        self.assertEqual(sha.digest_size, self.DIGEST_SIZE)
-        self.assertEqual(len(sha.digest), self.DIGEST_SIZE)
-        self.assertEqual(len(sha.hexdigest), self.DIGEST_SIZE * 2)
+        # Verify it has the right attributes ...
+        # DEBUG
+        print("TYPE hash_name: ", type(sha.hash_name()))
+        print("    value:      ", sha.hash_name())
+        # END
 
-        # we shouldn't be able to assign to properties
-        self.assertRaises(AttributeError, setattr, sha, "digest", 42)
-        self.assertRaises(AttributeError, setattr, sha, "hash_name", "foo")
+        self.assertEqual(sha.hash_name(), self.SHA1_NAME)
+        self.assertEqual(sha.digest_size(), self.DIGEST_SIZE)
+        self.assertEqual(len(sha.digest()), self.DIGEST_SIZE)
+        self.assertEqual(len(sha.hexdigest()), self.DIGEST_SIZE * 2)
 
         # byte strings are acceptable parameters
         XLSHA1(b"foo")
@@ -57,8 +58,8 @@ class TestSHA1(unittest.TestCase):
         """ Verify that the value of SHA1_{BIN,HEX}_NONE is as expected. """
         sha = XLSHA1()
         sha.update(b'')
-        self.assertEqual(sha.hexdigest, SHA1_HEX_NONE)
-        self.assertEqual(sha.digest, SHA1_BIN_NONE)
+        self.assertEqual(sha.hexdigest(), SHA1_HEX_NONE)
+        self.assertEqual(sha.digest(), SHA1_BIN_NONE)
 
     def test_unicode_to_hex_vectors(self):
         """ Verify that the test vectors in U2H_VECTORS compute correctly."""
@@ -75,7 +76,7 @@ class TestSHA1(unittest.TestCase):
         for _ in range(4):
             count = 16 + rng.next_int16(48)
             data = rng.some_bytes(count)
-            my_hex = XLSHA1(data).hexdigest
+            my_hex = XLSHA1(data).hexdigest()
             expected = hashlib.sha1(data).hexdigest()
             self.assertEqual(my_hex, expected)
 
@@ -91,14 +92,14 @@ class TestSHA1(unittest.TestCase):
 
         # shortcut passes bytes to constructor
         sha = XLSHA1(bin_in)
-        self.assertEqual(sha.hexdigest, expected_hex_out)
-        self.assertEqual(sha.digest, expected_bin_out)
+        self.assertEqual(sha.hexdigest(), expected_hex_out)
+        self.assertEqual(sha.digest(), expected_bin_out)
 
         # longer version has an explicit update() call
         sha = XLSHA1()
         sha.update(bin_in)
-        self.assertEqual(sha.hexdigest, expected_hex_out)
-        self.assertEqual(sha.digest, expected_bin_out)
+        self.assertEqual(sha.hexdigest(), expected_hex_out)
+        self.assertEqual(sha.digest(), expected_bin_out)
 
         # we can also hash the binary value byte by byte
         sha = XLSHA1()
@@ -106,8 +107,8 @@ class TestSHA1(unittest.TestCase):
             xxx = bytearray(1)
             xxx[0] = b_val
             sha.update(xxx)
-        self.assertEqual(sha.hexdigest, expected_hex_out)
-        self.assertEqual(sha.digest, expected_bin_out)
+        self.assertEqual(sha.hexdigest(), expected_hex_out)
+        self.assertEqual(sha.digest(), expected_bin_out)
 
 
 if __name__ == "__main__":

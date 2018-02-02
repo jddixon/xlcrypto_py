@@ -24,27 +24,29 @@ class XLSHA1(XLHash):
         """ Add data to the internal hash. """
         self._hash.update(data)
 
-    @property
     def digest(self):
         """ Return a fixed-length binary digest, a bytes-like value. """
         return self._hash.digest()
 
-    @property
     def hexdigest(self):
         """ Return a fixed-length hex digest, a string. """
         return self._hash.hexdigest()
 
     # these are actually class attributes
 
-    @property
-    def hash_name(self):
-        """ Return a standard name for the hash. """
-        return "sha1"
-
-    @property
     def digest_size(self):
         """ Return digest size in bytes, an integer value. """
         return SHA1_BIN_LEN
+
+    @classmethod
+    def hash_name(cls):
+        """ Return a standard name for the hash. """
+        return "sha1"
+
+    @classmethod
+    def lib_func(cls):
+        """ The implementing library function. """
+        return hashlib.sha1
 
 
 class XLSHA2(XLHash):
@@ -57,27 +59,29 @@ class XLSHA2(XLHash):
         """ Add data to the internal hash. """
         self._hash.update(data)
 
-    @property
     def digest(self):
         """ Return a fixed-length binary digest, a bytes-like value. """
         return self._hash.digest()
 
-    @property
     def hexdigest(self):
         """ Return a fixed-length hex digest, a string. """
         return self._hash.hexdigest()
 
     # these are actually class attributes
 
-    @property
-    def hash_name(self):
-        """ Return a standard name for the hash. """
-        return "sha2"
-
-    @property
     def digest_size(self):
         """ Return digest size in bytes, an integer value. """
         return SHA2_BIN_LEN
+
+    @classmethod
+    def hash_name(cls):
+        """ Return a standard name for the hash. """
+        return "sha2"
+
+    @classmethod
+    def lib_func(cls):
+        """ The implementing library function. """
+        return hashlib.sha256
 
 
 class XLSHA3(XLHash):
@@ -90,27 +94,29 @@ class XLSHA3(XLHash):
         """ Add data to the internal hash. """
         self._hash.update(data)
 
-    @property
     def digest(self):
         """ Return a fixed-length binary digest, a bytes-like value. """
         return self._hash.digest()
 
-    @property
     def hexdigest(self):
         """ Return a fixed-length hex digest, a string. """
         return self._hash.hexdigest()
 
     # these are actually class attributes
 
-    @property
-    def hash_name(self):
-        """ Return a standard name for the hash. """
-        return "sha3"
-
-    @property
     def digest_size(self):
         """ Return digest size in bytes, an integer value. """
         return SHA3_BIN_LEN
+
+    @classmethod
+    def hash_name(cls):
+        """ Return a standard name for the hash. """
+        return "sha3"
+
+    @classmethod
+    def lib_func(cls):
+        """ The implementing library function. """
+        return hashlib.sha3_256
 
 
 class XLBLAKE2B(XLHash):
@@ -128,24 +134,26 @@ class XLBLAKE2B(XLHash):
         """ Add data to the internal hash. """
         self._hash.update(data)
 
-    @property
     def digest(self):
         """ Return a fixed-length binary digest, a bytes-like value. """
         return self._hash.digest()
 
-    @property
     def hexdigest(self):
         """ Return a fixed-length hex digest, a string. """
         return self._hash.hexdigest()
 
     # these are actually class attributes
 
-    @property
-    def hash_name(self):
-        """ Return a standard name for the hash. """
-        return "blake2b"
-
-    @property
     def digest_size(self):
         """ Return digest size in bytes, an integer value. """
         return BLAKE2B_BIN_LEN
+
+    @classmethod
+    def hash_name(cls):
+        """ Return a standard name for the hash. """
+        return "blake2b"
+
+    @classmethod
+    def lib_func(cls):
+        """ The implementing library function. """
+        return hashlib.blake2b

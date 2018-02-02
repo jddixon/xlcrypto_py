@@ -1,5 +1,8 @@
 # py/xlcrypto_py/CHANGES
 
+v0.2.5
+    2018-02-02
+        * dropped @property lines, other hash library fixes         SLOC 2286
 v0.2.4
     2018-02-01
         * add very rough pbkdf2                                     SLOC 2285
@@ -90,6 +93,7 @@ v0.0.2
 v0.0.1
     2017-02-19
         * initial commit
+
 
 
 

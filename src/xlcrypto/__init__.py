@@ -10,8 +10,8 @@ if sys.version_info < (3, 6):
     import sha3                     # pysha3 monkey-patches hashlib
     from pyblake2 import blake2b
 
-__version__ = '0.2.4'
-__version_date__ = '2018-02-01'
+__version__ = '0.2.5'
+__version_date__ = '2018-02-02'
 
 
 __all__ = ['AES_BLOCK_BITS', 'AES_BLOCK_BYTES',
@@ -51,10 +51,16 @@ class XLHash(object):
     def hexdigest(self, data):
         raise NotImplementedError
 
+    def digest_size(self):
+        raise NotImplementedError
+
+    @classmethod
     def hash_name(self):
         raise NotImplementedError
 
-    def digest_size(self):
+    @classmethod
+    def lib_func(self):
+        """ The implementing library. """
         raise NotImplementedError
 
 #####################################################################

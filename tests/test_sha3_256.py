@@ -36,14 +36,10 @@ class TestSHA3_256(unittest.TestCase):
         sha = XLSHA3()
 
         # Verify it has the right properties ...
-        self.assertEqual(sha.hash_name, self.SHA3_NAME)
-        self.assertEqual(sha.digest_size, self.DIGEST_SIZE)
-        self.assertEqual(len(sha.digest), self.DIGEST_SIZE)
-        self.assertEqual(len(sha.hexdigest), self.DIGEST_SIZE * 2)
-
-        # we shouldn't be able to assign to properties
-        self.assertRaises(AttributeError, setattr, sha, "digest", 42)
-        self.assertRaises(AttributeError, setattr, sha, "hash_name", "foo")
+        self.assertEqual(sha.hash_name(), self.SHA3_NAME)
+        self.assertEqual(sha.digest_size(), self.DIGEST_SIZE)
+        self.assertEqual(len(sha.digest()), self.DIGEST_SIZE)
+        self.assertEqual(len(sha.hexdigest()), self.DIGEST_SIZE * 2)
 
         # byte strings are acceptable parameters
         XLSHA3(b"foo")
@@ -62,8 +58,8 @@ class TestSHA3_256(unittest.TestCase):
         """ Verify that the value of SHA3_{BIN,HEX}_NONE is as expected. """
         sha = XLSHA3()
         sha.update(b'')
-        self.assertEqual(sha.hexdigest, SHA3_HEX_NONE)
-        self.assertEqual(sha.digest, SHA3_BIN_NONE)
+        self.assertEqual(sha.hexdigest(), SHA3_HEX_NONE)
+        self.assertEqual(sha.digest(), SHA3_BIN_NONE)
 
     def test_unicode_to_hex_vectors(self):
         """ Verify that the test vectors in U2H_VECTORS compute correctly."""
@@ -80,7 +76,7 @@ class TestSHA3_256(unittest.TestCase):
         for _ in range(4):
             count = 16 + rng.next_int16(48)
             data = rng.some_bytes(count)
-            my_hex = XLSHA3(data).hexdigest
+            my_hex = XLSHA3(data).hexdigest()
             expected = hashlib.sha3_256(data).hexdigest()
             self.assertEqual(my_hex, expected)
 
@@ -96,14 +92,14 @@ class TestSHA3_256(unittest.TestCase):
 
         # shortcut passes bytes to constructor
         sha = XLSHA3(bin_in)
-        self.assertEqual(sha.hexdigest, expected_hex_out)
-        self.assertEqual(sha.digest, expected_bin_out)
+        self.assertEqual(sha.hexdigest(), expected_hex_out)
+        self.assertEqual(sha.digest(), expected_bin_out)
 
         # longer version has an explicit update call
         sha = XLSHA3()
         sha.update(bin_in)
-        self.assertEqual(sha.hexdigest, expected_hex_out)
-        self.assertEqual(sha.digest, expected_bin_out)
+        self.assertEqual(sha.hexdigest(), expected_hex_out)
+        self.assertEqual(sha.digest(), expected_bin_out)
 
         # we can also hash the binary value byte by byte
         sha = XLSHA3()
@@ -111,8 +107,8 @@ class TestSHA3_256(unittest.TestCase):
             xxx = bytearray(1)
             xxx[0] = b_val
             sha.update(xxx)
-        self.assertEqual(sha.hexdigest, expected_hex_out)
-        self.assertEqual(sha.digest, expected_bin_out)
+        self.assertEqual(sha.hexdigest(), expected_hex_out)
+        self.assertEqual(sha.digest(), expected_bin_out)
 
 
 if __name__ == "__main__":
