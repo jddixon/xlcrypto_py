@@ -8,7 +8,7 @@ k2lyCIE/V/CDb9eVDYQgYSJYrnQ/JAPST7NbcY8aI+/0l7QVBhLBpmOCvmS6ofvz
 /QIDAQAB
 -----END PUBLIC KEY-----
 xlcrypto_py
-2018-02-02 20:53:16
+2018-02-04 00:22:29
 # BEGIN CONTENT #
 xlcrypto_py
  .cache
@@ -16,36 +16,36 @@ xlcrypto_py
    cache
     lastfailed bf21a9e8fbc5a3846fb05b4fa0859e0917b2202f
  .dvcz
-  builds 31a6a917d14d2b9505bd10dfd8b5d17b41598bfc
-  lastBuildList e34495b2eb9813307740c0430d32739459479ffa
+  builds 4cc479b1dbac434b2c413fe6b0a6ff534f260e91
+  lastBuildList b567f561bc66735ddeef95ab01fbd67fc3c2bc96
   projCfg 836e66e693dec2578d9f85e43775b8f4921b8879
   projCfg.local 0f549c45fdb61775161f03b21be6ea78814f1f28
-  projConfig.toml a261635b3e7e01139929955afb48dfc85cdb941e
+  projConfig.toml 6f59350d9d362ed3ffe4eb6d8c24f6b1641fb068
  .gitignore 7de6b56ffe9e21d458fd606f462f7854743e09bb
  .gitignore.local dc759996ca1366caf080fde4a98d37e39e382eae
- CHANGES d87c355a6cdcbe653ca8db8a4c768226d3a956b1
+ CHANGES a26a8f98fc205619ceb7c9a06f9304f11427a4d0
  LICENSE-MIT.md aec2b90058ed291d26eef53badc44802cda9bcde
  MANIFEST.in ee87ecf6928c0c4c69376734eba9cf532ce748b1
  README.md 94d8aa3428a6f918946e468260961d3892df4f0f
- TODO 1aa1b43b3c1716d6d77e435714ba39a9de21cdd7
+ TODO 2467a6bf252416bdf35b0e6975e05eb33c62f1cc
  bkp2U 191660507830a3f66cb2e9b202581270fd3ad38f
  checkCoverage a11ebf3c71f3a2258f94f6439df298867a66ccbe
- countem 3328b406291e8b22c5c0f74269b621a0f6e5d026
+ countem cb49a45cb36f1bd50b5b7f9a7b11b03336aadb4a
  doPyLint 31321ad99eb3b9ac0928a68c29a8b5b88c9472fb
  ghpDoc
   index.md 37dd9879289663fec039cdea6fae1b76570285c6
  installit 94fbe89a36fe62a37d5408ff095f03aeedf01dd6
  pylintrc 6f006c8c1bad3195ddbe19db7db8bae9372c45ab
  requirements.txt 75341c9582d8e4cea089b5f9faf1b37499ed82ed
- setup.py 434ce5686f3ebfa801f678148970c664d9d7502b
+ setup.py 6ad24db3465358a9ac8c2c17259678d6626a8d8a
  src
   xlcrypto
-   __init__.py 94d9e90d570b6019f87d7cc47423f64e802a0d93
+   __init__.py cbb73be50a12acfe957c75a962b7b495a290d5c2
    filters
     __init__.py f0f0f17e99ca6efb41ca78559fb26ae66d93dc2a
    hash.py d57bfd6d5c947f05e2721cc8708f13fefdf77fe0
    hello_and_reply.py 29ba7dbceb46d110b88c851825a47265bf8f4cb3
-   keyderiv.py 33c1e2841f1da0ac0e639beefcdab80970d9f2b8
+   keyderiv.py 0b66bb5ac1db2e73686d5ddab24dd89a35fce017
  styleit 7a814827f2fcb2cd1ba3bdb6c651822d465587a4
  test.all 056b4e635ed4d13c89fb399f7a122ea8c9842255
  test_requirements.txt 8c680bc51ac4df7f9eee28c8ee7c59cff68e90df
@@ -56,6 +56,7 @@ xlcrypto_py
   test_hello_and_reply.py 93ca5a124fc3badfd6ba1237d4fd695d9263de1b
   test_key_selector.py 69638c354df98af740dc540ee7f4017f9f166bb4
   test_nibble_counters.py 6ef3ab24dea16ead99d3f0983ab70aa81918d572
+  test_pbkdf2.py bfc846ef196bcbf0b1071c53eefd7516ffdabcb7
   test_pkcs7.py 4ae8ed42be07a80866a1e53d78fcb523d9639a6c
   test_pyca_pkcs7.py e2d062233746b27c5a4f3851add21b457819a59d
   test_rsa.py 76a8eae9d859c7c3d3a95ee747ceff4f602850f1
@@ -66,4 +67,4 @@ xlcrypto_py
  tox.ini dee542eec0c141e874d5aa704397ed61a727179d
 # END CONTENT #
 
-Z5Qzho7S14DAGgSCdrAaaLEdOeYyQBMLj+CFFZN8iaRJfCrkLBf468sVJDeg3KLwlFXAEm4iL/RQ0eQZX3YCMXfclujrFnl5xn4KC3XBS1pWfud1t+rFt9pdHo5FsqZ3fnYzb6xaDvipCvad84UXgljmU2cVM0Cyo44/yjauUAfFz06gqMLFoE0iayMCFSWeKvTx6GAr7+nZU0EDhx9hvUs4ExQMStkuINF5Dtq3WBW0Ov5sm1NxItI4Zugrovn64Spj6TUWm81WSeSSVJMGdLfdEDrfflj5PkycmJpAiREWDqgGa5VlqsFuJck0eiUxeveUo8+rMAU2EUAGJHOB3Q==
+eRtjfuPUarlYswO0zbSek0lGLB08ePUqImBkHWJsuokTK2LlYznu/PLVURTzk88Z+Pcu74fSVIlVyYkQwitu5XwXiBxk/LB2NtQbAkqRk1DEQ03pjrIruHLSHvn7bXGGVfHoOzlKQeBEqsjdvy+MkMXFSUTmic9184Ip22qjcqEpwh+z/vML49LXZ6N3BFY1MJGgkJrmW1wmgkPriVNaRQYFMIJ9ki9rFbswvhVzzjg2K3knZKOTJhmJ+lXtDgVYWyTifjN8pp1osF1ia/4CK++MGEBcnuPaEN+fCYrkJmUpIZ5zPhv0wb6cHPLo4N3VFMTt6Mt0/hOWMmwBSxk7+w==

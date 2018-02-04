@@ -1,9 +1,18 @@
 py/xlcrypto_py/TODO
 
+2018-02-03
+    * elaborate keyderiv code to handle python >= (3.6) SHA3 and
+        BLAKE2B
+    * elaborate keyderiv test code to handle python <(3.6) using
+        dlitz PBKDF2, pysha3, pyblake2
+
+2018-02-02
+    * need key_deriv tests                                              * DONE
+
 2017-04-14
     * test_counting_bloom.py needs to be elaborated to actually 
         test counters (currently just verifies that it is equivalent
-        to BloomSHA
+        to BloomSHA)
 
 2017-04-10
     * resurrect KeySelector class to avoid repeated calculation         * DONE
