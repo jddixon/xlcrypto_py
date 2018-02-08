@@ -1,5 +1,32 @@
 # py/xlcrypto_py/CHANGES
 
+v0.2.6
+    2018-02-03
+        * improve pbkdf2(), add test_keyderiv.py                    SLOC 2327
+v0.2.5
+    2018-02-02
+        * dropped @property lines, other hash library fixes         SLOC 2286
+v0.2.4
+    2018-02-01
+        * add very rough pbkdf2                                     SLOC 2285
+v0.2.3
+    2018-01-22
+        * add XLBLAKE2B and test                                    SLOC 2261
+v0.2.2
+    2018-01-21
+        * add XLSHA3, update test                                   SLOC 2132
+v0.2.1
+    2018-01-20
+        * add XLSHA2 and test                                       SLOC 2096
+v0.2.0
+    2018-01-19
+        * add XLHash, XLSHA1, and test_sha1                         SLOC 1997
+v0.1.1
+    2018-01-13
+        *
+v0.1.0
+    2018-01-09
+        * add test_rsa.py, [test_]hello_and_reply.py                SLOC 1734
 v0.0.23
     2017-12-21
         * pylinting, general code cleanup                           SLOC 1188
@@ -69,6 +96,15 @@ v0.0.2
 v0.0.1
     2017-02-19
         * initial commit
+
+
+
+
+
+
+
+
+
 
 
 

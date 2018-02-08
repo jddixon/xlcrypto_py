@@ -3,10 +3,20 @@
 if [ ! -z "${DEV_BASE// }" ]
 then
   cd $DEV_BASE/py/xlcrypto_py
-  
-  rm -rf build/* tmp/* 
-  
-  pySloc -L py  -X cover -X htmlcov -X dist -v $@ src/xlcrypto src/xlcrypto/filters tox.ini requirements.txt test_requirements.txt tests/test_bloom_sha.py tests/test_counting_bloom.py tests/test_key_selector.py tests/test_nibble_counters.py setup.py
+
+  rm -rf build/* tmp/*
+
+  pySloc -L py  -X cover -X htmlcov -X dist -v $@ \
+      src/xlcrypto src/xlcrypto/filters src/xlcrypto/hash \
+      src/xlcrypto/keyderiv \
+      tox.ini requirements.txt test_requirements.txt \
+      tests/test_bloom_sha.py tests/test_counting_bloom.py \
+      tests/test_keyderiv.py \
+      tests/test_key_selector.py tests/test_nibble_counters.py \
+      tests/test_pkcs7.py tests/test_pyca_pkcs7.py \
+      tests/test_sha1.py test_sha2.py test_sha3_256.py test_blake2b.py \
+      tests/test_spaces.py \
+      setup.py
 else
   echo "DEV_BASE is not defined"
 fi

@@ -8,7 +8,6 @@ from threading import Lock
 from copy import deepcopy
 from math import exp
 
-# from xlattice.u import SHA1_BIN_LEN
 from xlcrypto import XLFilterError
 
 __all__ = ['MIN_M', 'MIN_K', 'BloomSHA', 'NibbleCounters']
