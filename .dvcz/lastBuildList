@@ -8,7 +8,7 @@ k2lyCIE/V/CDb9eVDYQgYSJYrnQ/JAPST7NbcY8aI+/0l7QVBhLBpmOCvmS6ofvz
 /QIDAQAB
 -----END PUBLIC KEY-----
 xlcrypto_py
-2018-02-04 00:22:29
+2018-02-16 18:34:53
 # BEGIN CONTENT #
 xlcrypto_py
  .cache
@@ -16,18 +16,18 @@ xlcrypto_py
    cache
     lastfailed bf21a9e8fbc5a3846fb05b4fa0859e0917b2202f
  .dvcz
-  builds 4cc479b1dbac434b2c413fe6b0a6ff534f260e91
-  lastBuildList b567f561bc66735ddeef95ab01fbd67fc3c2bc96
+  builds 713950c668db0df6990635ceaad81b207cfdd558
+  lastBuildList 56f4af47725586487bd0369921f11583ab509ef2
   projCfg 836e66e693dec2578d9f85e43775b8f4921b8879
   projCfg.local 0f549c45fdb61775161f03b21be6ea78814f1f28
-  projConfig.toml 6f59350d9d362ed3ffe4eb6d8c24f6b1641fb068
+  projConfig.toml 42855ca141db340298fb4592b38c3d1293516aee
  .gitignore 7de6b56ffe9e21d458fd606f462f7854743e09bb
  .gitignore.local dc759996ca1366caf080fde4a98d37e39e382eae
- CHANGES a26a8f98fc205619ceb7c9a06f9304f11427a4d0
+ CHANGES 805de3dc6f8f5ee59f4e0d37e502cdca0b98fe48
  LICENSE-MIT.md aec2b90058ed291d26eef53badc44802cda9bcde
  MANIFEST.in ee87ecf6928c0c4c69376734eba9cf532ce748b1
  README.md 94d8aa3428a6f918946e468260961d3892df4f0f
- TODO 2467a6bf252416bdf35b0e6975e05eb33c62f1cc
+ TODO e85858c7d17a26b9bc4377e9e20c912635552d7f
  bkp2U 191660507830a3f66cb2e9b202581270fd3ad38f
  checkCoverage a11ebf3c71f3a2258f94f6439df298867a66ccbe
  countem cb49a45cb36f1bd50b5b7f9a7b11b03336aadb4a
@@ -37,34 +37,71 @@ xlcrypto_py
  installit 94fbe89a36fe62a37d5408ff095f03aeedf01dd6
  pylintrc 6f006c8c1bad3195ddbe19db7db8bae9372c45ab
  requirements.txt 75341c9582d8e4cea089b5f9faf1b37499ed82ed
- setup.py 6ad24db3465358a9ac8c2c17259678d6626a8d8a
+ setup.py 10dec771d7b9baa6188e7630ae28d5ffb57cdf94
+ sha-3bytetestvectors
+  SHA3_224LongMsg.rsp 984954b6a45f247de5d1a771e3b09ae9086c2b25
+  SHA3_224Monte.rsp 34d4abdc2efa0b0833cbb5aeb2d4be949667c17f
+  SHA3_224ShortMsg.rsp fe478887c5018279e4e2b3711e776b215424bd7f
+  SHA3_256LongMsg.rsp 93fc49acc49cb2909092ac80155fa5a19532a3e7
+  SHA3_256Monte.rsp b105627432384a0ebc2574b19df3c5db6f66467b
+  SHA3_256ShortMsg.rsp a3de98d901dd86269b241e5903d5c14cc1fb4454
+  SHA3_384LongMsg.rsp b582c5eaafb7678d228b3816c84da4092705c271
+  SHA3_384Monte.rsp fa5477db544b8c3299ff72db43d92694fe889cf8
+  SHA3_384ShortMsg.rsp 2b089675ab22f85405c9337201f60ba10c54421f
+  SHA3_512LongMsg.rsp ec09bc7268516609deab60252303a2b8a05beed2
+  SHA3_512Monte.rsp 5803af4f257a4711d19f82b7fa2075383d760704
+  SHA3_512ShortMsg.rsp ee5e92afaee49d6173d681ab36f81efc1fb9a503
+ sha-3bytetestvectors.zip 9e357c33540ecd4ab9b1da6e7a7bddee6f39358a
+ shabytetestvectors
+  Readme.txt ac303ad2c3ceecde11c45b6a2a9ac8f7333d9a21
+  SHA1LongMsg.rsp 9a606b6a1e664034e418eb62d2a5eedd3c64c24b
+  SHA1Monte.rsp 8fed45e29ca2d03408e093fd5a445b570af14a73
+  SHA1Monte.txt 877355edf20a45b5c91d4afa72174ddc046db35e
+  SHA1ShortMsg.rsp 6e27f73154e85d4f4ce6e50fe51e916137c24cb5
+  SHA224LongMsg.rsp eba6c47733e7dea0d8d4cfe983dd243725ed4be7
+  SHA224Monte.rsp f711f44f261f47536e7fdabe1a320afd03604314
+  SHA224Monte.txt ea3af0d22f0a81ad0b478c0f5969c4f07abbc761
+  SHA224ShortMsg.rsp 021e86b8a8ccbb4758a6cd90f7be907b8166712a
+  SHA256LongMsg.rsp 82eca3572e0c729f2bc398cc2e5df25a99ad3851
+  SHA256Monte.rsp 1f0dd62d814a35e16c7670bd8a3cf5e06862870d
+  SHA256Monte.txt e138d51b35a0a319df9f87e64ad5d79c48d745d9
+  SHA256ShortMsg.rsp 6113e99fee3552416c63d15c300b3a32f481f251
+  SHA384LongMsg.rsp 0d0ebbd9f16002ade691a6bab30d142edab432cc
+  SHA384Monte.rsp 7a21ef58b4f53f51b4b9f183ccf696ef7d090bad
+  SHA384Monte.txt 7e130944488821b28e5846a54b97e39c3084afa3
+  SHA384ShortMsg.rsp 82eba1d3583b2523aa730e6686883213c087a2d7
+  SHA512LongMsg.rsp bfa07135d50c4ae82613f140280c4d5a9a72edb7
+  SHA512Monte.rsp 293d7b2930bc1249f13783b53336dead4ecf7253
+  SHA512Monte.txt ba04eac4d23fa9497520b8a5da34d88fe6f62435
+  SHA512ShortMsg.rsp 0ed816cd4766f6b7455b76649e730f481a228228
+ shabytetestvectors.zip 8b4e9182b0eb855810fe42033866b5c0e3156f19
  src
   xlcrypto
-   __init__.py cbb73be50a12acfe957c75a962b7b495a290d5c2
+   __init__.py 5eb042324d2a903940fad876eb36896e0edd0190
    filters
     __init__.py f0f0f17e99ca6efb41ca78559fb26ae66d93dc2a
    hash.py d57bfd6d5c947f05e2721cc8708f13fefdf77fe0
-   hello_and_reply.py 29ba7dbceb46d110b88c851825a47265bf8f4cb3
+   hello_and_reply.py 5116caad98dc260419fc18a2f023ba3c4a55ce06
    keyderiv.py 0b66bb5ac1db2e73686d5ddab24dd89a35fce017
  styleit 7a814827f2fcb2cd1ba3bdb6c651822d465587a4
  test.all 056b4e635ed4d13c89fb399f7a122ea8c9842255
  test_requirements.txt 8c680bc51ac4df7f9eee28c8ee7c59cff68e90df
  tests
-  test_blake2b.py a23daffe32032cdfbb1bc04226b547245078d7c5
+  test_blake2b.py 699530c4fc3479bb54cd72aa59259d5b8a383def
   test_bloom_sha.py d7d5fc07d20d00a12146f01bc768e642505a7bca
   test_counting_bloom.py 0a163e1f826853311d7caa60787efb4b553723c0
-  test_hello_and_reply.py 93ca5a124fc3badfd6ba1237d4fd695d9263de1b
+  test_hello_and_reply.py dc7d5384fb87e3ee1e43d5b709debc281db63608
   test_key_selector.py 69638c354df98af740dc540ee7f4017f9f166bb4
   test_nibble_counters.py 6ef3ab24dea16ead99d3f0983ab70aa81918d572
   test_pbkdf2.py bfc846ef196bcbf0b1071c53eefd7516ffdabcb7
-  test_pkcs7.py 4ae8ed42be07a80866a1e53d78fcb523d9639a6c
-  test_pyca_pkcs7.py e2d062233746b27c5a4f3851add21b457819a59d
+  test_pkcs7.py 30208200843bc90067585385d2980ea927d8cb65
+  test_pyca_pkcs7.py 3428cb316f313f2aed095b0e9d35af938676a827
   test_rsa.py 76a8eae9d859c7c3d3a95ee747ceff4f602850f1
-  test_sha1.py 60aec113c565fc13fde558689bee225d5747f7dc
-  test_sha2.py b78d1bc98e71bdca2878ce63ddbf7fbc8cdd7095
-  test_sha3_256.py 642fca4e80a002d40955783234e3b18f1319ab87
-  test_spaces.py 1603d6af33c59e285b6ce9e5069d026848f4a76d
+  test_sha1.py 0a73edc18652c2e3e5f9d6386c8701201272e715
+  test_sha2.py 674b9e63c5a44fcea79da4ec82b0a6b1a25632e8
+  test_sha3_256.py 2196f40a382f8bbc9cad74a794e585458d1ef6b2
+  test_spaces.py 4650ce4dbbb103898491735f8745c187b60abc09
  tox.ini dee542eec0c141e874d5aa704397ed61a727179d
 # END CONTENT #
 
-eRtjfuPUarlYswO0zbSek0lGLB08ePUqImBkHWJsuokTK2LlYznu/PLVURTzk88Z+Pcu74fSVIlVyYkQwitu5XwXiBxk/LB2NtQbAkqRk1DEQ03pjrIruHLSHvn7bXGGVfHoOzlKQeBEqsjdvy+MkMXFSUTmic9184Ip22qjcqEpwh+z/vML49LXZ6N3BFY1MJGgkJrmW1wmgkPriVNaRQYFMIJ9ki9rFbswvhVzzjg2K3knZKOTJhmJ+lXtDgVYWyTifjN8pp1osF1ia/4CK++MGEBcnuPaEN+fCYrkJmUpIZ5zPhv0wb6cHPLo4N3VFMTt6Mt0/hOWMmwBSxk7+w==
+h68aiNhZW7EM7S473pFaEo/XpnXSKiheGjQOFi1Wn/c7sAu/4s/KqCcR0QeSFSJccGkEI8zRhRDweR5cp1OPTNE64pX5QAW8X1YbIZ9IrWFx6AXMegBEX25WWsa6OKcgECfsKE7yT2rUy1nsR5O/qh48hiQzVId4cSmm2JV4YUSyiiFMx5NMXnM59Rs/GhHMA2wQ45BA0PhrJnP+xrOoNj7099UVMctucdVZPqr6kZfzQyk2SFYQarzpY5bcVzkg7RrsSzXxzjsTd4fLo9Zl33DBMUZm8Sqh+LIdr/kVN1mfbVaynzv70GVnuauOvSZjD9X2t+4h/T8DBCrJfIMObg==

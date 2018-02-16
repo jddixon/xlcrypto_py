@@ -1,6 +1,7 @@
 py/xlcrypto_py/TODO
 
 2018-02-03
+    * document = explain the pbkdf2 dklen parameter
     * elaborate keyderiv code to handle python >= (3.6) SHA3 and
         BLAKE2B
     * elaborate keyderiv test code to handle python <(3.6) using

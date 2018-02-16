@@ -24,9 +24,9 @@ class TestBLAKE2B_256(unittest.TestCase):
     BLAKE2B_NAME = "blake2b"      # 256-bit version
     DIGEST_SIZE = 32        # bytes
     U2H_VECTORS = [
-        ('',
+        (b'',
          '0e5751c026e543b2e8ab2eb06099daa1d1e5df47778f7787faab45cdf12fe3a8'),
-        ('abc',
+        (b'abc',
          'bddd813c634239723171ef3fee98579b94964e3bb1cb3e427262c8c068d52319'),
         # GET MORE FROM NIST DOCS
 
@@ -65,9 +65,8 @@ class TestBLAKE2B_256(unittest.TestCase):
 
     def test_unicode_to_hex_vectors(self):
         """ Verify that the test vectors in U2H_VECTORS compute correctly."""
-        for uni_in, expected_hex_out in self.U2H_VECTORS:
-            bin_in = uni_in.encode('utf-8')     # .hex()
-            self.do_test_bin_in_out(bin_in, expected_hex_out)
+        for bytes_in, expected_hex_out in self.U2H_VECTORS:
+            self.do_test_bytes_in_out(bytes_in, expected_hex_out)
 
     def test_random_value(self):
         """
@@ -84,7 +83,7 @@ class TestBLAKE2B_256(unittest.TestCase):
                 expected = pyblake2.blake2b(data, digest_size=32).hexdigest()
                 self.assertEqual(my_hex, expected)
 
-    def do_test_bin_in_out(self, bin_in, expected_hex_out):
+    def do_test_bytes_in_out(self, bytes_in, expected_hex_out):
         """
         Verify that the binary input value hashes to the expected
         hex output value.
@@ -95,19 +94,19 @@ class TestBLAKE2B_256(unittest.TestCase):
         self.assertEqual(len(expected_bin_out), self.DIGEST_SIZE)
 
         # shortcut passes bytes to constructor
-        sha = XLBLAKE2B(bin_in)
+        sha = XLBLAKE2B(bytes_in)
         self.assertEqual(sha.hexdigest(), expected_hex_out)
         self.assertEqual(sha.digest(), expected_bin_out)
 
         # longer version has an explicit update call
         sha = XLBLAKE2B()
-        sha.update(bin_in)
+        sha.update(bytes_in)
         self.assertEqual(sha.hexdigest(), expected_hex_out)
         self.assertEqual(sha.digest(), expected_bin_out)
 
         # we can also hash the binary value byte by byte
         sha = XLBLAKE2B()
-        for b_val in bin_in:
+        for b_val in bytes_in:
             xxx = bytearray(1)
             xxx[0] = b_val
             sha.update(xxx)

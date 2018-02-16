@@ -12,9 +12,9 @@ from cryptography.hazmat.primitives.asymmetric import rsa
 # from cryptography.hazmat.primitives.hashes import SHA256
 
 import rnglib
-from xlattice.crypto import AES_BLOCK_BYTES
+from xlcrypto import AES_BLOCK_BYTES
 from xlcrypto import hello_and_reply as hr
-from xlattice.util import DecimalVersion, parse_decimal_version
+from xlutil import DecimalVersion, parse_decimal_version
 from xlattice import SHA1_BIN_LEN
 
 KEY_BITS = 2048

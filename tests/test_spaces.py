@@ -5,7 +5,7 @@
 
 import unittest
 from rnglib import SimpleRNG
-from xlattice.crypto import SP
+from xlcrypto import SP
 
 
 class TestCrypto(unittest.TestCase):

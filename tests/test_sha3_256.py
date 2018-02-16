@@ -22,9 +22,9 @@ class TestSHA3_256(unittest.TestCase):
     SHA3_NAME = "sha3"      # 256-bit version
     DIGEST_SIZE = 32        # bytes
     U2H_VECTORS = [
-        ('',
+        (b'',
          'a7ffc6f8bf1ed76651c14756a061d662f580ff4de43b49fa82d80a4b80f8434a'),
-        ('abc',
+        (b'abc',
          '3a985da74fe225b2045c172d6bd390bd855f086e3e9d525b46bfe24511431532'),
         # GET MORE FROM NIST DOCS
 
@@ -63,9 +63,8 @@ class TestSHA3_256(unittest.TestCase):
 
     def test_unicode_to_hex_vectors(self):
         """ Verify that the test vectors in U2H_VECTORS compute correctly."""
-        for uni_in, expected_hex_out in self.U2H_VECTORS:
-            bin_in = uni_in.encode('utf-8')     # .hex()
-            self.do_test_bin_in_out(bin_in, expected_hex_out)
+        for bytes_in, expected_hex_out in self.U2H_VECTORS:
+            self.do_test_bytes_in_out(bytes_in, expected_hex_out)
 
     def test_random_value(self):
         """
@@ -80,7 +79,7 @@ class TestSHA3_256(unittest.TestCase):
             expected = hashlib.sha3_256(data).hexdigest()
             self.assertEqual(my_hex, expected)
 
-    def do_test_bin_in_out(self, bin_in, expected_hex_out):
+    def do_test_bytes_in_out(self, bytes_in, expected_hex_out):
         """
         Verify that the binary input value hashes to the expected
         hex output value.
@@ -91,19 +90,19 @@ class TestSHA3_256(unittest.TestCase):
         self.assertEqual(len(expected_bin_out), self.DIGEST_SIZE)
 
         # shortcut passes bytes to constructor
-        sha = XLSHA3(bin_in)
+        sha = XLSHA3(bytes_in)
         self.assertEqual(sha.hexdigest(), expected_hex_out)
         self.assertEqual(sha.digest(), expected_bin_out)
 
         # longer version has an explicit update call
         sha = XLSHA3()
-        sha.update(bin_in)
+        sha.update(bytes_in)
         self.assertEqual(sha.hexdigest(), expected_hex_out)
         self.assertEqual(sha.digest(), expected_bin_out)
 
         # we can also hash the binary value byte by byte
         sha = XLSHA3()
-        for b_val in bin_in:
+        for b_val in bytes_in:
             xxx = bytearray(1)
             xxx[0] = b_val
             sha.update(xxx)
