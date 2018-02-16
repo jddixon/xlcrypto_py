@@ -7,7 +7,7 @@ import time
 import unittest
 
 from rnglib import SimpleRNG
-from xlattice.crypto import(
+from xlcrypto import(
     AES_BLOCK_BYTES,
     pkcs7_padding, add_pkcs7_padding, strip_pkcs7_padding)
 

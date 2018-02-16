@@ -7,7 +7,7 @@ import time
 import unittest
 
 from rnglib import SimpleRNG
-from xlattice.crypto import AES_BLOCK_BYTES, AES_BLOCK_BITS
+from xlcrypto import AES_BLOCK_BYTES, AES_BLOCK_BITS
 from cryptography.hazmat.primitives import padding
 
 

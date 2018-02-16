@@ -14,7 +14,7 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives.hashes import SHA1
 
 from rnglib import SystemRNG
-from xlattice.crypto import AES_BLOCK_BYTES, AES_BLOCK_BITS
+from xlcrypto import AES_BLOCK_BYTES, AES_BLOCK_BITS
 
 __all__ = ['client_encrypt_hello', 'server_decrypt_hello',
            'server_encrypt_hello_reply', 'client_decrypt_hello_reply', ]

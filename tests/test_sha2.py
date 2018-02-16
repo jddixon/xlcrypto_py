@@ -17,9 +17,9 @@ class TestSHA2(unittest.TestCase):
     SHA2_NAME = "sha2"
     DIGEST_SIZE = 32    # bytes
     U2H_VECTORS = [
-        ('',
+        (b'',
          'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'),
-        ('abc',
+        (b'abc',
          'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad'),
         # GET MORE FROM NIST DOCS
 
@@ -58,9 +58,8 @@ class TestSHA2(unittest.TestCase):
 
     def test_unicode_to_hex_vectors(self):
         """ Verify that the test vectors in U2H_VECTORS compute correctly."""
-        for uni_in, expected_hex_out in self.U2H_VECTORS:
-            bin_in = uni_in.encode('utf-8')
-            self.do_test_bin_in_out(bin_in, expected_hex_out)
+        for bytes_in, expected_hex_out in self.U2H_VECTORS:
+            self.do_test_bytes_in_out(bytes_in, expected_hex_out)
 
     def test_random_value(self):
         """
@@ -75,7 +74,7 @@ class TestSHA2(unittest.TestCase):
             expected = hashlib.sha256(data).hexdigest()
             self.assertEqual(my_hex, expected)
 
-    def do_test_bin_in_out(self, bin_in, expected_hex_out):
+    def do_test_bytes_in_out(self, bytes_in, expected_hex_out):
         """
         Verify that the binary input value hashes to the expected
         hex output value.
@@ -86,19 +85,19 @@ class TestSHA2(unittest.TestCase):
         self.assertEqual(len(expected_bin_out), self.DIGEST_SIZE)
 
         # shortcut passes bytes to constructor
-        sha = XLSHA2(bin_in)
+        sha = XLSHA2(bytes_in)
         self.assertEqual(sha.hexdigest(), expected_hex_out)
         self.assertEqual(sha.digest(), expected_bin_out)
 
         # longer version has an explicit update() call
         sha = XLSHA2()
-        sha.update(bin_in)
+        sha.update(bytes_in)
         self.assertEqual(sha.hexdigest(), expected_hex_out)
         self.assertEqual(sha.digest(), expected_bin_out)
 
         # we can also hash the binary value byte by byte
         sha = XLSHA2()
-        for b_val in bin_in:
+        for b_val in bytes_in:
             xxx = bytearray(1)
             xxx[0] = b_val
             sha.update(xxx)
