@@ -1,8 +1,8 @@
 # py/xlcrypto_py/CHANGES
 
 v0.2.7
-    2018-02-16
-        *
+    2018-02-17
+        * introduce xlcrypto.padding                                SLOC 2347
 v0.2.6
     2018-02-03
         * improve pbkdf2(), add test_keyderiv.py                    SLOC 2327

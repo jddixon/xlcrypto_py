@@ -23,26 +23,12 @@ class TestPKCS7Padding(unittest.TestCase):
     def do_test_padding(self, length):
         """ length is in bytes. """
 
-#       # DEBUG
-#       def dump(title, data):
-#           print(title, end='')
-#           for ndx, datum in enumerate(data):
-#               print('%02x ' % datum, end='' )
-#           print()
-#       # END
-
         data_ = bytearray(length)
         self.rng.next_bytes(data_)
         data = bytes(data_)
 
-#       # DEBUG
-#       dump("DATA:   ", data)
-#       # END
         padder = padding.PKCS7(AES_BLOCK_BITS).padder()
         padded_data = padder.update(data) + padder.finalize()
-#       # DEBUG
-#       dump("PADDED: ", padded_data)
-#       # END
 
         # round up to the next higher number of whole blocks
         if length % AES_BLOCK_BYTES == 0:
