@@ -119,7 +119,7 @@ class XLSHA3(XLHash):
         return hashlib.sha3_256
 
 
-class XLBLAKE2B(XLHash):
+class XLBLAKE2B_256(XLHash):
     """
     Implementation of the blake2b hash algorithm with a 32-byte/256-bit digest.
     """
@@ -151,7 +151,7 @@ class XLBLAKE2B(XLHash):
     @classmethod
     def hash_name(cls):
         """ Return a standard name for the hash. """
-        return "blake2b"
+        return "blake2b_256"
 
     @classmethod
     def lib_func(cls):
