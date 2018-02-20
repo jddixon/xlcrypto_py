@@ -7,8 +7,8 @@ import time
 import unittest
 
 from rnglib import SimpleRNG
-from xlcrypto import(
-    AES_BLOCK_BYTES,
+from xlcrypto import AES_BLOCK_BYTES
+from xlcrypto.padding import(
     pkcs7_padding, add_pkcs7_padding, strip_pkcs7_padding)
 
 
@@ -21,58 +21,39 @@ class TestPKCS7Padding(unittest.TestCase):
     def tearDown(self):
         pass
 
-    # utility functions #############################################
+    def do_test_padding(self, block_bytes, data_bytes):
+        """ Both block size and data length are in bytes. """
 
-    # actual unit tests #############################################
+        data = self.rng.some_bytes(data_bytes)
+        extra = pkcs7_padding(data, block_bytes)
+        padded = data + extra
+        extra_bytes = len(extra)
+
+        # verify that value of padding bytes is in each case the length
+        for ndx, extra_byte in enumerate(extra):
+            self.assertEqual(extra_byte, extra_bytes)   # byte contains length
+
+        # verify that padded data structure is a whole number of blocks
+        self.assertEqual(len(padded) % block_bytes, 0)
+
+        # stripping ofd the padding should return the original value
+        unpadded = strip_pkcs7_padding(padded, AES_BLOCK_BYTES)
+        self.assertEqual(unpadded, data)
 
     def test_padding(self):
         """ test PKCS7 padding """
 
-        seven = bytearray(7)
-        self.rng.next_bytes(seven)
+        self.do_test_padding(AES_BLOCK_BYTES, 7)
+        self.do_test_padding(AES_BLOCK_BYTES, 8)
+        self.do_test_padding(AES_BLOCK_BYTES, 9)
 
-        fifteen = bytearray(15)
-        self.rng.next_bytes(fifteen)
+        self.do_test_padding(AES_BLOCK_BYTES, 15)
+        self.do_test_padding(AES_BLOCK_BYTES, 16)
+        self.do_test_padding(AES_BLOCK_BYTES, 17)
 
-        sixteen = bytearray(16)
-        self.rng.next_bytes(sixteen)
-
-        seventeen = bytearray(17)
-        self.rng.next_bytes(seventeen)
-
-        padding = pkcs7_padding(seven, AES_BLOCK_BYTES)
-        self.assertEqual(len(padding), AES_BLOCK_BYTES - 7)
-        self.assertEqual(padding[0], AES_BLOCK_BYTES - 7)
-
-        padding = pkcs7_padding(fifteen, AES_BLOCK_BYTES)
-        self.assertEqual(len(padding), AES_BLOCK_BYTES - 15)
-        self.assertEqual(padding[0], AES_BLOCK_BYTES - 15)
-
-        padding = pkcs7_padding(sixteen, AES_BLOCK_BYTES)
-        self.assertEqual(len(padding), AES_BLOCK_BYTES)
-        self.assertEqual(padding[0], 16)
-
-        padding = pkcs7_padding(seventeen, AES_BLOCK_BYTES)
-        expected_len = 2 * AES_BLOCK_BYTES - 17
-        self.assertEqual(len(padding), expected_len)
-        self.assertEqual(padding[0], expected_len)
-
-        padded_seven = add_pkcs7_padding(seven, AES_BLOCK_BYTES)
-        unpadded_seven = strip_pkcs7_padding(padded_seven, AES_BLOCK_BYTES)
-        self.assertEqual(seven, unpadded_seven)
-
-        paddd_fifteen = add_pkcs7_padding(fifteen, AES_BLOCK_BYTES)
-        unpaddd_fifteen = strip_pkcs7_padding(paddd_fifteen, AES_BLOCK_BYTES)
-        self.assertEqual(fifteen, unpaddd_fifteen)
-
-        padded_sixteen = add_pkcs7_padding(sixteen, AES_BLOCK_BYTES)
-        unpadded_sixteen = strip_pkcs7_padding(padded_sixteen, AES_BLOCK_BYTES)
-        self.assertEqual(sixteen, unpadded_sixteen)
-
-        padded_seventeen = add_pkcs7_padding(seventeen, AES_BLOCK_BYTES)
-        unpadded_seventeen = strip_pkcs7_padding(
-            padded_seventeen, AES_BLOCK_BYTES)
-        self.assertEqual(seventeen, unpadded_seventeen)
+        self.do_test_padding(AES_BLOCK_BYTES, 63)
+        self.do_test_padding(AES_BLOCK_BYTES, 64)
+        self.do_test_padding(AES_BLOCK_BYTES, 65)
 
 
 if __name__ == '__main__':

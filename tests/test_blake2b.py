@@ -8,7 +8,7 @@ import hashlib
 
 from rnglib import SimpleRNG
 from xlattice import BLAKE2B_HEX_NONE, BLAKE2B_BIN_NONE
-from xlcrypto.hash import XLBLAKE2B
+from xlcrypto.hash import XLBLAKE2B_256
 
 if sys.version_info < (3, 6):
     # pylint:disable=unused-import
@@ -21,7 +21,7 @@ else:
 class TestBLAKE2B_256(unittest.TestCase):
     """ Test functionality of 256-bit BLAKE2B hash. """
 
-    BLAKE2B_NAME = "blake2b"      # 256-bit version
+    BLAKE2B_NAME = "blake2b_256"      # 256-bit version
     DIGEST_SIZE = 32        # bytes
     U2H_VECTORS = [
         (b'',
@@ -35,7 +35,7 @@ class TestBLAKE2B_256(unittest.TestCase):
     def test_constructor(self):
         """ Verify that behavior of blake2b is as expected """
 
-        sha = XLBLAKE2B()
+        sha = XLBLAKE2B_256()
 
         # Verify it has the right properties ...
         self.assertEqual(sha.hash_name(), self.BLAKE2B_NAME)
@@ -44,13 +44,13 @@ class TestBLAKE2B_256(unittest.TestCase):
         self.assertEqual(len(sha.hexdigest()), self.DIGEST_SIZE * 2)
 
         # byte strings are acceptable parameters
-        XLBLAKE2B(b"foo")
-        XLBLAKE2B(data=b"foo")
+        XLBLAKE2B_256(b"foo")
+        XLBLAKE2B_256(data=b"foo")
 
         # None is not an acceptable parameter to the constructor
-        self.assertRaises(TypeError, XLBLAKE2B, None)
+        self.assertRaises(TypeError, XLBLAKE2B_256, None)
         # neitheris unicode
-        self.assertRaises(TypeError, XLBLAKE2B, "abcdef")
+        self.assertRaises(TypeError, XLBLAKE2B_256, "abcdef")
 
         # same constraints on parameters to update()
         self.assertRaises(TypeError, sha.update, None)
@@ -58,7 +58,7 @@ class TestBLAKE2B_256(unittest.TestCase):
 
     def test_constants(self):
         """ Verify that the value of BLAKE2B_{BIN,HEX}_NONE is as expected. """
-        sha = XLBLAKE2B()
+        sha = XLBLAKE2B_256()
         sha.update(b'')
         self.assertEqual(sha.hexdigest(), BLAKE2B_HEX_NONE)
         self.assertEqual(sha.digest(), BLAKE2B_BIN_NONE)
@@ -79,7 +79,7 @@ class TestBLAKE2B_256(unittest.TestCase):
             for _ in range(4):
                 count = 16 + rng.next_int16(48)
                 data = rng.some_bytes(count)
-                my_hex = XLBLAKE2B(data).hexdigest()
+                my_hex = XLBLAKE2B_256(data).hexdigest()
                 expected = pyblake2.blake2b(data, digest_size=32).hexdigest()
                 self.assertEqual(my_hex, expected)
 
@@ -94,18 +94,18 @@ class TestBLAKE2B_256(unittest.TestCase):
         self.assertEqual(len(expected_bin_out), self.DIGEST_SIZE)
 
         # shortcut passes bytes to constructor
-        sha = XLBLAKE2B(bytes_in)
+        sha = XLBLAKE2B_256(bytes_in)
         self.assertEqual(sha.hexdigest(), expected_hex_out)
         self.assertEqual(sha.digest(), expected_bin_out)
 
         # longer version has an explicit update call
-        sha = XLBLAKE2B()
+        sha = XLBLAKE2B_256()
         sha.update(bytes_in)
         self.assertEqual(sha.hexdigest(), expected_hex_out)
         self.assertEqual(sha.digest(), expected_bin_out)
 
         # we can also hash the binary value byte by byte
-        sha = XLBLAKE2B()
+        sha = XLBLAKE2B_256()
         for b_val in bytes_in:
             xxx = bytearray(1)
             xxx[0] = b_val
