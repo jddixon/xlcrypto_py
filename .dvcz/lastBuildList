@@ -8,18 +8,18 @@ k2lyCIE/V/CDb9eVDYQgYSJYrnQ/JAPST7NbcY8aI+/0l7QVBhLBpmOCvmS6ofvz
 /QIDAQAB
 -----END PUBLIC KEY-----
 xlcrypto_py
-2018-02-20 22:27:37
+2018-02-26 20:43:14
 # BEGIN CONTENT #
 xlcrypto_py
  .dvcz
-  builds 9cabbf728bd0af72e7d68a2f2a349ce8cf690d83
-  lastBuildList 87e7d171be997de77d44c103b189dab03feba558
+  builds 9214f95fa2c0ad5c539f2f1bb42302a01b3d7711
+  lastBuildList 91d978c523cd3ee3ea5004e5975286bfd7d5dd3b
   projCfg 836e66e693dec2578d9f85e43775b8f4921b8879
   projCfg.local 0f549c45fdb61775161f03b21be6ea78814f1f28
-  projConfig.toml af7bad36997823a9ac6be471b3d483536765d114
+  projConfig.toml 29182f8f65dea87b398297221d14440d51dd04e0
  .gitignore 7de6b56ffe9e21d458fd606f462f7854743e09bb
  .gitignore.local dc759996ca1366caf080fde4a98d37e39e382eae
- CHANGES a5ffd19f1f97323c4e082b8de93a552f856e6ea8
+ CHANGES fe48c16f3a90114941eba879dd811b7e02ccdf86
  LICENSE-MIT.md aec2b90058ed291d26eef53badc44802cda9bcde
  MANIFEST.in ee87ecf6928c0c4c69376734eba9cf532ce748b1
  README.md 94d8aa3428a6f918946e468260961d3892df4f0f
@@ -32,8 +32,8 @@ xlcrypto_py
   index.md 37dd9879289663fec039cdea6fae1b76570285c6
  installit 94fbe89a36fe62a37d5408ff095f03aeedf01dd6
  pylintrc 6f006c8c1bad3195ddbe19db7db8bae9372c45ab
- requirements.txt 75341c9582d8e4cea089b5f9faf1b37499ed82ed
- setup.py e67db9f05696e563b4e6bc8c427431435688b10e
+ requirements.txt 6102fe76646ec314137275ea341a76f9f89055a7
+ setup.py f86123663aa72f9e2318d1eefc739153eba47a83
  sha-3bytetestvectors
   SHA3_224LongMsg.rsp 984954b6a45f247de5d1a771e3b09ae9086c2b25
   SHA3_224Monte.rsp 34d4abdc2efa0b0833cbb5aeb2d4be949667c17f
@@ -73,7 +73,9 @@ xlcrypto_py
  shabytetestvectors.zip 8b4e9182b0eb855810fe42033866b5c0e3156f19
  src
   xlcrypto
-   __init__.py b2117887748593e3ab2ec6397a03d32618aaa85c
+   __init__.py 436fd1eed3e134cb5a3411fbd6ee0e996bda5f23
+   cipher
+    block.py b9648bd5569e93f29cc9f25336944c6bb518fe56
    filters
     __init__.py f0f0f17e99ca6efb41ca78559fb26ae66d93dc2a
    hash.py 243de5b59a8d6c9711caa1cfa47d91afae09a152
@@ -81,10 +83,10 @@ xlcrypto_py
    keyderiv.py 0b66bb5ac1db2e73686d5ddab24dd89a35fce017
    padding.py aeb4ecce4af4a6b62aebe48e3c4d241f6d358560
  styleit 7a814827f2fcb2cd1ba3bdb6c651822d465587a4
- test.all 056b4e635ed4d13c89fb399f7a122ea8c9842255
+ test.all 741b4802315e70eda56a417af00ee966aa7c3c41
  test_requirements.txt 8c680bc51ac4df7f9eee28c8ee7c59cff68e90df
  tests
-  test_blake2b.py ecf751700c2d3919c90723171ef22332ee1c59f4
+  test_blake2b.py 7e7cc6259fe3847be62cca3997a0e0fb959c024c
   test_bloom_sha.py d7d5fc07d20d00a12146f01bc768e642505a7bca
   test_counting_bloom.py 0a163e1f826853311d7caa60787efb4b553723c0
   test_hello_and_reply.py dc7d5384fb87e3ee1e43d5b709debc281db63608
@@ -98,7 +100,7 @@ xlcrypto_py
   test_sha2.py 674b9e63c5a44fcea79da4ec82b0a6b1a25632e8
   test_sha3_256.py 2196f40a382f8bbc9cad74a794e585458d1ef6b2
   test_spaces.py 4650ce4dbbb103898491735f8745c187b60abc09
- tox.ini dee542eec0c141e874d5aa704397ed61a727179d
+ tox.ini 47fd445bda09d2ea1b19d22583eda7eb4941453b
 # END CONTENT #
 
-kWC4ymnxWVWg/ZwImt4ddV3Jezge8IzqNILlhfr369gGey5QBMdqPhZiAXaJxEvwTW4Wjv1jV5hZ+KIFup0eZFHGW7zo8H7I9CjqpWLgcarO0xCh2NX3jJ2XyvQ8b/ZMBADV7VEAJ9m5BvRtWz/OSBsJEN6kcr45qHRO6Ax564YR6FeFcKylhrNsp/6cbXuzBC8JEBnkGzZCh4FuqT2u74myrgEgQi2e7znjuOt/8n/RWZRxGTBVQAHJPWhVHZJrrkFywOB5oMs1JCIuRpn5LG61/fGB6e8DFd2awLruCTMFj8D6VlKJ6BxWOm+AdKdexQwPQfP9yee3sLAyoW/Xfg==
+MC+zaO44F6eJyXGQsqfXa9xN9X92HFb2905CqWqV3HC6stIoVg93r58YreaKt58DhTYTEN5UFcSQBPD/e9MV6W/bLLVkq8IOarcFLVQMOiCluBX8ZT29tRBnEPIKqbSsFNW6h+oD6uTN/UzKiGU3g2K1zDvNdAF4GBRgyYuMJnFiPMlIWUleNxiGVf8+Wj4ABz7RoY4VnJx586B2bXPFJAC9jf/c7E3yLslT4kScm5tlS+NuFWSoEI34wcSPVWxJf6O98CFvsc1Bk8QOLOFxJnZAtH95ZUGbr4PdKjpFaLH2vGhtRKtPLi6yog9PHgLrPggOlApm4EBJa9EBBueYfQ==

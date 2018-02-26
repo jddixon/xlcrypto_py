@@ -1,2 +1,6 @@
 # xlcrypto_py/requirements.txt
-
+cryptography
+pbkdf2
+pyblake2
+setuptools
+pysha3
