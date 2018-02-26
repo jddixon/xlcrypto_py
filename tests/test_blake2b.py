@@ -1,7 +1,7 @@
-#!/usr/bin/env python3
 
 """ Test functionality of 256-bit BLAKE2B hash. """
 
+from __future__ import absolute_import, division, print_function
 import sys
 import unittest
 import hashlib
